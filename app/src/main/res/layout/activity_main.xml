@@ -15,10 +15,10 @@
         android:layout_height="116dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="223dp"
+        android:layout_marginTop="221dp"
+        android:contentDescription="@null"
         app:srcCompat="@drawable/logo_white"
         tools:layout_editor_absoluteX="75dp"
-        tools:layout_editor_absoluteY="235dp"
-        android:contentDescription="@null"/>
+        tools:layout_editor_absoluteY="235dp" />
 
 </RelativeLayout>
