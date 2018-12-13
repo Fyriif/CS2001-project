@@ -3,9 +3,9 @@
     <font
         android:fontStyle="normal"
         android:fontWeight="400"
-        android:font="@font/Oswald_Regular"/>
+        android:font="@font/oswald_regular"/>
     <font
         android:fontStyle="italic"
         android:fontWeight="400"
-        android:font="@font/Oswald_Regular"/>
+        android:font="@font/oswald_regular"/>
 </font-family>
