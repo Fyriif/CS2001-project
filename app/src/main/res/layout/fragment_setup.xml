@@ -1,65 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/background"
-    tools:context=".SetupActivity">
-
-    <ImageView
-        android:layout_width="236dp"
-        android:layout_height="124dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="99dp"
-        android:contentDescription="@null"
-        android:src="@drawable/logo" />
+    tools:context=".SetupActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/initial_Text1"
+        android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="279dp"
-        android:text="@string/initialText1"
-        android:fontFamily="@font/oswald"
-        android:textColor="@color/text_color_primary"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/constraintLayout"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
-    <Button
-        android:id="@+id/btn_yes"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="250dp"
-        android:layout_height="62dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="171dp"
-        android:background="@drawable/btn_rounded"
-        android:text="@string/btnYes"
-        android:textAllCaps="true"
-        android:textColor="@color/text_color_secondary"
-        android:fontFamily="@font/oswald"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <Button
-        android:id="@+id/btn_No"
-        style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="250dp"
-        android:layout_height="62dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="87dp"
-        android:background="@drawable/btn_rounded"
-        android:text="@string/btnNo"
-        android:textAllCaps="true"
-        android:textColor="@color/text_color_secondary"
-        android:textSize="20sp"
-        android:fontFamily="@font/oswald"
-        android:textStyle="bold" />
-
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
