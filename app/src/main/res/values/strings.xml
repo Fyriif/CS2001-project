@@ -1,9 +1,24 @@
 <resources>
-    <string name="app_name">FitnessApp</string>
+    <string name="app_name">BFit Tracker</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_setup">SetupActivity</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_text">Welcome to BFit Tracker</string>
+    <string name="intro_text">Use this app to manage your work out time, we give you high quality time plan which fits your daily busy life and manage your healthy lifestyle </string>
+    <string name="btn_start">Start</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_more">More</string>
+    <string name="btn_yes">Yes</string>
+    <string name="btn_no">No</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="initial_text">Do you have an account?</string>
+    <string name="email_text">Email</string>
+    <string name="password_text">Password</string>
+    <string name="edit_email">Email</string>
+    <string name="edit_password">Password</string>
 </resources>
