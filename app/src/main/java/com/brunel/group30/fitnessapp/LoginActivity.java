@@ -3,8 +3,11 @@ package com.brunel.group30.fitnessapp;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -13,20 +16,43 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import java.util.regex.Pattern;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
+            "(?=.*[0-9])" +         //minimum 1 digit
+            //"(?=.*[a-z])" +         // 1 lower case letter
+            "(?=.*[A-Z])" +         //1 upper case letter
+            "(?=.*[a-zA-Z])" +      //any letter
+            "(?=.*[@#$%^&+=])" +    //1 special character
+            "(?=\\S+$)" +           //no white spaces
+            ".{6,}" +               //6 characters minimum
+            "$");
+
     private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+
     private EditText emailEditText;
     private EditText passwordEditText;
-    FirebaseUser currentUser;
+
+    private Button signUpButton;
+    private Button loginButton;
+
+    private ProgressBar loginProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        this.loginProgressBar = (ProgressBar) findViewById(R.id.progress_bar_login);
+
         this.emailEditText = (EditText) findViewById(R.id.text_email);
         this.passwordEditText = (EditText) findViewById(R.id.text_password);
+
+        this.signUpButton = (Button) findViewById(R.id.btn_signUp);
+        this.loginButton = (Button) findViewById(R.id.btn_login);
 
         findViewById(R.id.btn_signUp).setOnClickListener(this);
         findViewById(R.id.btn_login).setOnClickListener(this);
@@ -37,6 +63,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     void createAccount(String email, String password) {
         if (!validateForm()) {
             return;
+
         }
 
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -51,6 +78,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
     }
@@ -60,6 +88,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             return;
         }
 
+        this.loginProgressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -67,31 +96,40 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         if (task.isSuccessful()) {
                             // TODO: user has logged in, go to dashboard/set-up
                             FirebaseUser user = mAuth.getCurrentUser();
+
                         } else {
                             // TODO: user has failed to log in, what next?
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
+                            String errorMessage = task.getException().getMessage();
+                            Toast.makeText(getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
                         }
+
+                        loginProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
     }
 
+
     boolean validateForm() {
         boolean valid = true;
 
-        // TODO: more email validation, use RegEx to determine whether an email has '@' for example
         String email = this.emailEditText.getText().toString();
         if (email.isEmpty()) {
-            this.emailEditText.setError("Required.");
+            this.emailEditText.setError("Field can't be empty");
+            valid = false;
+
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            this.emailEditText.setError("Please enter a valid email address");
             valid = false;
         } else {
             this.emailEditText.setError(null);
         }
 
-        // TODO: more password validation, length, uppercase, symbol for example, consider using RegEx
         String password = this.passwordEditText.getText().toString();
         if (password.isEmpty()) {
-            this.passwordEditText.setError("Required.");
+            this.passwordEditText.setError("Field can't be empty");
+            valid = false;
+        } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
+            this.passwordEditText.setError("Password is weak");
             valid = false;
         } else {
             this.passwordEditText.setError(null);
@@ -106,9 +144,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.currentUser = mAuth.getCurrentUser();
         if (this.currentUser != null) {
             // TODO: go to dashboard or set-up screen
-            Toast.makeText(getApplicationContext(),
-                    "User already logged in " + currentUser.getEmail(),
-                    Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -124,3 +159,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 }
+
+
+
+
+
+

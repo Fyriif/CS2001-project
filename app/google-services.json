@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "510873132832-epvkausp86pqtngajcir9v5thu44bfao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.brunel.group30.fitnessapp",
+            "certificate_hash": "86c0a0d18e580701b1df921c26373564e73d36de"
+          }
+        },
+        {
           "client_id": "510873132832-cbjnduvm1jk12jjt2s5kim35qe8m67sn.apps.googleusercontent.com",
           "client_type": 3
         }

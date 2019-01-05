@@ -17,7 +17,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         this.startBtn = (Button) findViewById(R.id.button_start);
         startBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
+           @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
