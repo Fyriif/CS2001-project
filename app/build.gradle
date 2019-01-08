@@ -33,6 +33,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-core:16.0.6'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
 
+    implementation 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.8'
 }
 
 apply plugin: 'com.google.gms.google-services'

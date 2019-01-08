@@ -1,5 +1,6 @@
 package com.brunel.group30.fitnessapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -48,14 +49,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         this.loginProgressBar = (ProgressBar) findViewById(R.id.progress_bar_login);
 
-        this.emailEditText = (EditText) findViewById(R.id.text_email);
-        this.passwordEditText = (EditText) findViewById(R.id.text_password);
-
-        this.signUpButton = (Button) findViewById(R.id.btn_signUp);
-        this.loginButton = (Button) findViewById(R.id.btn_login);
-
-        findViewById(R.id.btn_signUp).setOnClickListener(this);
-        findViewById(R.id.btn_login).setOnClickListener(this);
+        this.emailEditText = (EditText) findViewById(R.id.edit_email);
+        this.passwordEditText = (EditText) findViewById(R.id.edit_password);
+      
+        findViewById(R.id.button_sign_up).setOnClickListener(this);
+        findViewById(R.id.button_login).setOnClickListener(this);
 
         mAuth = FirebaseAuth.getInstance();
     }
@@ -71,8 +69,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // TODO: user has created an account, go to dashboard/set-up
                             FirebaseUser user = mAuth.getCurrentUser();
+                            Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                            startActivity(intent);
                         } else {
                             // TODO: user has failed to create account, what next?
                             Toast.makeText(getApplicationContext(), "Authentication failed.",
@@ -143,7 +142,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onStart();
         this.currentUser = mAuth.getCurrentUser();
         if (this.currentUser != null) {
-            // TODO: go to dashboard or set-up screen
+            Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+            startActivity(intent);
         }
     }
 
@@ -152,9 +152,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int i = v.getId();
 
         switch (i) {
-            case R.id.btn_signUp:
+            case R.id.button_sign_up:
                 this.createAccount(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
-            case R.id.btn_login:
+            case R.id.button_login:
                 this.signIn(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
         }
     }

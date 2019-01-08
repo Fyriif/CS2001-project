@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".SignUpActivity$PlaceholderFragment">
+
+    <TextView
+        android:id="@+id/text_view_progress_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/questrial_regular"
+        android:text="@string/progress_number"
+        android:textColor="#808080"
+        android:textSize="15sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="25dp"
+            app:srcCompat="@drawable/logo"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/rubik_regular"
+            android:gravity="center"
+            android:text="@string/sign_up_title_height"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="30sp" />
+
+        <com.brunel.group30.fitnessapp.CustomNumberPicker
+            android:id="@+id/number_picker_age"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:theme="@style/NumberPickerStyle"
+            custom:minValue="40"
+            custom:maxValue="200" />
+
+    </LinearLayout>
+
+    <include
+        layout="@layout/fragment_sign_up_bottom_btn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|end" />
+
+</RelativeLayout>
