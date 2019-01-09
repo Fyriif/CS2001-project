@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/button_day_monday"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="149dp"
                     android:layout_height="wrap_content"
@@ -67,6 +68,7 @@
                     android:textSize="20sp" />
 
                 <CheckBox
+                    android:id="@+id/button_day_thursday"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="149dp"
                     android:layout_height="wrap_content"
@@ -88,6 +90,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/button_day_tuesday"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="149dp"
                     android:layout_height="wrap_content"
@@ -103,6 +106,7 @@
                     android:textSize="20sp" />
 
                 <CheckBox
+                    android:id="@+id/button_day_friday"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="149dp"
                     android:layout_height="wrap_content"
@@ -124,6 +128,7 @@
                 android:layout_height="wrap_content">
 
                 <CheckBox
+                    android:id="@+id/button_day_wednesday"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="149dp"
                     android:layout_height="wrap_content"
@@ -139,6 +144,7 @@
                     android:textSize="20sp" />
 
                 <CheckBox
+                    android:id="@+id/button_day_saturday"
                     style="@style/Widget.AppCompat.Button.Colored"
                     android:layout_width="149dp"
                     android:layout_height="wrap_content"
@@ -156,6 +162,7 @@
             </TableRow>
 
             <CheckBox
+                android:id="@+id/button_day_sunday"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="149dp"
                 android:layout_height="wrap_content"
@@ -167,7 +174,7 @@
                 android:text="@string/text_sunday"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
-                android:textSize="20sp"/>
+                android:textSize="20sp" />
         </TableLayout>
 
     </LinearLayout>

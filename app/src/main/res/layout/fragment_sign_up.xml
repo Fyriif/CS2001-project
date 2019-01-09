@@ -54,6 +54,7 @@
 
 
                 <EditText
+                    android:id="@+id/edit_text_forename"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/btn_rounded_edit_text"
@@ -79,6 +80,7 @@
 
 
                 <EditText
+                    android:id="@+id/edit_text_surname"
                     android:layout_width="wrap_content"
                     android:layout_height="50dp"
                     android:background="@drawable/btn_rounded_edit_text"

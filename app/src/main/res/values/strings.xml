@@ -50,4 +50,6 @@
     <string name="text_sunday">Sunday</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="error_field_empty">Field cannot be left empty</string>
+    <string name="error_option_is_required">One of the options must be selected</string>
 </resources>
