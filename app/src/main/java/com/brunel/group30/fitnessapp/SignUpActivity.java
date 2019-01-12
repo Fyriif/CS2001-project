@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class SignUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
+public class SignUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime  {
 
     static final String TIMERANGEPICKER_TAG = "timerangepicker";
 
@@ -38,11 +38,10 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     /**
      * The {@link ViewPager} that will host the section contents.
      */
-    private ViewPager mViewPager;
+    private CustomViewPager mViewPager;
 
     private Calendar calendar;
     private Format dateFormat;
@@ -53,14 +52,14 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_up);
-
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.view_pager_sign_up);
+        mViewPager = (CustomViewPager) findViewById(R.id.view_pager_sign_up);
         mViewPager.setAdapter(mSectionsPagerAdapter);
+        mViewPager.setSwipeable(false);
 
         calendar = Calendar.getInstance();
         defaultLocale = Locale.getDefault();
@@ -172,6 +171,7 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
         this.dobEditText = v.findViewById(R.id.edit_text_dob);
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @SuppressLint("SimpleDateFormat")
+
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
                                   int dayOfMonth) {
@@ -187,6 +187,7 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
         new DatePickerDialog(this, date, calendar
                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)).show();
+
     }
 
     public void createTimePickerFragment(View v) {
