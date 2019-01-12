@@ -23,15 +23,7 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^" +
-            "(?=.*[0-9])" +         //minimum 1 digit
-            //"(?=.*[a-z])" +         // 1 lower case letter
-            "(?=.*[A-Z])" +         //1 upper case letter
-            "(?=.*[a-zA-Z])" +      //any letter
-            "(?=.*[@#$%^&+=])" +    //1 special character
-            "(?=\\S+$)" +           //no white spaces
-            ".{6,}" +               //6 characters minimum
-            "$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).{6,}$");
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
@@ -55,7 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         findViewById(R.id.button_sign_up).setOnClickListener(this);
         findViewById(R.id.button_login).setOnClickListener(this);
 
-        mAuth = FirebaseAuth.getInstance();
+        this.mAuth = FirebaseAuth.getInstance();
         this.firebaseDatabase = FirebaseFirestore.getInstance();
     }
 
@@ -129,11 +121,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         String email = this.emailEditText.getText().toString();
         if (email.isEmpty()) {
-            this.emailEditText.setError("Field can't be empty");
+            this.emailEditText.setError(getString(R.string.error_field_empty));
             valid = false;
 
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            this.emailEditText.setError("Please enter a valid email address");
+            this.emailEditText.setError(getString(R.string.error_enter_valid_email));
             valid = false;
         } else {
             this.emailEditText.setError(null);
@@ -141,10 +133,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         String password = this.passwordEditText.getText().toString();
         if (password.isEmpty()) {
-            this.passwordEditText.setError("Field can't be empty");
+            this.passwordEditText.setError(getString(R.string.error_field_empty));
             valid = false;
         } else if (!PASSWORD_PATTERN.matcher(password).matches()) {
-            this.passwordEditText.setError("Password is weak");
+            this.passwordEditText.setError(getString(R.string.error_password_weak));
             valid = false;
         } else {
             this.passwordEditText.setError(null);
@@ -154,8 +146,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     void nextActivity(Class nextActivity) {
-        Intent intent = new Intent(getApplicationContext(), nextActivity);
-        startActivity(intent);
+        startActivity(new Intent(getApplicationContext(), nextActivity));
     }
 
     @Override
@@ -186,9 +177,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        int i = v.getId();
-
-        switch (i) {
+        switch (v.getId()) {
             case R.id.button_sign_up:
                 this.createAccount(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
             case R.id.button_login:
