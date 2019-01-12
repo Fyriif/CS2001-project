@@ -3,6 +3,7 @@ package com.brunel.group30.fitnessapp;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -18,17 +19,19 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
-public class SignUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime  {
-
-    static final String TIMERANGEPICKER_TAG = "timerangepicker";
-
+public class SettingUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime  {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -43,10 +46,18 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
      */
     private CustomViewPager mViewPager;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
+    private FirebaseFirestore firebaseDatabase;
+
+    Map<String, Object> userDataHashMap;
+
+    private RangeTimePickerDialog rangeTimePickerDialog;
     private Calendar calendar;
     private Format dateFormat;
     private Locale defaultLocale;
     private EditText dobEditText;
+    private Map<String, Map<String, String>> workOutDayTimes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +72,22 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setSwipeable(false);
 
-        calendar = Calendar.getInstance();
-        defaultLocale = Locale.getDefault();
-        dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+        this.firebaseDatabase = FirebaseFirestore.getInstance();
+        this.mAuth = FirebaseAuth.getInstance();
+        new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                currentUser = firebaseAuth.getCurrentUser();
+            }
+        };
+
+        this.userDataHashMap = new HashMap<>();
+
+        this.calendar = Calendar.getInstance();
+        this.defaultLocale = Locale.getDefault();
+        this.dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
+
+        this.workOutDayTimes = new HashMap<>();
     }
 
     public void nextFragment(View v) {
@@ -97,6 +121,9 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
                 }
 
                 if (forenameValid && surnameValid && dobValid) {
+                    userDataHashMap.put(DBFields.FORENAME, forenameEditText.getText());
+                    userDataHashMap.put(DBFields.SURNAME, surnameEditText.getText());
+                    userDataHashMap.put(DBFields.DOB, dobEditText.getText());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -109,8 +136,25 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
                 if (!maleRadioButton.isChecked() && !femaleRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
                 } else {
+                    userDataHashMap.put(DBFields.GENDER, maleRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
+
+                break;
+
+            case 3:
+                CustomNumberPicker ageNumberPicker = (CustomNumberPicker) findViewById(R.id.number_picker_age);
+
+                userDataHashMap.put(DBFields.AGE, ageNumberPicker.getValue());
+                this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
+
+                break;
+
+            case 4:
+                CustomNumberPicker weightNumberPicker = (CustomNumberPicker) findViewById(R.id.number_picker_weight);
+
+                userDataHashMap.put(DBFields.WEIGHT, weightNumberPicker.getValue());
+                this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
 
@@ -121,6 +165,7 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
                 if (!yesDisabilityRadioButton.isChecked() && !noDisabilityRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
                 } else {
+                    userDataHashMap.put(DBFields.DISABILITY, yesDisabilityRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -136,6 +181,12 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
                         !parkLocationCheckBox.isChecked()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
                 } else {
+                    HashMap<String, Boolean> locationHashMap = new HashMap<>();
+                    locationHashMap.put(DBFields.LOCATION_GYM, gymLocationCheckBox.isChecked());
+                    locationHashMap.put(DBFields.LOCATION_HOME, homeLocationCheckBox.isChecked());
+                    locationHashMap.put(DBFields.LOCATION_PARK, parkLocationCheckBox.isChecked());
+
+                    userDataHashMap.put(DBFields.LOCATION, locationHashMap);
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -147,11 +198,15 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
                 CheckBox wednesdayCheckBox = (CheckBox) findViewById(R.id.button_day_wednesday);
                 CheckBox thursdayCheckBox = (CheckBox) findViewById(R.id.button_day_thursday);
                 CheckBox fridayCheckBox = (CheckBox) findViewById(R.id.button_day_friday);
+                CheckBox saturdayCheckBox = (CheckBox) findViewById(R.id.button_day_saturday);
+                CheckBox sundayCheckBox = (CheckBox) findViewById(R.id.button_day_sunday);
 
                 if (!mondayCheckBox.isChecked() && !tuesdayCheckBox.isChecked() && !wednesdayCheckBox.isChecked()
-                        && !thursdayCheckBox.isChecked() && !fridayCheckBox.isChecked()) {
+                        && !thursdayCheckBox.isChecked() && !fridayCheckBox.isChecked()
+                        && !saturdayCheckBox.isChecked() && !sundayCheckBox.isChecked()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
                 } else {
+                    // TODO: send data off to DB
                     // TODO: go to dashboard
                 }
 
@@ -191,18 +246,25 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
     }
 
     public void createTimePickerFragment(View v) {
-        if (((CheckBox)v).isChecked()) {
-            RangeTimePickerDialog dialog = new RangeTimePickerDialog();
-            dialog.newInstance(R.color.colorAccent, R.color.White, R.color.colorPrimary, R.color.colorAccent, false);
-            dialog.setRadiusDialog(20);
-            dialog.setValidateRange(true);
-            dialog.show(getFragmentManager(), TIMERANGEPICKER_TAG);
+        CheckBox dayCheckBox = ((CheckBox)v);
+
+        if (dayCheckBox.isChecked()) {
+            this.rangeTimePickerDialog = new RangeTimePickerDialog();
+            this.rangeTimePickerDialog.newInstance(R.color.colorAccent, R.color.White, R.color.colorPrimary, R.color.colorAccent, false);
+            this.rangeTimePickerDialog.setValidateRange(true);
+            this.rangeTimePickerDialog.setInitialOpenedTab(RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
+            this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toUpperCase())));
+        } else {
+            this.workOutDayTimes.remove(String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toUpperCase())));
         }
     }
 
     @Override
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
-        Toast.makeText(this, "Start: "+hourStart+":"+minuteStart+"\nEnd: "+hourEnd+":"+minuteEnd, Toast.LENGTH_SHORT).show();
+        Map<String, String> times = new HashMap<>();
+        times.put("FROM", hourStart + ":" + minuteStart);
+        times.put("TO", hourEnd + ":" + minuteEnd);
+        this.workOutDayTimes.put(this.rangeTimePickerDialog.getTag().toUpperCase(), times);
     }
 
     /**

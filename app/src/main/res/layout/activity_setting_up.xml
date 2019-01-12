@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".SignUpActivity">
+    tools:context=".SettingUpActivity">
 
     <com.brunel.group30.fitnessapp.CustomViewPager
         android:id="@+id/view_pager_sign_up"
