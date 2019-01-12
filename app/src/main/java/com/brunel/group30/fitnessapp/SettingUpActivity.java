@@ -19,6 +19,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -74,12 +76,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
         this.firebaseDatabase = FirebaseFirestore.getInstance();
         this.mAuth = FirebaseAuth.getInstance();
-        new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                currentUser = firebaseAuth.getCurrentUser();
-            }
-        };
+        this.currentUser = this.mAuth.getCurrentUser();
 
         this.userDataHashMap = new HashMap<>();
 
@@ -143,9 +140,9 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 break;
 
             case 3:
-                CustomNumberPicker ageNumberPicker = (CustomNumberPicker) findViewById(R.id.number_picker_age);
+                CustomNumberPicker ageNumberPicker = (CustomNumberPicker) findViewById(R.id.number_picker_height);
 
-                userDataHashMap.put(DBFields.AGE, ageNumberPicker.getValue());
+                userDataHashMap.put(DBFields.HEIGHT, ageNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -188,26 +185,6 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
                     userDataHashMap.put(DBFields.LOCATION, locationHashMap);
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
-                }
-
-                break;
-
-            case 7:
-                CheckBox mondayCheckBox = (CheckBox) findViewById(R.id.button_day_monday);
-                CheckBox tuesdayCheckBox = (CheckBox) findViewById(R.id.button_day_tuesday);
-                CheckBox wednesdayCheckBox = (CheckBox) findViewById(R.id.button_day_wednesday);
-                CheckBox thursdayCheckBox = (CheckBox) findViewById(R.id.button_day_thursday);
-                CheckBox fridayCheckBox = (CheckBox) findViewById(R.id.button_day_friday);
-                CheckBox saturdayCheckBox = (CheckBox) findViewById(R.id.button_day_saturday);
-                CheckBox sundayCheckBox = (CheckBox) findViewById(R.id.button_day_sunday);
-
-                if (!mondayCheckBox.isChecked() && !tuesdayCheckBox.isChecked() && !wednesdayCheckBox.isChecked()
-                        && !thursdayCheckBox.isChecked() && !fridayCheckBox.isChecked()
-                        && !saturdayCheckBox.isChecked() && !sundayCheckBox.isChecked()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
-                } else {
-                    // TODO: send data off to DB
-                    // TODO: go to dashboard
                 }
 
                 break;
@@ -255,16 +232,50 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             this.rangeTimePickerDialog.setInitialOpenedTab(RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
             this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toUpperCase())));
         } else {
-            this.workOutDayTimes.remove(String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toUpperCase())));
+            this.workOutDayTimes.remove(String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toLowerCase())));
         }
     }
 
     @Override
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
         Map<String, String> times = new HashMap<>();
-        times.put("FROM", hourStart + ":" + minuteStart);
-        times.put("TO", hourEnd + ":" + minuteEnd);
-        this.workOutDayTimes.put(this.rangeTimePickerDialog.getTag().toUpperCase(), times);
+        times.put(DBFields.DAY_TIME_FROM, hourStart + ":" + minuteStart);
+        times.put(DBFields.DAY_TIME_TO, hourEnd + ":" + minuteEnd);
+        this.workOutDayTimes.put(this.rangeTimePickerDialog.getTag().toLowerCase(), times);
+    }
+
+    public void sendToDB(View view) {
+        CheckBox mondayCheckBox = (CheckBox) findViewById(R.id.button_day_monday);
+        CheckBox tuesdayCheckBox = (CheckBox) findViewById(R.id.button_day_tuesday);
+        CheckBox wednesdayCheckBox = (CheckBox) findViewById(R.id.button_day_wednesday);
+        CheckBox thursdayCheckBox = (CheckBox) findViewById(R.id.button_day_thursday);
+        CheckBox fridayCheckBox = (CheckBox) findViewById(R.id.button_day_friday);
+        CheckBox saturdayCheckBox = (CheckBox) findViewById(R.id.button_day_saturday);
+        CheckBox sundayCheckBox = (CheckBox) findViewById(R.id.button_day_sunday);
+
+        if (!mondayCheckBox.isChecked() && !tuesdayCheckBox.isChecked() && !wednesdayCheckBox.isChecked()
+                && !thursdayCheckBox.isChecked() && !fridayCheckBox.isChecked()
+                && !saturdayCheckBox.isChecked() && !sundayCheckBox.isChecked()) {
+            Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
+        } else {
+            this.userDataHashMap.put(DBFields.WORK_OUT_DAYS, this.workOutDayTimes);
+
+            firebaseDatabase.collection("user-info").document(this.currentUser.getUid())
+                    .set(this.userDataHashMap)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // TODO: go to dashboard
+                            Toast.makeText(getApplicationContext(), "DocumentSnapshot successfully written!", Toast.LENGTH_LONG).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(getApplicationContext(), "Error writing document", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 
     /**

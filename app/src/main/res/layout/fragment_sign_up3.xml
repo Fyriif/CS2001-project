@@ -44,7 +44,7 @@
             android:textSize="30sp" />
 
         <com.brunel.group30.fitnessapp.CustomNumberPicker
-            android:id="@+id/number_picker_age"
+            android:id="@+id/number_picker_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

@@ -226,7 +226,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:textColor="@color/textColorPrimary"
                     android:fontFamily="@font/questrial_regular"
-                    android:onClick="nextFragment"
+                    android:onClick="sendToDB"
                     android:text="@string/btn_submit"
                     android:textAllCaps="true"
                     android:textSize="20sp"
