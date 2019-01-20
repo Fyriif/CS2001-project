@@ -30,10 +30,9 @@ import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
-public class SettingUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime  {
+public class SettingUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -57,7 +56,6 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
     private RangeTimePickerDialog rangeTimePickerDialog;
     private Calendar calendar;
     private Format dateFormat;
-    private Locale defaultLocale;
     private EditText dobEditText;
     private Map<String, Map<String, String>> workOutDayTimes;
 
@@ -81,7 +79,6 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         this.userDataHashMap = new HashMap<>();
 
         this.calendar = Calendar.getInstance();
-        this.defaultLocale = Locale.getDefault();
         this.dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 
         this.workOutDayTimes = new HashMap<>();
@@ -216,14 +213,15 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
         };
 
-        new DatePickerDialog(this, date, calendar
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, date, calendar
                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)).show();
-
+                calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show();
     }
 
     public void createTimePickerFragment(View v) {
-        CheckBox dayCheckBox = ((CheckBox)v);
+        CheckBox dayCheckBox = ((CheckBox) v);
 
         if (dayCheckBox.isChecked()) {
             this.rangeTimePickerDialog = new RangeTimePickerDialog();
@@ -349,7 +347,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             TextView progressNumTextView = (TextView) rootView.findViewById(R.id.text_view_progress_num);
             String progressText = progressNumTextView.getText().toString();
             progressText = progressText.replaceFirst("X", String.valueOf(getArguments().getInt("SECTION_NUMBER")))
-                                        .replaceFirst("X", String.valueOf(getArguments().getInt("TOTAL_FRAGMENTS")));
+                    .replaceFirst("X", String.valueOf(getArguments().getInt("TOTAL_FRAGMENTS")));
             progressNumTextView.setText(progressText);
 
             return rootView;
