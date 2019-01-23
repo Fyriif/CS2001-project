@@ -34,10 +34,10 @@
             </intent-filter>
         </activity>
 
-        <activity
+        <activit
             android:name=".SettingUpActivity"
             android:label="@string/title_activity_sign_up">
-        </activity>
+        </activit>
     </application>
 
 </manifest>

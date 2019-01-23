@@ -36,6 +36,7 @@
     <string name="sign_up_title_times">Days to Work Out</string>
     <string name="btn_male">Male</string>
     <string name="btn_female">Female</string>
+    <string name="btn_prefer_not_to_say">Prefer not to say</string>
     <string name="btn_submit">Submit</string>
     <string name="secondary_title">(Select all that apply)</string>
     <string name="btn_gym">Gym</string>

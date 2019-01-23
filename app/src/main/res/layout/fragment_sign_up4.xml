@@ -52,6 +52,27 @@
             custom:minValue="40"
             custom:maxValue="200" />
 
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/btn_rounded_secondary"
+                android:button="@null"
+                android:fontFamily="@font/questrial_regular"
+                android:text="@string/btn_prefer_not_to_say"
+                android:textColor="@drawable/radio_text_selected"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
     </LinearLayout>
 
     <include
