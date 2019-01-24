@@ -88,8 +88,6 @@
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="18sp" />
 
-=======
->>>>>>> origin/master
         </RadioGroup>
 
     </LinearLayout>

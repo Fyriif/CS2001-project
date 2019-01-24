@@ -39,10 +39,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        this.loginProgressBar = (ProgressBar) findViewById(R.id.progress_bar_login);
+        this.loginProgressBar = findViewById(R.id.progress_bar_login);
 
-        this.emailEditText = (EditText) findViewById(R.id.edit_email);
-        this.passwordEditText = (EditText) findViewById(R.id.edit_password);
+        this.emailEditText = findViewById(R.id.edit_email);
+        this.passwordEditText = findViewById(R.id.edit_password);
       
         findViewById(R.id.button_sign_up).setOnClickListener(this);
         findViewById(R.id.button_login).setOnClickListener(this);
@@ -172,7 +172,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 }
             });
->>>>>>> origin/master
         }
     }
 

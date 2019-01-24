@@ -52,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (ViewPager) findViewById(R.id.view_pager_sign_up);
+        mViewPager = findViewById(R.id.view_pager_sign_up);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
         //TypedArray ta = obtainStyledAttributes(R.style.TimePickerWidgetStyle);
@@ -166,7 +166,7 @@ public class SignUpActivity extends AppCompatActivity implements RangeTimePicker
 
             View rootView = inflater.inflate(getArguments().getInt(ARG_SECTION_LAYOUT_RESOURCE_ID), container, false);
 
-            TextView progressNumTextView = (TextView) rootView.findViewById(R.id.text_view_progress_num);
+            TextView progressNumTextView = rootView.findViewById(R.id.text_view_progress_num);
             String progressText = progressNumTextView.getText().toString();
             progressText = progressText.replaceFirst("X", String.valueOf(getArguments().getInt("SECTION_NUMBER")))
                                         .replaceFirst("X", String.valueOf(getArguments().getInt("TOTAL_FRAGMENTS")));

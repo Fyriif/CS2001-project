@@ -1,0 +1,15 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="AndroidLintGradleCompatible" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="Annotator" enabled="false" level="ERROR" enabled_by_default="false" />
+    <inspection_tool class="GrUnnecessaryPublicModifier" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="GrUnnecessarySemicolon" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="GroovyUnnecessaryContinue" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="GroovyUnnecessaryReturn" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="RedundantCast" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryBreak" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryContinue" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="UnnecessaryVariable" enabled="true" level="ERROR" enabled_by_default="true" />
+  </profile>
+</component>

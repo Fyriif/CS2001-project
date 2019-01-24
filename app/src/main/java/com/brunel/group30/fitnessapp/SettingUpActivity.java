@@ -68,7 +68,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
-        mViewPager = (CustomViewPager) findViewById(R.id.view_pager_sign_up);
+        mViewPager = findViewById(R.id.view_pager_sign_up);
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setSwipeable(false);
 
@@ -87,9 +87,9 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
     public void nextFragment(View v) {
         switch (this.mViewPager.getCurrentItem() + 1) {
             case 1:
-                EditText forenameEditText = (EditText) findViewById(R.id.edit_text_forename);
-                EditText surnameEditText = (EditText) findViewById(R.id.edit_text_surname);
-                EditText dobEditText = (EditText) findViewById(R.id.edit_text_dob);
+                EditText forenameEditText = findViewById(R.id.edit_text_forename);
+                EditText surnameEditText = findViewById(R.id.edit_text_surname);
+                EditText dobEditText = findViewById(R.id.edit_text_dob);
 
                 boolean forenameValid = false, surnameValid = false, dobValid = false;
 
@@ -124,8 +124,8 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 break;
 
             case 2:
-                RadioButton maleRadioButton = (RadioButton) findViewById(R.id.button_sex_male);
-                RadioButton femaleRadioButton = (RadioButton) findViewById(R.id.button_sex_female);
+                RadioButton maleRadioButton = findViewById(R.id.button_sex_male);
+                RadioButton femaleRadioButton = findViewById(R.id.button_sex_female);
 
                 if (!maleRadioButton.isChecked() && !femaleRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 break;
 
             case 3:
-                CustomNumberPicker ageNumberPicker = (CustomNumberPicker) findViewById(R.id.number_picker_height);
+                CustomNumberPicker ageNumberPicker = findViewById(R.id.number_picker_height);
 
                 userDataHashMap.put(DBFields.HEIGHT, ageNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
@@ -145,7 +145,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 break;
 
             case 4:
-                CustomNumberPicker weightNumberPicker = (CustomNumberPicker) findViewById(R.id.number_picker_weight);
+                CustomNumberPicker weightNumberPicker = findViewById(R.id.number_picker_weight);
 
                 userDataHashMap.put(DBFields.WEIGHT, weightNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
@@ -153,8 +153,8 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 break;
 
             case 5:
-                RadioButton yesDisabilityRadioButton = (RadioButton) findViewById(R.id.button_disability_yes);
-                RadioButton noDisabilityRadioButton = (RadioButton) findViewById(R.id.button_disability_no);
+                RadioButton yesDisabilityRadioButton = findViewById(R.id.button_disability_yes);
+                RadioButton noDisabilityRadioButton = findViewById(R.id.button_disability_no);
 
                 if (!yesDisabilityRadioButton.isChecked() && !noDisabilityRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
@@ -166,9 +166,9 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 break;
 
             case 6:
-                CheckBox gymLocationCheckBox = (CheckBox) findViewById(R.id.button_gym);
-                CheckBox homeLocationCheckBox = (CheckBox) findViewById(R.id.button_home);
-                CheckBox parkLocationCheckBox = (CheckBox) findViewById(R.id.button_park);
+                CheckBox gymLocationCheckBox = findViewById(R.id.button_gym);
+                CheckBox homeLocationCheckBox = findViewById(R.id.button_home);
+                CheckBox parkLocationCheckBox = findViewById(R.id.button_park);
 
 
                 if (!gymLocationCheckBox.isChecked() && !homeLocationCheckBox.isChecked() &&
@@ -243,13 +243,13 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
     }
 
     public void sendToDB(View view) {
-        CheckBox mondayCheckBox = (CheckBox) findViewById(R.id.button_day_monday);
-        CheckBox tuesdayCheckBox = (CheckBox) findViewById(R.id.button_day_tuesday);
-        CheckBox wednesdayCheckBox = (CheckBox) findViewById(R.id.button_day_wednesday);
-        CheckBox thursdayCheckBox = (CheckBox) findViewById(R.id.button_day_thursday);
-        CheckBox fridayCheckBox = (CheckBox) findViewById(R.id.button_day_friday);
-        CheckBox saturdayCheckBox = (CheckBox) findViewById(R.id.button_day_saturday);
-        CheckBox sundayCheckBox = (CheckBox) findViewById(R.id.button_day_sunday);
+        CheckBox mondayCheckBox = findViewById(R.id.button_day_monday);
+        CheckBox tuesdayCheckBox = findViewById(R.id.button_day_tuesday);
+        CheckBox wednesdayCheckBox = findViewById(R.id.button_day_wednesday);
+        CheckBox thursdayCheckBox = findViewById(R.id.button_day_thursday);
+        CheckBox fridayCheckBox = findViewById(R.id.button_day_friday);
+        CheckBox saturdayCheckBox = findViewById(R.id.button_day_saturday);
+        CheckBox sundayCheckBox = findViewById(R.id.button_day_sunday);
 
         if (!mondayCheckBox.isChecked() && !tuesdayCheckBox.isChecked() && !wednesdayCheckBox.isChecked()
                 && !thursdayCheckBox.isChecked() && !fridayCheckBox.isChecked()
@@ -344,7 +344,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
             View rootView = inflater.inflate(getArguments().getInt(ARG_SECTION_LAYOUT_RESOURCE_ID), container, false);
 
-            TextView progressNumTextView = (TextView) rootView.findViewById(R.id.text_view_progress_num);
+            TextView progressNumTextView = rootView.findViewById(R.id.text_view_progress_num);
             String progressText = progressNumTextView.getText().toString();
             progressText = progressText.replaceFirst("X", String.valueOf(getArguments().getInt("SECTION_NUMBER")))
                     .replaceFirst("X", String.valueOf(getArguments().getInt("TOTAL_FRAGMENTS")));

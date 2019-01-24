@@ -21,6 +21,23 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    lintOptions {
+        htmlReport true
+        htmlOutput file("lint-report.html")
+        warningsAsErrors false
+        abortOnError true
+        warning 'InvalidPackage'
+        warning 'GradleCompatible'
+    }
+    afterEvaluate {
+        applicationVariants.all {
+            variant ->
+                def variantName = variant.name.capitalize()
+                project.tasks["compile${variantName}Sources"].doLast {
+                    project.tasks["lint${variantName}"].execute()
+                }
+        }
+    }
 }
 
 dependencies {
