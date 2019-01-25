@@ -1,5 +1,6 @@
 *.iml
 .gradle
+/app/lint-report.html
 /local.properties
 /.idea/caches/build_file_checksums.ser
 /.idea/caches/grade_models.ser

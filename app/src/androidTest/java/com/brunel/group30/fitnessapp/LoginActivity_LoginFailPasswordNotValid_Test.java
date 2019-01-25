@@ -1,31 +1,32 @@
 package com.brunel.group30.fitnessapp;
 
 
+import android.content.res.Resources;
 import android.support.test.espresso.ViewInteraction;
+import android.support.test.espresso.matcher.BoundedMatcher;
 import android.support.test.filters.LargeTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
+import android.widget.EditText;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -36,19 +37,18 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class LoginActivity_CreatingAccount_Test {
+public class LoginActivity_LoginFailPasswordNotValid_Test {
 
     @Rule
     public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
 
-
     @Test
-    public void loginActivity_CreatingAccount_Test() {
+    public void loginActivity_LoginFailEmailNotValid_Test() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
 
-        String randomEmail = "user" + ThreadLocalRandom.current().nextInt(1000, 9999 + 1)
-                + "@test.com";
+        String testEmail = "test@test.com";
+        String testPassword = "admin";
 
         ViewInteraction appCompatEmailEditTextClick = onView(
                 allOf(withId(R.id.edit_email),
@@ -68,7 +68,7 @@ public class LoginActivity_CreatingAccount_Test {
                                         0),
                                 0),
                         isDisplayed()));
-        appCompatEmailEditTextType.perform(replaceText(randomEmail), closeSoftKeyboard());
+        appCompatEmailEditTextType.perform(replaceText(testEmail), closeSoftKeyboard());
 
         ViewInteraction appCompatPasswordEditTextClick = onView(
                 allOf(withId(R.id.edit_password),
@@ -88,7 +88,7 @@ public class LoginActivity_CreatingAccount_Test {
                                         1),
                                 0),
                         isDisplayed()));
-        appCompatPasswordEditTextType.perform(replaceText("adminAdmin123#"), closeSoftKeyboard());
+        appCompatPasswordEditTextType.perform(replaceText(testPassword), closeSoftKeyboard());
 
         ViewInteraction appCompatSignUpButtonClick = onView(
                 allOf(withId(R.id.button_sign_up), withText("Sign Up"),
@@ -110,8 +110,19 @@ public class LoginActivity_CreatingAccount_Test {
             e.printStackTrace();
         }
 
-        if (mAuth.getCurrentUser() == null) {
-            fail("User " + randomEmail + " failed to be created");
+        ViewInteraction editText = onView(
+                allOf(withId(R.id.edit_password), withText(testPassword),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.TableLayout")),
+                                        1),
+                                0),
+                        isDisplayed()));
+        editText.check(matches(withErrorText(R.string.error_password_weak)));
+
+        if (mAuth.getCurrentUser() != null) {
+            fail("User " + testEmail + " has logged in " + "with " + testPassword
+                    + " as their  password this shouldn't occur");
         }
     }
 
@@ -130,6 +141,48 @@ public class LoginActivity_CreatingAccount_Test {
                 ViewParent parent = view.getParent();
                 return parent instanceof ViewGroup && parentMatcher.matches(parent)
                         && view.equals(((ViewGroup) parent).getChildAt(position));
+            }
+        };
+    }
+
+    /**
+     * Returns a matcher that matches a descendant of {@link EditText} that is displaying the error
+     * string associated with the given resource id.
+     *
+     * @param resourceId the string resource the text view is expected to hold.
+     */
+    public static Matcher<View> withErrorText(final int resourceId) {
+
+        return new BoundedMatcher<View, EditText>(EditText.class) {
+            private String resourceName = null;
+            private String expectedText = null;
+
+            @Override
+            public void describeTo(Description description) {
+                description.appendText("with error text from resource id: ");
+                description.appendValue(resourceId);
+                if (null != resourceName) {
+                    description.appendText("[");
+                    description.appendText(resourceName);
+                    description.appendText("]");
+                }
+                if (null != expectedText) {
+                    description.appendText(" value: ");
+                    description.appendText(expectedText);
+                }
+            }
+
+            @Override
+            public boolean matchesSafely(EditText editText) {
+                if (null == expectedText) {
+                    try {
+                        expectedText = editText.getResources().getString(resourceId);
+                        resourceName = editText.getResources().getResourceEntryName(resourceId);
+                    } catch (Resources.NotFoundException ignored) {
+                        // view could be from a context unaware of the resource id
+                    }
+                }
+                return null != expectedText && expectedText.equals(editText.getError());
             }
         };
     }
