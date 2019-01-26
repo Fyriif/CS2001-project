@@ -19,13 +19,10 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         int SPLASH_DISPLAY_LENGTH = 1000;
-        new Handler().postDelayed(() -> {
-            startActivity(new Intent(getApplicationContext(),
-                    FastSave.getInstance().isKeyExists(WELCOME_SCREEN_SHOWN_KEY)
-                            ? (FirebaseAuth.getInstance().getCurrentUser() != null
-                            ? SettingUpActivity.class : LoginActivity.class)
-                            : WelcomeActivity.class));
-            FastSave.getInstance().saveBoolean("WELCOME_SCREEN_ALREADY_SHOWN", true);
-        }, SPLASH_DISPLAY_LENGTH);
+        new Handler().postDelayed (() -> startActivity(new Intent(getApplicationContext(),
+                FastSave.getInstance().getBoolean(WELCOME_SCREEN_SHOWN_KEY, false)
+                        ? (FirebaseAuth.getInstance().getCurrentUser() != null
+                        ? DashboardActivity.class : LoginActivity.class)
+                        : WelcomeActivity.class)), SPLASH_DISPLAY_LENGTH);
     }
 }

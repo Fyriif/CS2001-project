@@ -10,6 +10,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -20,15 +22,15 @@ import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).{6,}$");
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile(
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).{6,}$"
+    );
 
     private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
     private FirebaseFirestore firebaseDatabase;
 
     private EditText emailEditText;
     private EditText passwordEditText;
-    private TextView forgotPassTextView;
 
     private ProgressBar loginProgressBar;
 
@@ -41,13 +43,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         this.emailEditText = findViewById(R.id.edit_email);
         this.passwordEditText = findViewById(R.id.edit_password);
-        this.forgotPassTextView = findViewById(R.id.text_view_forgot_password);
-        this.forgotPassTextView.setOnClickListener(this);
+
+        TextView forgotPassTextView = findViewById(R.id.text_view_forgot_password);
+        forgotPassTextView.setOnClickListener(this);
 
         findViewById(R.id.button_sign_up).setOnClickListener(this);
         findViewById(R.id.button_login).setOnClickListener(this);
 
         this.mAuth = FirebaseAuth.getInstance();
+        this.mAuth.signOut();
+
         this.firebaseDatabase = FirebaseFirestore.getInstance();
     }
 
@@ -60,11 +65,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
                         nextActivity(SettingUpActivity.class);
                     } else {
                         // TODO: user has failed to create account, what next?
-                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                        Toast.makeText(getApplicationContext(),
+                                getString(R.string.error_auth_failed),
                                 Toast.LENGTH_SHORT).show();
                     }
 
@@ -80,26 +85,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        // TODO: user has logged in, go to dashboard/set-up
-                        currentUser = mAuth.getCurrentUser();
-                        DocumentReference docRef = firebaseDatabase.collection("user-info").document(currentUser.getUid());
-                        docRef.get().addOnCompleteListener(task1 -> {
-                            if (task1.isSuccessful()) {
-                                DocumentSnapshot document = task1.getResult();
-                                if (document.exists()) {
-                                    Toast.makeText(getApplicationContext(), "No need to set-up, go to dashboard", Toast.LENGTH_LONG).show();
-                                } else {
-                                    nextActivity(SettingUpActivity.class);
-                                }
-                            } else {
-                                Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
+                        isUserSetUp();
                     } else {
                         // TODO: user has failed to log in, what next?
-                        String errorMessage = task.getException().getMessage();
-                        Toast.makeText(getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),
+                                getString(R.string.error_auth_failed),
+                                Toast.LENGTH_SHORT).show();
                     }
 
                     loginProgressBar.setVisibility(View.INVISIBLE);
@@ -145,31 +136,29 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return valid;
     }
 
-    void nextActivity(Class nextActivity) {
-        startActivity(new Intent(getApplicationContext(), nextActivity));
-    }
+    void isUserSetUp() {
+        FirebaseUser user = this.mAuth.getCurrentUser();
+        if (user != null) {
+            DocumentReference docRef = this.firebaseDatabase.collection(
+                    DBFields.USER_INFO_COLLECTION)
+                    .document(user.getUid());
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        this.currentUser = mAuth.getCurrentUser();
-        if (this.currentUser != null) {
-            DocumentReference docRef = this.firebaseDatabase.collection("user-info").document(this.currentUser.getUid());
             docRef.get().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
-                    DocumentSnapshot document = task.getResult();
-                    if (document.exists()) {
-                        // TODO: go to dashboard, once implemented
-                        Toast.makeText(getApplicationContext(), "No need to set-up, go to dashboard", Toast.LENGTH_LONG).show();
-                    } else {
-                        nextActivity(SettingUpActivity.class);
-                    }
+                    DocumentSnapshot documentResult = docRef.get().getResult();
+                    nextActivity(documentResult != null && documentResult.exists()
+                            ? DashboardActivity.class : SettingUpActivity.class);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Authentication failed.",
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_auth_failed),
                             Toast.LENGTH_SHORT).show();
                 }
             });
         }
+    }
+
+    void nextActivity(Class nextActivity) {
+        startActivity(new Intent(getApplicationContext(), nextActivity));
     }
 
     @Override
@@ -180,10 +169,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.button_login:
                 this.signIn(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
-                break;
-            case R.id.button_login:
-                this.signIn(this.emailEditText.getText().toString(),
-                        this.passwordEditText.getText().toString());
                 break;
             case R.id.text_view_forgot_password:
                 forgotPassword(this.emailEditText.getText().toString());
