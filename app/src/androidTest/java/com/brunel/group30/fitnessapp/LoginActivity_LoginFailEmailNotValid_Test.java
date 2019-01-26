@@ -114,7 +114,7 @@ public class LoginActivity_LoginFailEmailNotValid_Test {
                 allOf(withId(R.id.edit_email), withText(testEmail),
                         childAtPosition(
                                 childAtPosition(
-                                        IsInstanceOf.<View>instanceOf(android.widget.TableLayout.class),
+                                        IsInstanceOf.instanceOf(android.widget.TableLayout.class),
                                         0),
                                 0),
                         isDisplayed()));

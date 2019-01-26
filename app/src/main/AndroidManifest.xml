@@ -20,9 +20,12 @@
 
         <activity
             android:name=".WelcomeActivity"
+            android:label="@string/title_activity_welcome"
             android:noHistory="true" />
 
-        <activity android:name=".LoginActivity" />
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" />
 
         <activity
             android:name=".SplashScreenActivity"

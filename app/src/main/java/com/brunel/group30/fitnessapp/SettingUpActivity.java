@@ -3,7 +3,6 @@ package com.brunel.group30.fitnessapp;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,8 +18,6 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -260,19 +257,11 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
             firebaseDatabase.collection("user-info").document(this.currentUser.getUid())
                     .set(this.userDataHashMap)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-                            // TODO: go to dashboard
-                            Toast.makeText(getApplicationContext(), "DocumentSnapshot successfully written!", Toast.LENGTH_LONG).show();
-                        }
+                    .addOnSuccessListener(aVoid -> {
+                        // TODO: go to dashboard
+                        Toast.makeText(getApplicationContext(), "DocumentSnapshot successfully written!", Toast.LENGTH_LONG).show();
                     })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(getApplicationContext(), "Error writing document", Toast.LENGTH_LONG).show();
-                        }
-                    });
+                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error writing document", Toast.LENGTH_LONG).show());
         }
     }
 

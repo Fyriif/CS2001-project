@@ -3,11 +3,49 @@
     <option name="myName" value="Project Default" />
     <inspection_tool class="AndroidLintGradleCompatible" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="Annotator" enabled="false" level="ERROR" enabled_by_default="false" />
+    <inspection_tool class="CheckEmptyScriptTag" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="CheckValidXmlInScriptTagBody" enabled="false" level="ERROR" enabled_by_default="false" />
     <inspection_tool class="GrUnnecessaryPublicModifier" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="GrUnnecessarySemicolon" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="GroovyUnnecessaryContinue" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="GroovyUnnecessaryReturn" enabled="true" level="ERROR" enabled_by_default="true" />
-    <inspection_tool class="RedundantCast" enabled="true" level="ERROR" enabled_by_default="true" />
+    <inspection_tool class="HtmlExtraClosingTag" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="HtmlMissingClosingTag" enabled="false" level="INFORMATION" enabled_by_default="false" />
+    <inspection_tool class="HtmlUnknownAnchorTarget" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="HtmlUnknownAttribute" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="myValues">
+        <value>
+          <list size="0" />
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownBooleanAttribute" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="HtmlUnknownTag" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="myValues">
+        <value>
+          <list size="6">
+            <item index="0" class="java.lang.String" itemvalue="nobr" />
+            <item index="1" class="java.lang.String" itemvalue="noembed" />
+            <item index="2" class="java.lang.String" itemvalue="comment" />
+            <item index="3" class="java.lang.String" itemvalue="noscript" />
+            <item index="4" class="java.lang.String" itemvalue="embed" />
+            <item index="5" class="java.lang.String" itemvalue="script" />
+          </list>
+        </value>
+      </option>
+      <option name="myCustomValuesEnabled" value="true" />
+    </inspection_tool>
+    <inspection_tool class="HtmlUnknownTarget" enabled="false" level="WARNING" enabled_by_default="false" />
+    <inspection_tool class="InconsistentLineSeparators" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="LongLine" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="ProblematicWhitespace" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="RedundantSuppression" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="RequiredAttributes" enabled="false" level="WARNING" enabled_by_default="false">
+      <option name="myAdditionalRequiredHtmlAttributes" value="" />
+    </inspection_tool>
+    <inspection_tool class="SSBasedInspection" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="TodoComment" enabled="true" level="WARNING" enabled_by_default="true" />
     <inspection_tool class="UnnecessaryBreak" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnnecessaryContinue" enabled="true" level="ERROR" enabled_by_default="true" />
     <inspection_tool class="UnnecessaryVariable" enabled="true" level="ERROR" enabled_by_default="true" />
