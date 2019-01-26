@@ -8,6 +8,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +32,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private EditText emailEditText;
     private EditText passwordEditText;
+    private TextView forgotPassTextView;
 
     private ProgressBar loginProgressBar;
 
@@ -43,7 +45,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         this.emailEditText = findViewById(R.id.edit_email);
         this.passwordEditText = findViewById(R.id.edit_password);
-      
+        this.forgotPassTextView = findViewById(R.id.text_view_forgot_password);
+        this.forgotPassTextView.setOnClickListener(this);
+
         findViewById(R.id.button_sign_up).setOnClickListener(this);
         findViewById(R.id.button_login).setOnClickListener(this);
 
@@ -115,6 +119,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 });
     }
 
+    void forgotPassword(String email) {
+        if (!email.isEmpty()) {
+            this.mAuth.sendPasswordResetEmail(email);
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.info_password_reset_email_sent),
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     boolean validateForm() {
         boolean valid = true;
@@ -179,9 +192,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_sign_up:
-                this.createAccount(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
+                this.createAccount(this.emailEditText.getText().toString(),
+                        this.passwordEditText.getText().toString());
+                break;
             case R.id.button_login:
-                this.signIn(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
+                this.signIn(this.emailEditText.getText().toString(),
+                        this.passwordEditText.getText().toString());
+                break;
+            case R.id.text_view_forgot_password:
+                forgotPassword(this.emailEditText.getText().toString());
+                break;
         }
     }
 }

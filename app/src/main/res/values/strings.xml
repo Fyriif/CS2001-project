@@ -56,4 +56,6 @@
     <string name="error_option_is_required">One of the options must be selected</string>
     <string name="error_enter_valid_email">Please enter a valid email address</string>
     <string name="error_password_weak">Password is weak, password must be at least 6 characters in length and contain at least one upper case and lower case, along with a number and symbol</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="info_password_reset_email_sent">Password reset email has been sent</string>
 </resources>
