@@ -56,43 +56,40 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     void createAccount(String email, String password) {
         if (isLoginValid()) {
-            return;
+            this.loginProgressBar.setVisibility(View.VISIBLE);
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            nextActivity(SettingUpActivity.class);
+                        } else {
+                            // TODO: user has failed to create account, what next?
+                            Toast.makeText(getApplicationContext(),
+                                    getString(R.string.error_auth_failed),
+                                    Toast.LENGTH_SHORT).show();
+                        }
 
+                    });
+            loginProgressBar.setVisibility(View.INVISIBLE);
         }
-
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        nextActivity(SettingUpActivity.class);
-                    } else {
-                        // TODO: user has failed to create account, what next?
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.error_auth_failed),
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                });
     }
 
     void signIn(String email, String password) {
         if (isLoginValid()) {
-            return;
+            this.loginProgressBar.setVisibility(View.VISIBLE);
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, task -> {
+                        if (task.isSuccessful()) {
+                            isUserSetUp();
+                        } else {
+                            // TODO: user has failed to log in, what next?
+                            Toast.makeText(getApplicationContext(),
+                                    getString(R.string.error_auth_failed),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+
+                        loginProgressBar.setVisibility(View.INVISIBLE);
+                    });
         }
-
-        this.loginProgressBar.setVisibility(View.VISIBLE);
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, task -> {
-                    if (task.isSuccessful()) {
-                        isUserSetUp();
-                    } else {
-                        // TODO: user has failed to log in, what next?
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.error_auth_failed),
-                                Toast.LENGTH_SHORT).show();
-                    }
-
-                    loginProgressBar.setVisibility(View.INVISIBLE);
-                });
     }
 
     void forgotPassword(String email) {
@@ -125,7 +122,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             this.passwordEditText.setError(null);
         }
 
-        return this.emailEditText.getError() != null && this.emailEditText.getError() != null;
+        return this.emailEditText.getError() == null && this.passwordEditText.getError() == null;
     }
 
     void isUserSetUp() {
@@ -157,10 +154,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_sign_up:
-                this.createAccount(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
-                break;
-            case R.id.button_login:
-                this.signIn(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
+                this.createAccount(this.emailEditText.getText().toString(),
+                        this.passwordEditText.getText().toString());
                 break;
             case R.id.text_view_forgot_password:
                 forgotPassword(this.emailEditText.getText().toString());
