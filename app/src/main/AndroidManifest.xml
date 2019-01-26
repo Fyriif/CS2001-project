@@ -16,11 +16,12 @@
 
         <activity
             android:name=".WelcomeActivity"
+            android:label="@string/title_activity_welcome"
             android:noHistory="true" />
 
         <activity
             android:name=".LoginActivity"
-            android:noHistory="true" />
+            android:label="@string/title_activity_login" />
 
         <activity
             android:name=".SplashScreenActivity"
@@ -34,12 +35,8 @@
 
         <activity
             android:name=".SettingUpActivity"
-            android:noHistory="true" />
-
-        <activity
-            android:name=".DashboardActivity"
-            android:noHistory="true" />
-
+            android:label="@string/title_activity_sign_up">
+        </activity>
     </application>
 
 </manifest>
