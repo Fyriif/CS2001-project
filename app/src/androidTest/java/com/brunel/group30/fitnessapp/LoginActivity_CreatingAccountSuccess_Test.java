@@ -110,6 +110,9 @@ public class LoginActivity_CreatingAccountSuccess_Test {
 
         if (mAuth.getCurrentUser() == null) {
             fail("User " + randomEmail + " failed to be created");
+        } else {
+            mAuth.getCurrentUser().delete();
+            mAuth.signOut();
         }
     }
 

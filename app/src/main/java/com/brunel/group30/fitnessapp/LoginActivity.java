@@ -2,7 +2,6 @@ package com.brunel.group30.fitnessapp;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.view.View;
@@ -11,9 +10,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -62,19 +58,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            nextActivity(SettingUpActivity.class);
-                        } else {
-                            // TODO: user has failed to create account, what next?
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        nextActivity(SettingUpActivity.class);
+                    } else {
+                        // TODO: user has failed to create account, what next?
+                        Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
                     }
+
                 });
     }
 
@@ -85,37 +78,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         this.loginProgressBar.setVisibility(View.VISIBLE);
         mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // TODO: user has logged in, go to dashboard/set-up
-                            currentUser = mAuth.getCurrentUser();
-                            DocumentReference docRef = firebaseDatabase.collection("user-info").document(currentUser.getUid());
-                            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        DocumentSnapshot document = task.getResult();
-                                        if (document.exists()) {
-                                            Toast.makeText(getApplicationContext(), "No need to set-up, go to dashboard", Toast.LENGTH_LONG).show();
-                                        } else {
-                                            nextActivity(SettingUpActivity.class);
-                                        }
-                                    } else {
-                                        Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                                Toast.LENGTH_SHORT).show();
-                                    }
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // TODO: user has logged in, go to dashboard/set-up
+                        currentUser = mAuth.getCurrentUser();
+                        DocumentReference docRef = firebaseDatabase.collection("user-info").document(currentUser.getUid());
+                        docRef.get().addOnCompleteListener(task1 -> {
+                            if (task1.isSuccessful()) {
+                                DocumentSnapshot document = task1.getResult();
+                                if (document.exists()) {
+                                    Toast.makeText(getApplicationContext(), "No need to set-up, go to dashboard", Toast.LENGTH_LONG).show();
+                                } else {
+                                    nextActivity(SettingUpActivity.class);
                                 }
-                            });
-                        } else {
-                            // TODO: user has failed to log in, what next?
-                            String errorMessage = task.getException().getMessage();
-                            Toast.makeText(getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
-                        }
-
-                        loginProgressBar.setVisibility(View.INVISIBLE);
+                            } else {
+                                Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    } else {
+                        // TODO: user has failed to log in, what next?
+                        String errorMessage = task.getException().getMessage();
+                        Toast.makeText(getApplicationContext(), "Error: " + errorMessage, Toast.LENGTH_LONG).show();
                     }
+
+                    loginProgressBar.setVisibility(View.INVISIBLE);
                 });
     }
 
@@ -168,21 +155,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         this.currentUser = mAuth.getCurrentUser();
         if (this.currentUser != null) {
             DocumentReference docRef = this.firebaseDatabase.collection("user-info").document(this.currentUser.getUid());
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            // TODO: go to dashboard, once implemented
-                            Toast.makeText(getApplicationContext(), "No need to set-up, go to dashboard", Toast.LENGTH_LONG).show();
-                        } else {
-                            nextActivity(SettingUpActivity.class);
-                        }
+            docRef.get().addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        // TODO: go to dashboard, once implemented
+                        Toast.makeText(getApplicationContext(), "No need to set-up, go to dashboard", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
+                        nextActivity(SettingUpActivity.class);
                     }
+                } else {
+                    Toast.makeText(getApplicationContext(), "Authentication failed.",
+                            Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -192,8 +176,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button_sign_up:
-                this.createAccount(this.emailEditText.getText().toString(),
-                        this.passwordEditText.getText().toString());
+                this.createAccount(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
+                break;
+            case R.id.button_login:
+                this.signIn(this.emailEditText.getText().toString(), this.passwordEditText.getText().toString());
                 break;
             case R.id.button_login:
                 this.signIn(this.emailEditText.getText().toString(),

@@ -1,7 +1,10 @@
 package com.brunel.group30.fitnessapp;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -263,6 +266,18 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                     })
                     .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error writing document", Toast.LENGTH_LONG).show());
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.title_sign_out))
+                .setMessage(getString(R.string.confirm_sign_out))
+                .setNegativeButton(getString(R.string.option_cancel), null)
+                .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
+                    mAuth.signOut();
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }).create().show();
     }
 
     /**
