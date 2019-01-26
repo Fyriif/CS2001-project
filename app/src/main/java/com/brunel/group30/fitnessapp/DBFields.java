@@ -1,6 +1,9 @@
 package com.brunel.group30.fitnessapp;
 
 public class DBFields {
+    static final String USER_INFO_COLLECTION = "user-info";
+
+
     static final String FORENAME = "forename";
     static final String SURNAME = "surname";
     static final String DOB = "dob";

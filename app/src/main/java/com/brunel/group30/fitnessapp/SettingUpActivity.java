@@ -1,9 +1,7 @@
 package com.brunel.group30.fitnessapp;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -198,19 +195,12 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
     public void enterDateOfBirth(View v) {
         this.dobEditText = v.findViewById(R.id.edit_text_dob);
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @SuppressLint("SimpleDateFormat")
+        DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, monthOfYear);
+            calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, monthOfYear);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                dobEditText.setText(new SimpleDateFormat(((SimpleDateFormat) dateFormat).toLocalizedPattern()).format(calendar.getTime()));
-            }
-
+            dobEditText.setText(new SimpleDateFormat(((SimpleDateFormat) dateFormat).toLocalizedPattern()).format(calendar.getTime()));
         };
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, date, calendar
