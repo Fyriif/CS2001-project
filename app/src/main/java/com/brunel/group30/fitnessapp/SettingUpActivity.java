@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -23,13 +24,32 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
+import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class SettingUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
+    /**
+     * The {@link ViewPager} that will host the section contents.
+     */
+    private CustomViewPager mViewPager;
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore firebaseDatabase;
+    FirebaseUser currentUser;
+
+    Map<String, Object> dataToSendToDB;
+
+    private RangeTimePickerDialog rangeTimePickerDialog;
+    private Calendar calendar;
+    private EditText dobEditText;
+    private Map<String, Map<String, String>> workOutDayTimes;
+
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -38,31 +58,12 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
-    private SectionsPagerAdapter mSectionsPagerAdapter;
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
-    private CustomViewPager mViewPager;
-
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
-    private FirebaseFirestore firebaseDatabase;
-
-    Map<String, Object> userDataHashMap;
-
-    private RangeTimePickerDialog rangeTimePickerDialog;
-    private Calendar calendar;
-    private Format dateFormat;
-    private EditText dobEditText;
-    private Map<String, Map<String, String>> workOutDayTimes;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_up);
-        // Create the adapter that will return a fragment for each of the three
-        // primary sections of the activity.
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+
+        SectionsPagerAdapter mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = findViewById(R.id.view_pager_sign_up);
@@ -73,10 +74,13 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         this.mAuth = FirebaseAuth.getInstance();
         this.currentUser = this.mAuth.getCurrentUser();
 
-        this.userDataHashMap = new HashMap<>();
+        if (currentUser == null) {
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        }
+
+        this.dataToSendToDB = new HashMap<>();
 
         this.calendar = Calendar.getInstance();
-        this.dateFormat = android.text.format.DateFormat.getDateFormat(getApplicationContext());
 
         this.workOutDayTimes = new HashMap<>();
     }
@@ -88,33 +92,31 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 EditText surnameEditText = findViewById(R.id.edit_text_surname);
                 EditText dobEditText = findViewById(R.id.edit_text_dob);
 
-                boolean forenameValid = false, surnameValid = false, dobValid = false;
-
                 if (forenameEditText.getText().toString().isEmpty()) {
                     forenameEditText.setError(getString(R.string.error_field_empty));
                 } else {
                     forenameEditText.setError(null);
-                    forenameValid = true;
                 }
 
                 if (surnameEditText.getText().toString().isEmpty()) {
                     surnameEditText.setError(getString(R.string.error_field_empty));
                 } else {
                     surnameEditText.setError(null);
-                    surnameValid = true;
                 }
 
                 if (dobEditText.getText().toString().isEmpty()) {
                     dobEditText.setError(getString(R.string.error_field_empty));
                 } else {
                     dobEditText.setError(null);
-                    dobValid = true;
                 }
 
-                if (forenameValid && surnameValid && dobValid) {
-                    userDataHashMap.put(DBFields.FORENAME, forenameEditText.getText());
-                    userDataHashMap.put(DBFields.SURNAME, surnameEditText.getText());
-                    userDataHashMap.put(DBFields.DOB, dobEditText.getText());
+                if (forenameEditText.getError() == null &&
+                        surnameEditText.getError() == null &&
+                        dobEditText.getError() == null) {
+
+                    dataToSendToDB.put(DBFields.FORENAME, forenameEditText.getText().toString());
+                    dataToSendToDB.put(DBFields.SURNAME, surnameEditText.getText().toString());
+
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -124,10 +126,13 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 RadioButton maleRadioButton = findViewById(R.id.button_sex_male);
                 RadioButton femaleRadioButton = findViewById(R.id.button_sex_female);
 
-                if (!maleRadioButton.isChecked() && !femaleRadioButton.isChecked()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
+                if (!maleRadioButton.isChecked()
+                        && !femaleRadioButton.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_option_is_required),
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    userDataHashMap.put(DBFields.GENDER, maleRadioButton.isChecked());
+                    dataToSendToDB.put(DBFields.GENDER, maleRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -136,7 +141,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             case 3:
                 CustomNumberPicker ageNumberPicker = findViewById(R.id.number_picker_height);
 
-                userDataHashMap.put(DBFields.HEIGHT, ageNumberPicker.getValue());
+                dataToSendToDB.put(DBFields.HEIGHT, ageNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -144,7 +149,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             case 4:
                 CustomNumberPicker weightNumberPicker = findViewById(R.id.number_picker_weight);
 
-                userDataHashMap.put(DBFields.WEIGHT, weightNumberPicker.getValue());
+                dataToSendToDB.put(DBFields.WEIGHT, weightNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -153,10 +158,13 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 RadioButton yesDisabilityRadioButton = findViewById(R.id.button_disability_yes);
                 RadioButton noDisabilityRadioButton = findViewById(R.id.button_disability_no);
 
-                if (!yesDisabilityRadioButton.isChecked() && !noDisabilityRadioButton.isChecked()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
+                if (!yesDisabilityRadioButton.isChecked()
+                        && !noDisabilityRadioButton.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_option_is_required),
+                            Toast.LENGTH_SHORT).show();
                 } else {
-                    userDataHashMap.put(DBFields.DISABILITY, yesDisabilityRadioButton.isChecked());
+                    dataToSendToDB.put(DBFields.DISABILITY, yesDisabilityRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -170,14 +178,15 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
                 if (!gymLocationCheckBox.isChecked() && !homeLocationCheckBox.isChecked() &&
                         !parkLocationCheckBox.isChecked()) {
-                    Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required),
+                            Toast.LENGTH_SHORT).show();
                 } else {
                     HashMap<String, Boolean> locationHashMap = new HashMap<>();
                     locationHashMap.put(DBFields.LOCATION_GYM, gymLocationCheckBox.isChecked());
                     locationHashMap.put(DBFields.LOCATION_HOME, homeLocationCheckBox.isChecked());
                     locationHashMap.put(DBFields.LOCATION_PARK, parkLocationCheckBox.isChecked());
 
-                    userDataHashMap.put(DBFields.LOCATION, locationHashMap);
+                    dataToSendToDB.put(DBFields.LOCATION, locationHashMap);
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -200,7 +209,11 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             calendar.set(Calendar.MONTH, monthOfYear);
             calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-            dobEditText.setText(new SimpleDateFormat(((SimpleDateFormat) dateFormat).toLocalizedPattern()).format(calendar.getTime()));
+            dobEditText.setText(DateFormat.getDateInstance(DateFormat.LONG)
+                    .format(calendar.getTime()));
+
+            dataToSendToDB.put(DBFields.DOB, new SimpleDateFormat("yyyy-MM-dd",
+                    Locale.getDefault()).format(calendar.getTime()));
         };
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, date, calendar
@@ -215,12 +228,16 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
         if (dayCheckBox.isChecked()) {
             this.rangeTimePickerDialog = new RangeTimePickerDialog();
-            this.rangeTimePickerDialog.newInstance(R.color.colorAccent, R.color.White, R.color.colorPrimary, R.color.colorAccent, false);
+            this.rangeTimePickerDialog.newInstance(R.color.colorAccent, R.color.White,
+                    R.color.colorPrimary, R.color.colorAccent, false);
             this.rangeTimePickerDialog.setValidateRange(true);
-            this.rangeTimePickerDialog.setInitialOpenedTab(RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
-            this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toUpperCase())));
+            this.rangeTimePickerDialog.setInitialOpenedTab(
+                    RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
+            this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Days.valueOf(
+                    dayCheckBox.getText().toString().toUpperCase())));
         } else {
-            this.workOutDayTimes.remove(String.valueOf(Days.valueOf(dayCheckBox.getText().toString().toLowerCase())));
+            this.workOutDayTimes.remove(String.valueOf(Days.valueOf(
+                    dayCheckBox.getText().toString().toLowerCase())));
         }
     }
 
@@ -241,20 +258,24 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         CheckBox saturdayCheckBox = findViewById(R.id.button_day_saturday);
         CheckBox sundayCheckBox = findViewById(R.id.button_day_sunday);
 
-        if (!mondayCheckBox.isChecked() && !tuesdayCheckBox.isChecked() && !wednesdayCheckBox.isChecked()
+        if (!mondayCheckBox.isChecked() && !tuesdayCheckBox.isChecked()
+                && !wednesdayCheckBox.isChecked()
                 && !thursdayCheckBox.isChecked() && !fridayCheckBox.isChecked()
                 && !saturdayCheckBox.isChecked() && !sundayCheckBox.isChecked()) {
-            Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required),
+                    Toast.LENGTH_SHORT).show();
         } else {
-            this.userDataHashMap.put(DBFields.WORK_OUT_DAYS, this.workOutDayTimes);
+            this.dataToSendToDB.put(DBFields.WORK_OUT_DAYS, this.workOutDayTimes);
 
-            firebaseDatabase.collection("user-info").document(this.currentUser.getUid())
-                    .set(this.userDataHashMap)
-                    .addOnSuccessListener(aVoid -> {
-                        // TODO: go to dashboard
-                        Toast.makeText(getApplicationContext(), "DocumentSnapshot successfully written!", Toast.LENGTH_LONG).show();
-                    })
-                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error writing document", Toast.LENGTH_LONG).show());
+            firebaseDatabase.collection(DBFields.USER_INFO_COLLECTION)
+                    .document(currentUser.getUid())
+                    .set(this.dataToSendToDB)
+                    .addOnSuccessListener(aVoid ->
+                            startActivity(new Intent(getApplicationContext(),
+                                    DashboardActivity.class)))
+                    // TODO: improve error here
+                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),
+                            "Error writing document", Toast.LENGTH_LONG).show());
         }
     }
 
@@ -333,15 +354,19 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
 
-            View rootView = inflater.inflate(getArguments().getInt(ARG_SECTION_LAYOUT_RESOURCE_ID), container, false);
+            View rootView = inflater.inflate(getArguments() != null ?
+                            getArguments().getInt(ARG_SECTION_LAYOUT_RESOURCE_ID) : 0,
+                    container, false);
 
             TextView progressNumTextView = rootView.findViewById(R.id.text_view_progress_num);
             String progressText = progressNumTextView.getText().toString();
-            progressText = progressText.replaceFirst("X", String.valueOf(getArguments().getInt("SECTION_NUMBER")))
-                    .replaceFirst("X", String.valueOf(getArguments().getInt("TOTAL_FRAGMENTS")));
+            progressText = progressText.replaceFirst("X",
+                    String.valueOf(getArguments().getInt("SECTION_NUMBER")))
+                    .replaceFirst("X", String.valueOf(
+                            getArguments().getInt("TOTAL_FRAGMENTS")));
             progressNumTextView.setText(progressText);
 
             return rootView;
