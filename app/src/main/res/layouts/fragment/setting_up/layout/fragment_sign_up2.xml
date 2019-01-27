@@ -38,7 +38,7 @@
             android:layout_marginBottom="25dp"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/sign_up_disabilities"
+            android:text="@string/sign_up_title_sex"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
 
@@ -50,28 +50,28 @@
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/button_disability_yes"
+                android:id="@+id/button_sex_male"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_yes"
+                android:text="@string/btn_male"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <RadioButton
-                android:id="@+id/button_disability_no"
+                android:id="@+id/button_sex_female"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_no"
+                android:text="@string/btn_female"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp"
@@ -87,13 +87,12 @@
                 android:text="@string/btn_prefer_not_to_say"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="18sp" />
-
         </RadioGroup>
 
     </LinearLayout>
 
     <include
-        layout="@layout/fragment_sign_up_bottom_btn"
+        layout="@layout/fragment_next_back_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|end" />

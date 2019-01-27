@@ -21,6 +21,18 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    sourceSets {
+        main {
+            res.srcDirs =
+                    [
+                            'src/main/res/layouts/activity',
+                            'src/main/res/layouts/fragment',
+                            'src/main/res/layouts/fragment/setting_up',
+                            'src/main/res/layouts/dialog',
+                            'src/main/res'
+                    ]
+        }
+    }
     lintOptions {
         htmlReport true
         htmlOutput file("lint-report.html")
