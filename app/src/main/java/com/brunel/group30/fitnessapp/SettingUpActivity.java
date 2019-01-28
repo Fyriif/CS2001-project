@@ -157,9 +157,10 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             case 5:
                 RadioButton yesDisabilityRadioButton = findViewById(R.id.button_disability_yes);
                 RadioButton noDisabilityRadioButton = findViewById(R.id.button_disability_no);
-
+                RadioButton preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
                 if (!yesDisabilityRadioButton.isChecked()
-                        && !noDisabilityRadioButton.isChecked()) {
+                        && !noDisabilityRadioButton.isChecked()
+                        && !preferNotToSayRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(),
                             getString(R.string.error_option_is_required),
                             Toast.LENGTH_SHORT).show();
