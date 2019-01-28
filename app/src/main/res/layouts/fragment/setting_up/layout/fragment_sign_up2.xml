@@ -92,6 +92,7 @@
     </LinearLayout>
 
     <include
+        android:id="@+id/button_disability_prefer_not_to_say"
         layout="@layout/fragment_next_back_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

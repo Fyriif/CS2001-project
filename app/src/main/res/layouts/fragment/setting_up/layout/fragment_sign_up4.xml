@@ -61,6 +61,7 @@
             android:orientation="vertical">
 
             <RadioButton
+                android:id="@+id/button_disability_prefer_not_to_say"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"

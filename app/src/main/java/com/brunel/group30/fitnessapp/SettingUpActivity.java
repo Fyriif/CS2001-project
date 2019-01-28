@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -125,14 +126,17 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             case 2:
                 RadioButton maleRadioButton = findViewById(R.id.button_sex_male);
                 RadioButton femaleRadioButton = findViewById(R.id.button_sex_female);
+                RadioButton preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
 
                 if (!maleRadioButton.isChecked()
-                        && !femaleRadioButton.isChecked()) {
+                        && !femaleRadioButton.isChecked()
+                && !preferNotToSayRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(),
                             getString(R.string.error_option_is_required),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    dataToSendToDB.put(DBFields.GENDER, maleRadioButton.isChecked());
+                    dataToSendToDB.put(DBFields.WEIGHT, preferNotToSayRadioButton.isChecked() ?
+                            "null" : maleRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -148,8 +152,11 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
             case 4:
                 CustomNumberPicker weightNumberPicker = findViewById(R.id.number_picker_weight);
+                preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
 
-                dataToSendToDB.put(DBFields.WEIGHT, weightNumberPicker.getValue());
+                dataToSendToDB.put(DBFields.WEIGHT, preferNotToSayRadioButton.isChecked() ?
+                        "null" : Integer.valueOf(weightNumberPicker.getValue()));
+
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -157,7 +164,8 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             case 5:
                 RadioButton yesDisabilityRadioButton = findViewById(R.id.button_disability_yes);
                 RadioButton noDisabilityRadioButton = findViewById(R.id.button_disability_no);
-                RadioButton preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
+                preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
+
                 if (!yesDisabilityRadioButton.isChecked()
                         && !noDisabilityRadioButton.isChecked()
                         && !preferNotToSayRadioButton.isChecked()) {
@@ -202,6 +210,8 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
     public void previousFragment(View v) {
         this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() - 1);
     }
+
+
 
     public void enterDateOfBirth(View v) {
         this.dobEditText = v.findViewById(R.id.edit_text_dob);
