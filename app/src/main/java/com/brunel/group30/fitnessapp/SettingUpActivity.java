@@ -75,9 +75,12 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         this.mAuth = FirebaseAuth.getInstance();
         this.currentUser = this.mAuth.getCurrentUser();
 
-        if (currentUser == null) {
+        if (this.currentUser == null) {
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
+
+        Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in)
+                        + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
         this.dataToSendToDB = new HashMap<>();
 
