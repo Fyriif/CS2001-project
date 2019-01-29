@@ -13,15 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity
+            android:name=".DashboardActivity"
+            android:noHistory="true" />
         <activity
             android:name=".WelcomeActivity"
             android:noHistory="true" />
-
         <activity
             android:name=".LoginActivity"
             android:noHistory="true" />
-
         <activity
             android:name=".SplashScreenActivity"
             android:noHistory="true">
@@ -31,15 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".SettingUpActivity"
             android:noHistory="true" />
-
-        <activity
-            android:name=".DashboardActivity"
-            android:noHistory="true" />
-
     </application>
 
 </manifest>
