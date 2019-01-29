@@ -86,8 +86,9 @@
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
                 android:text="@string/btn_prefer_not_to_say"
+                android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
-                android:textSize="18sp" />
+                android:textSize="20sp" />
 
         </RadioGroup>
 

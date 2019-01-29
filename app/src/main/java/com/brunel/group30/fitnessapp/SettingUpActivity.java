@@ -79,7 +79,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             startActivity(new Intent(getApplicationContext(), LoginActivity.class));
         }
 
-        Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in)
+        Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in) + ": "
                         + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
         this.dataToSendToDB = new HashMap<>();
@@ -133,12 +133,12 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
                 if (!maleRadioButton.isChecked()
                         && !femaleRadioButton.isChecked()
-                && !preferNotToSayRadioButton.isChecked()) {
+                        && !preferNotToSayRadioButton.isChecked()) {
                     Toast.makeText(getApplicationContext(),
                             getString(R.string.error_option_is_required),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    dataToSendToDB.put(DBFields.WEIGHT, preferNotToSayRadioButton.isChecked() ?
+                    dataToSendToDB.put(DBFields.GENDER, preferNotToSayRadioButton.isChecked() ?
                             "null" : maleRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }

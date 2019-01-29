@@ -78,8 +78,7 @@
                     android:textColor="#333333"
                     android:textColorHint="#d8d8d8"
                     android:textCursorDrawable="@null"
-                    android:textSize="20sp"
-                    android:autofillHints="" />
+                    android:textSize="20sp" />
             </TableRow>
 
             <TableRow
