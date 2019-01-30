@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BFit Tracker</string>
     <string name="action_settings">Settings</string>
-    <string name="intro_text">Use this app to manage your work out time, we give you high quality time plan which fits your daily busy life and manage your healthy lifestyle. </string>
+    <string name="intro_text">Use this app to manage your work out time, included is a high quality time plan which fits your daily, busy life as well as help you maintain a healthy lifestyle. </string>
     <string name="btn_start">Start</string>
     <string name="btn_next">Next</string>
     <string name="btn_cancel">Cancel</string>
@@ -52,7 +52,7 @@
     <string name="error_field_empty">Field cannot be left empty</string>
     <string name="error_option_is_required">One of the options must be selected</string>
     <string name="error_enter_valid_email">Please enter a valid email address</string>
-    <string name="error_password_weak">Password is weak, password must be at least 6 characters in length and contain at least one upper case and lower case, along with a number and symbol</string>
+    <string name="error_password_weak">Password is weak, password must be at least 6 characters in length and contain at least one upper case and lower case </string>
     <string name="title_sign_out">Sign out</string>
     <string name="confirm_sign_out">Are you sure you want to sign out?</string>
     <string name="option_cancel">Cancel</string>
