@@ -65,5 +65,4 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_my_account">My Account</string>
     <string name="title_calendar">Calendar</string>
-    <string name="info_user_logged_in">User logged in</string>
 </resources>
