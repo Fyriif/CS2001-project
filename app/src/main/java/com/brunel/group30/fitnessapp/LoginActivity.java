@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(
-            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])(?=.*[@#$%^&+=]).{6,}$"
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$"
     );
 
     private FirebaseAuth mAuth;
