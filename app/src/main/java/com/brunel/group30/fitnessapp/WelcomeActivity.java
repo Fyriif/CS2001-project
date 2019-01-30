@@ -19,6 +19,6 @@ public class WelcomeActivity extends AppCompatActivity {
 
         Button startBtn = findViewById(R.id.button_start);
         startBtn.setOnClickListener(view -> startActivity(new Intent(getApplicationContext(),
-                DashboardActivity.class)));
+                LoginActivity.class)));
     }
 }

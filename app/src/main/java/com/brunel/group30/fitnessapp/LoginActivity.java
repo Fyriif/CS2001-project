@@ -37,6 +37,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        this.mAuth = FirebaseAuth.getInstance();
+        this.mAuth.signOut();
+
         this.loginProgressBar = findViewById(R.id.progress_bar_login);
 
         this.emailEditText = findViewById(R.id.edit_email);
@@ -47,9 +50,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         findViewById(R.id.button_sign_up).setOnClickListener(this);
         findViewById(R.id.button_login).setOnClickListener(this);
-
-        this.mAuth = FirebaseAuth.getInstance();
-        this.mAuth.signOut();
 
         this.firebaseDatabase = FirebaseFirestore.getInstance();
     }
