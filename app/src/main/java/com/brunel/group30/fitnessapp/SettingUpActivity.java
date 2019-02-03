@@ -25,9 +25,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
+import org.joda.time.DateTime;
+
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -214,8 +217,6 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() - 1);
     }
 
-
-
     public void enterDateOfBirth(View v) {
         this.dobEditText = v.findViewById(R.id.edit_text_dob);
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
@@ -247,6 +248,9 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             this.rangeTimePickerDialog.setValidateRange(true);
             this.rangeTimePickerDialog.setInitialOpenedTab(
                     RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
+            DateTime endTime = new DateTime().plusHours(1);
+            this.rangeTimePickerDialog.setInitialEndClock(endTime.getHourOfDay(),
+                    endTime.getMinuteOfDay());
             this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Days.valueOf(
                     dayCheckBox.getText().toString().toUpperCase())));
         } else {

@@ -90,15 +90,15 @@ public class LoginActivity_LoginFailPasswordNotValid_Test {
                         isDisplayed()));
         appCompatPasswordEditTextType.perform(replaceText(testPassword), closeSoftKeyboard());
 
-        ViewInteraction appCompatSignUpButtonClick = onView(
-                allOf(withId(R.id.button_sign_up), withText("Sign Up"),
+        ViewInteraction appCompatLoginButtonClick = onView(
+                allOf(withId(R.id.button_login),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.RelativeLayout")),
                                         2),
-                                2),
+                                0),
                         isDisplayed()));
-        appCompatSignUpButtonClick.perform(click());
+        appCompatLoginButtonClick.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:

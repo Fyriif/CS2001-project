@@ -35,11 +35,12 @@ import static org.hamcrest.Matchers.is;
 public class LoginActivity_LoginSuccess_Test {
 
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityTestRule = new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<LoginActivity> mActivityTestRule =
+            new ActivityTestRule<>(LoginActivity.class);
 
 
     @Test
-    public void loginActivity_CreatingAccount_Test() {
+    public void loginActivity_LoginSuccess_Test() {
         FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
 
@@ -85,15 +86,15 @@ public class LoginActivity_LoginSuccess_Test {
                         isDisplayed()));
         appCompatPasswordEditTextType.perform(replaceText("adminAdmin123#"), closeSoftKeyboard());
 
-        ViewInteraction appCompatSignUpButtonClick = onView(
-                allOf(withId(R.id.button_sign_up), withText("Sign Up"),
+        ViewInteraction appCompatLoginButtonClick = onView(
+                allOf(withId(R.id.button_login),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.RelativeLayout")),
                                         2),
-                                2),
+                                0),
                         isDisplayed()));
-        appCompatSignUpButtonClick.perform(click());
+        appCompatLoginButtonClick.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -108,6 +109,8 @@ public class LoginActivity_LoginSuccess_Test {
         if (mAuth.getCurrentUser() == null) {
             fail("User " + testEmail + " failed to login");
         }
+
+        mAuth.signOut();
 
         // TODO: add check of what activity has appeared
     }
