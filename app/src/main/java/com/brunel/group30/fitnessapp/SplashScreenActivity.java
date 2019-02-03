@@ -6,7 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
-import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
@@ -23,7 +23,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FastSave.init(getApplicationContext());
         setContentView(R.layout.activity_splash_screen);
 
         this.currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -38,7 +37,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     void isUserSetUp() {
         DocumentReference docRef = this.firebaseDatabase.collection(
-                DBFields.USER_INFO_COLLECTION)
+                UserInfo.COLLECTION_NAME)
                 .document(this.currentUser.getUid());
 
         docRef.get().addOnCompleteListener(this, task -> {

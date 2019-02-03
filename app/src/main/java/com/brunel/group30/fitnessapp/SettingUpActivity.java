@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -20,6 +19,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brunel.group30.fitnessapp.Enums.Day;
+import com.brunel.group30.fitnessapp.Enums.Location;
+import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,16 +30,15 @@ import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 import org.joda.time.DateTime;
 
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
-public class SettingUpActivity extends AppCompatActivity implements RangeTimePickerDialog.ISelectedTime {
+public class SettingUpActivity extends AppCompatActivity
+        implements RangeTimePickerDialog.ISelectedTime {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -45,14 +46,13 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseDatabase;
-    FirebaseUser currentUser;
+    private FirebaseUser currentUser;
 
-    Map<String, Object> dataToSendToDB;
+    private UserInfo userInfo;
+    private HashMap<String, List<String>> workOutTimes;
 
     private RangeTimePickerDialog rangeTimePickerDialog;
     private Calendar calendar;
-    private EditText dobEditText;
-    private Map<String, Map<String, String>> workOutDayTimes;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -85,11 +85,10 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
         Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in) + ": "
                         + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
-        this.dataToSendToDB = new HashMap<>();
-
+        this.userInfo = new UserInfo();
         this.calendar = Calendar.getInstance();
 
-        this.workOutDayTimes = new HashMap<>();
+        this.workOutTimes = new HashMap<>();
     }
 
     public void nextFragment(View v) {
@@ -121,8 +120,8 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                         surnameEditText.getError() == null &&
                         dobEditText.getError() == null) {
 
-                    dataToSendToDB.put(DBFields.FORENAME, forenameEditText.getText().toString());
-                    dataToSendToDB.put(DBFields.SURNAME, surnameEditText.getText().toString());
+                    this.userInfo.setForename(forenameEditText.getText().toString());
+                    this.userInfo.setSurname(surnameEditText.getText().toString());
 
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
@@ -141,17 +140,16 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                             getString(R.string.error_option_is_required),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    dataToSendToDB.put(DBFields.GENDER, preferNotToSayRadioButton.isChecked() ?
-                            "null" : maleRadioButton.isChecked());
+                    this.userInfo.setIsMale(maleRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
                 break;
 
             case 3:
-                CustomNumberPicker ageNumberPicker = findViewById(R.id.number_picker_height);
+                CustomNumberPicker heightNumberPicker = findViewById(R.id.number_picker_height);
 
-                dataToSendToDB.put(DBFields.HEIGHT, ageNumberPicker.getValue());
+                this.userInfo.setHeight(heightNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -160,9 +158,8 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                 CustomNumberPicker weightNumberPicker = findViewById(R.id.number_picker_weight);
                 preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
 
-                dataToSendToDB.put(DBFields.WEIGHT, preferNotToSayRadioButton.isChecked() ?
-                        "null" : Integer.valueOf(weightNumberPicker.getValue()));
-
+                this.userInfo.setWeight(preferNotToSayRadioButton.isChecked() ?
+                        0 : weightNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -179,7 +176,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                             getString(R.string.error_option_is_required),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    dataToSendToDB.put(DBFields.DISABILITY, yesDisabilityRadioButton.isChecked());
+                    this.userInfo.setIsDisabled(yesDisabilityRadioButton.isChecked());
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -196,12 +193,15 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
                     Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required),
                             Toast.LENGTH_SHORT).show();
                 } else {
-                    HashMap<String, Boolean> locationHashMap = new HashMap<>();
-                    locationHashMap.put(DBFields.LOCATION_GYM, gymLocationCheckBox.isChecked());
-                    locationHashMap.put(DBFields.LOCATION_HOME, homeLocationCheckBox.isChecked());
-                    locationHashMap.put(DBFields.LOCATION_PARK, parkLocationCheckBox.isChecked());
+                    HashMap<String, Boolean> locations = new HashMap<>();
+                    locations.put(String.valueOf(Location.GYM).toLowerCase(),
+                            gymLocationCheckBox.isChecked());
+                    locations.put(String.valueOf(Location.HOME).toLowerCase(),
+                            homeLocationCheckBox.isChecked());
+                    locations.put(String.valueOf(Location.PARK).toLowerCase(),
+                            parkLocationCheckBox.isChecked());
 
-                    dataToSendToDB.put(DBFields.LOCATION, locationHashMap);
+                    this.userInfo.setLocations(locations);
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -218,7 +218,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
     }
 
     public void enterDateOfBirth(View v) {
-        this.dobEditText = v.findViewById(R.id.edit_text_dob);
+        EditText dobEditText = v.findViewById(R.id.edit_text_dob);
         DatePickerDialog.OnDateSetListener date = (view, year, monthOfYear, dayOfMonth) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, monthOfYear);
@@ -227,7 +227,7 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             dobEditText.setText(DateFormat.getDateInstance(DateFormat.LONG)
                     .format(calendar.getTime()));
 
-            dataToSendToDB.put(DBFields.DOB, new SimpleDateFormat("yyyy-MM-dd",
+            this.userInfo.setDob(new SimpleDateFormat("yyyy-MM-dd",
                     Locale.getDefault()).format(calendar.getTime()));
         };
 
@@ -251,23 +251,24 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             DateTime endTime = new DateTime().plusHours(1);
             this.rangeTimePickerDialog.setInitialEndClock(endTime.getHourOfDay(),
                     endTime.getMinuteOfDay());
-            this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Days.valueOf(
+            this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Day.valueOf(
                     dayCheckBox.getText().toString().toUpperCase())));
         } else {
-            this.workOutDayTimes.remove(String.valueOf(Days.valueOf(
-                    dayCheckBox.getText().toString().toLowerCase())));
+            this.workOutTimes.remove(dayCheckBox.getText().toString().toUpperCase().toLowerCase());
         }
     }
 
     @Override
     public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
-        Map<String, String> times = new HashMap<>();
-        times.put(DBFields.DAY_TIME_FROM, hourStart + ":" + minuteStart);
-        times.put(DBFields.DAY_TIME_TO, hourEnd + ":" + minuteEnd);
-        this.workOutDayTimes.put(this.rangeTimePickerDialog.getTag().toLowerCase(), times);
+        this.workOutTimes.put(this.rangeTimePickerDialog.getTag().toLowerCase(),
+                Arrays.asList(hourStart + ":" + minuteStart, hourEnd + ":" + minuteEnd));
     }
 
-    public void sendToDB(View view) {
+
+    /**
+     * Send data off to Firebase Firestore
+     */
+    public void sendToDB(View v) {
         CheckBox mondayCheckBox = findViewById(R.id.button_day_monday);
         CheckBox tuesdayCheckBox = findViewById(R.id.button_day_tuesday);
         CheckBox wednesdayCheckBox = findViewById(R.id.button_day_wednesday);
@@ -283,11 +284,11 @@ public class SettingUpActivity extends AppCompatActivity implements RangeTimePic
             Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required),
                     Toast.LENGTH_SHORT).show();
         } else {
-            this.dataToSendToDB.put(DBFields.WORK_OUT_DAYS, this.workOutDayTimes);
+            this.userInfo.setWorkOutDays(this.workOutTimes);
 
-            firebaseDatabase.collection(DBFields.USER_INFO_COLLECTION)
+            firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
                     .document(currentUser.getUid())
-                    .set(this.dataToSendToDB)
+                    .set(this.userInfo)
                     .addOnSuccessListener(aVoid ->
                             startActivity(new Intent(getApplicationContext(),
                                     DashboardActivity.class)))

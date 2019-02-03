@@ -18,6 +18,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.regex.Pattern;
 
+import com.brunel.group30.fitnessapp.Models.UserInfo;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final Pattern PASSWORD_PATTERN = Pattern.compile(
@@ -129,7 +131,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FirebaseUser user = this.mAuth.getCurrentUser();
         if (user != null) {
             DocumentReference docRef = this.firebaseDatabase.collection(
-                    DBFields.USER_INFO_COLLECTION)
+                    UserInfo.COLLECTION_NAME)
                     .document(user.getUid());
 
             docRef.get().addOnCompleteListener(this, task -> {
