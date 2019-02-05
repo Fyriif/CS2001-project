@@ -284,17 +284,19 @@ public class SettingUpActivity extends AppCompatActivity
             Toast.makeText(getApplicationContext(), getString(R.string.error_option_is_required),
                     Toast.LENGTH_SHORT).show();
         } else {
-            this.userInfo.setWorkOutDays(this.workOutTimes);
+            if (this.workOutTimes != null && !this.workOutTimes.isEmpty()) {
+                this.userInfo.setWorkOutDays(this.workOutTimes);
 
-            firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
-                    .document(currentUser.getUid())
-                    .set(this.userInfo)
-                    .addOnSuccessListener(aVoid ->
-                            startActivity(new Intent(getApplicationContext(),
-                                    DashboardActivity.class)))
-                    // TODO: improve error here
-                    .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),
-                            "Error writing document", Toast.LENGTH_LONG).show());
+                firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
+                        .document(currentUser.getUid())
+                        .set(this.userInfo)
+                        .addOnSuccessListener(aVoid ->
+                                startActivity(new Intent(getApplicationContext(),
+                                        DashboardActivity.class)))
+                        // TODO: improve error here
+                        .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),
+                                "Error writing document", Toast.LENGTH_LONG).show());
+            }
         }
     }
 
