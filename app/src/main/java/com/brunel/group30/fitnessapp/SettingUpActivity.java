@@ -78,10 +78,6 @@ public class SettingUpActivity extends AppCompatActivity
         this.mAuth = FirebaseAuth.getInstance();
         this.currentUser = this.mAuth.getCurrentUser();
 
-        if (this.currentUser == null) {
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-        }
-
         Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in) + ": "
                         + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
@@ -298,18 +294,6 @@ public class SettingUpActivity extends AppCompatActivity
                                 "Error writing document", Toast.LENGTH_LONG).show());
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.title_sign_out))
-                .setMessage(getString(R.string.confirm_sign_out))
-                .setNegativeButton(getString(R.string.option_cancel), null)
-                .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
-                    mAuth.signOut();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
-                }).create().show();
     }
 
     /**

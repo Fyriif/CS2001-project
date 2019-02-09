@@ -156,7 +156,7 @@ public class DashboardActivity extends AppCompatActivity implements OnDataPointL
                 .setNegativeButton(getString(R.string.option_cancel), null)
                 .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
                     mAuth.signOut();
-                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                    startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
                 }).create().show();
     }
 
