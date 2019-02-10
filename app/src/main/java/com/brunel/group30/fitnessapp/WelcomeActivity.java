@@ -54,10 +54,9 @@ public class WelcomeActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (this.mAuth.getCurrentUser() == null) {
-            startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
+        isUserSetUp();
         }
-    }
+
 
     void isUserSetUp() {
         FirebaseUser user = this.mAuth.getCurrentUser();
@@ -78,6 +77,7 @@ public class WelcomeActivity extends AppCompatActivity {
                 }
             });
         } else {
+            mGoogleSignInClient.signOut();
             startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
         }
     }

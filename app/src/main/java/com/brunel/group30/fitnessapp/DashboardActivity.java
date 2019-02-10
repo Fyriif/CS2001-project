@@ -31,34 +31,37 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.concurrent.TimeUnit;
 
-public class DashboardActivity extends AppCompatActivity implements OnDataPointListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class DashboardActivity extends AppCompatActivity
+        implements OnDataPointListener, GoogleApiClient.ConnectionCallbacks,
+        GoogleApiClient.OnConnectionFailedListener {
 
     private static final int REQUEST_OAUTH = 1;
-    private FirebaseAuth mAuth;
-    private ViewFlipper dashboardViewFlipper;
     private static final String OAUTH_PENDING = "auth_pending";
     private boolean authInProgress = false;
-    private GoogleApiClient mGoogleApiClient;
 
+    private GoogleApiClient mGoogleApiClient;
+    private FirebaseAuth mAuth;
+
+    private ViewFlipper dashboardViewFlipper;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
-                switch (item.getItemId()) {
-                    case R.id.navigation_dashboard_home:
-                        dashboardViewFlipper.setDisplayedChild(0);
-                        return true;
-                    case R.id.navigation_dashboard_calendar:
-                        dashboardViewFlipper.setDisplayedChild(1);
-                        return true;
-                    case R.id.navigation_dashboard_notifications:
-                        dashboardViewFlipper.setDisplayedChild(2);
-                        return true;
-                    case R.id.navigation_dashboard_account:
-                        dashboardViewFlipper.setDisplayedChild(3);
-                        return true;
-                }
-                return false;
-            };
+        switch (item.getItemId()) {
+            case R.id.navigation_dashboard_home:
+                dashboardViewFlipper.setDisplayedChild(0);
+                return true;
+            case R.id.navigation_dashboard_calendar:
+                dashboardViewFlipper.setDisplayedChild(1);
+                return true;
+            case R.id.navigation_dashboard_notifications:
+                dashboardViewFlipper.setDisplayedChild(2);
+                return true;
+            case R.id.navigation_dashboard_account:
+                dashboardViewFlipper.setDisplayedChild(3);
+                return true;
+        }
+        return false;
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,28 +69,31 @@ public class DashboardActivity extends AppCompatActivity implements OnDataPointL
         setContentView(R.layout.activity_dashboard);
 
         this.mAuth = FirebaseAuth.getInstance();
+
         dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if (savedInstanceState != null) {
-            authInProgress = savedInstanceState.getBoolean(OAUTH_PENDING);}
-
-            mGoogleApiClient = new GoogleApiClient.Builder(this)
-                    .addApi(Fitness.SENSORS_API)  // Required for SensorsApi calls
-                    // Optional: specify more APIs used with additional calls to addApi
-                    .useDefaultAccount()
-                    .addScope(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this)
-                    .build();
+            authInProgress = savedInstanceState.getBoolean(OAUTH_PENDING);
         }
 
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addApi(Fitness.SENSORS_API)
+                // Optional: specify more APIs used with additional calls to addApi
+                .useDefaultAccount()
+                .addScope(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .build();
+    }
+
     @Override
-        public void onStart(){
-    super.onStart();
-    mGoogleApiClient.connect();
-       }
+    public void onStart() {
+        super.onStart();
+        mGoogleApiClient.connect();
+    }
+
     @Override
     public void onConnected(@Nullable Bundle bundle) {
         DataSourcesRequest dataSourceRequest = new DataSourcesRequest.Builder()
@@ -96,12 +102,13 @@ public class DashboardActivity extends AppCompatActivity implements OnDataPointL
                 .build();
 
         ResultCallback<DataSourcesResult> dataSourcesResultCallback = result -> {
-            for( DataSource data : result.getDataSources() ) {
-                if( DataType.TYPE_STEP_COUNT_CUMULATIVE.equals( data.getDataType() ) ) {
+            for (DataSource data : result.getDataSources()) {
+                if (DataType.TYPE_STEP_COUNT_CUMULATIVE.equals(data.getDataType())) {
                     onDataListener(data, DataType.TYPE_STEP_COUNT_CUMULATIVE);
                 }
             }
         };
+
         Fitness.SensorsApi.findDataSources(mGoogleApiClient, dataSourceRequest)
                 .setResultCallback(dataSourcesResultCallback);
     }
@@ -109,18 +116,19 @@ public class DashboardActivity extends AppCompatActivity implements OnDataPointL
     private void onDataListener(DataSource dataSource, DataType dataType) {
 
         SensorRequest fitness = new SensorRequest.Builder()
-                .setDataSource( dataSource )
-                .setDataType( dataType )
-                .setSamplingRate( 1, TimeUnit.SECONDS )
+                .setDataSource(dataSource)
+                .setDataType(dataType)
+                .setSamplingRate(1, TimeUnit.SECONDS)
                 .build();
 
-        Fitness.SensorsApi.add( mGoogleApiClient, fitness, this )
+        Fitness.SensorsApi.add(mGoogleApiClient, fitness, this)
                 .setResultCallback(status -> {
                     if (status.isSuccess()) {
-                        Log.e( "GoogleFit", "SensorApi successfully added" );
+                        Log.e("GoogleFit", "SensorApi successfully added");
                     }
                 });
     }
+
     @Override
     public void onConnectionSuspended(int i) {
         // The connection has been interrupted. Wait until onConnected() is called.
@@ -128,14 +136,16 @@ public class DashboardActivity extends AppCompatActivity implements OnDataPointL
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if( requestCode == REQUEST_OAUTH ) {
+        if (requestCode == REQUEST_OAUTH) {
             authInProgress = false;
-            if( resultCode == RESULT_OK ) {
-                if( !mGoogleApiClient.isConnecting() && !mGoogleApiClient.isConnected() ) {
+            if (resultCode == RESULT_OK) {
+                if (!mGoogleApiClient.isConnecting() && !mGoogleApiClient.isConnected()) {
                     mGoogleApiClient.connect();
                 }
-            } else if( resultCode == RESULT_CANCELED ) {
-                Log.e( "FIT", "RESULT_CANCELED" );
+            } else if (resultCode == RESULT_CANCELED) {
+                Log.e("FIT", "RESULT_CANCELED");
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
             }
         } else {
             Log.e("FIT", "request_oauth");
@@ -163,35 +173,39 @@ public class DashboardActivity extends AppCompatActivity implements OnDataPointL
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         // Error while connecting. Try to resolve using the pending intent returned.
-        if( !authInProgress ) {
+        if (!authInProgress) {
             try {
                 authInProgress = true;
-                connectionResult.startResolutionForResult( this, REQUEST_OAUTH );
-            } catch(IntentSender.SendIntentException e ) {
-
+                connectionResult.startResolutionForResult(this, REQUEST_OAUTH);
+            } catch (IntentSender.SendIntentException e) {
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
             }
         } else {
-            Log.e( "FIT", "authInProgress" );
+            Log.e("FIT", "authInProgress");
         }
     }
+
     @Override
     public void onDataPoint(DataPoint dataPoint) {
-        for( final Field field : dataPoint.getDataType().getFields() ) {
-            final Value value = dataPoint.getValue( field );
-            runOnUiThread(() -> Toast.makeText(getApplicationContext(), "Field: " + field.getName() + " Value: " + value, Toast.LENGTH_SHORT).show());
-            //lambda expression
+        for (final Field field : dataPoint.getDataType().getFields()) {
+            final Value value = dataPoint.getValue(field);
+            runOnUiThread(() -> Toast.makeText(getApplicationContext(),
+                    "Field: " + field.getName() + " Value: " +
+                            value, Toast.LENGTH_SHORT).show());
         }
     }
+
+
     @Override
     protected void onStop() {
         super.onStop();
 
-        Fitness.SensorsApi.remove( mGoogleApiClient, this )
-                .setResultCallback(status -> { //lambda to shorten code
+        Fitness.SensorsApi.remove(mGoogleApiClient, this)
+                .setResultCallback(status -> {
                     if (status.isSuccess()) {
                         mGoogleApiClient.disconnect();
                     }
                 });
-    }}
-
-
+    }
+}
