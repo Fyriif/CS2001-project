@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file("${projectDir}/debug.keystore")
+            storePassword 'android'
+            keyAlias 'AndroidDebugKey'
+            keyPassword 'android'
+        }
+    }
     compileSdkVersion 28
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -15,11 +23,16 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary = true
+        signingConfig signingConfigs.config
     }
     buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     sourceSets {
@@ -68,8 +81,9 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.7'
     implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-firestore:18.0.1'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
-    implementation 'com.google.firebase:firebase-firestore:18.0.0'
+    implementation 'com.google.android.gms:play-services-fitness:16.0.1'
     implementation 'com.github.PuffoCyano:Range-Time-Picker-Dialog:v1.8'
     implementation 'joda-time:joda-time:2.10.1'
     implementation 'com.github.yehiahd:FastSave-Android:1.0.6'
