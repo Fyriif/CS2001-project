@@ -88,6 +88,27 @@ public class SettingUpActivity extends AppCompatActivity
         this.workOutTimes = new HashMap<>();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (this.currentUser == null) {
+            this.mAuth.signOut();
+            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.title_sign_out))
+                .setMessage(getString(R.string.confirm_sign_out))
+                .setNegativeButton(getString(R.string.option_cancel), null)
+                .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
+                    mAuth.signOut();
+                    startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                }).create().show();
+    }
+
     public void nextFragment(View v) {
         switch (this.mViewPager.getCurrentItem() + 1) {
             case 1:

@@ -50,13 +50,11 @@ public class WelcomeActivity extends AppCompatActivity {
         startBtn.setOnClickListener(view -> isUserSetUp());
     }
 
-
     @Override
     protected void onStart() {
         super.onStart();
         isUserSetUp();
-        }
-
+    }
 
     void isUserSetUp() {
         FirebaseUser user = this.mAuth.getCurrentUser();

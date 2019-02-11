@@ -9,24 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+
+import java.util.concurrent.Executor;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.Espresso.pressBack;
 import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.replaceText;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withClassName;
-import static android.support.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static junit.framework.TestCase.fail;
@@ -35,75 +39,50 @@ import static org.hamcrest.Matchers.is;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class SettingUpActivity_CreatingUserInfoSuccess_Test {
 
+    FirebaseAuth mAuth;
+    FirebaseFirestore firebaseDatabase;
+
     @Rule
-    public ActivityTestRule<LoginActivity> mActivityTestRule =
-            new ActivityTestRule<>(LoginActivity.class);
+    public ActivityTestRule<WelcomeActivity> mActivityTestRule =
+            new ActivityTestRule<>(WelcomeActivity.class);
+
+    @Before
+    public void beforeTest() {
+        mAuth = FirebaseAuth.getInstance();
+        firebaseDatabase = FirebaseFirestore.getInstance();
+    }
 
     @Test
     public void settingUpActivity_CreatingUserInfoSuccess_Test() {
-        FirebaseAuth mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
+        try {
+            Thread.sleep(7500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        FirebaseFirestore firebaseDatabase = FirebaseFirestore.getInstance();
-        String userUid = "QRdjRmzHT1fsOOFBkIg65Xc8uAo1";
-
-        firebaseDatabase.collection(DBFields.USER_INFO_COLLECTION).document(userUid)
+        firebaseDatabase.collection(UserInfo.COLLECTION_NAME).document(mAuth.getCurrentUser().getUid())
                 .delete()
                 .addOnFailureListener(e -> fail("Unable to delete collection"));
 
-        String testEmail = "test@test.com";
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        ViewInteraction appCompatEmailEditTextClick = onView(
-                allOf(withId(R.id.edit_email),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.TableLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEmailEditTextClick.perform(click());
-
-        ViewInteraction appCompatEmailEditTextType = onView(
-                allOf(withId(R.id.edit_email),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.TableLayout")),
-                                        0),
-                                0),
-                        isDisplayed()));
-        appCompatEmailEditTextType.perform(replaceText(testEmail), closeSoftKeyboard());
-
-        ViewInteraction appCompatPasswordEditTextClick = onView(
-                allOf(withId(R.id.edit_password),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.TableLayout")),
-                                        1),
-                                0),
-                        isDisplayed()));
-        appCompatPasswordEditTextClick.perform(click());
-
-        ViewInteraction appCompatPasswordEditTextType = onView(
-                allOf(withId(R.id.edit_password),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.TableLayout")),
-                                        1),
-                                0),
-                        isDisplayed()));
-        appCompatPasswordEditTextType.perform(replaceText("adminAdmin123#"), closeSoftKeyboard());
-
-        ViewInteraction appCompatLoginButtonClick = onView(
-                allOf(withId(R.id.button_login),
+        ViewInteraction appCompatButton = onView(
+                allOf(withId(R.id.button_start),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.RelativeLayout")),
-                                        2),
+                                        1),
                                 0),
                         isDisplayed()));
-        appCompatLoginButtonClick.perform(click());
+        appCompatButton.perform(click());
 
         // Added a sleep statement to match the app's execution delay.
         // The recommended way to handle such scenarios is to use Espresso idling resources:
@@ -272,6 +251,12 @@ public class SettingUpActivity_CreatingUserInfoSuccess_Test {
                                 1),
                         isDisplayed()));
         appCompatNextButton.perform(click());
+
+        try {
+            Thread.sleep(7500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static Matcher<View> childAtPosition(
