@@ -127,7 +127,7 @@ public class SettingUpActivity extends AppCompatActivity
             case 2:
                 RadioButton maleRadioButton = findViewById(R.id.button_sex_male);
                 RadioButton femaleRadioButton = findViewById(R.id.button_sex_female);
-                RadioButton preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
+                RadioButton preferNotToSayRadioButton = findViewById(R.id.button_sex_prefer_not_to_say);
 
                 if (!maleRadioButton.isChecked()
                         && !femaleRadioButton.isChecked()
@@ -152,7 +152,7 @@ public class SettingUpActivity extends AppCompatActivity
 
             case 4:
                 CustomNumberPicker weightNumberPicker = findViewById(R.id.number_picker_weight);
-                preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
+                preferNotToSayRadioButton = findViewById(R.id.button_weight_prefer_not_to_say);
 
                 this.userInfo.setWeight(preferNotToSayRadioButton.isChecked() ?
                         0 : weightNumberPicker.getValue());
