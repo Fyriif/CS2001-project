@@ -12,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -28,6 +29,8 @@ import com.google.android.gms.fitness.request.OnDataPointListener;
 import com.google.android.gms.fitness.request.SensorRequest;
 import com.google.android.gms.fitness.result.DataSourcesResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.auth.User;
+import com.google.gson.Gson;
 
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +46,8 @@ public class DashboardActivity extends AppCompatActivity
     private FirebaseAuth mAuth;
 
     private ViewFlipper dashboardViewFlipper;
+
+    private UserInfo userInfo;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = item -> {
@@ -86,6 +91,10 @@ public class DashboardActivity extends AppCompatActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        Bundle bundle = getIntent().getExtras();
+        this.userInfo = new Gson().fromJson(bundle != null ?
+                bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
     }
 
     @Override

@@ -12,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -19,6 +20,8 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     FirebaseUser currentUser;
     FirebaseFirestore firebaseDatabase;
+
+    UserInfo userInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,17 @@ public class SplashScreenActivity extends AppCompatActivity {
         docRef.get().addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
                 DocumentSnapshot documentResult = task.getResult();
-                nextActivity(documentResult != null && documentResult.exists() ?
-                        DashboardActivity.class : SettingUpActivity.class);
+                if (documentResult != null && documentResult.exists()) {
+                    userInfo = documentResult.toObject(UserInfo.class);
+                    new Handler().postDelayed (() -> startActivity(
+                            new Intent(getApplicationContext(), DashboardActivity.class)
+                                    .putExtra(UserInfo.COLLECTION_NAME,
+                                            new Gson().toJson(this.userInfo))),
+                            NEXT_ACTIVITY_DELAY
+                    );
+                } else {
+                    nextActivity(SettingUpActivity.class);
+                }
             } else {
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.error_auth_failed),

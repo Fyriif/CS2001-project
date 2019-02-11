@@ -25,6 +25,7 @@ import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
 import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
 
 import org.joda.time.DateTime;
@@ -286,9 +287,10 @@ public class SettingUpActivity extends AppCompatActivity
                 firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
                         .document(currentUser.getUid())
                         .set(this.userInfo)
-                        .addOnSuccessListener(aVoid ->
-                                startActivity(new Intent(getApplicationContext(),
-                                        DashboardActivity.class)))
+                        .addOnSuccessListener(aVoid -> startActivity(
+                                new Intent(getApplicationContext(), DashboardActivity.class)
+                                        .putExtra(UserInfo.COLLECTION_NAME,
+                                                new Gson().toJson(this.userInfo))))
                         // TODO: improve error here
                         .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),
                                 "Error writing document", Toast.LENGTH_LONG).show());
