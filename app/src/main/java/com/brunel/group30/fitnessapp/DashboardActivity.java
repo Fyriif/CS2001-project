@@ -12,6 +12,8 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Models.NotificationToken;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
@@ -24,6 +26,9 @@ import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.fitness.result.DailyTotalResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.gson.Gson;
 
 public class DashboardActivity extends AppCompatActivity
@@ -38,6 +43,8 @@ public class DashboardActivity extends AppCompatActivity
 
     private GoogleApiClient mGoogleApiClient;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore mFirestore;
+    private FirebaseUser mCurrentUser;
 
     private ViewFlipper dashboardViewFlipper;
 
@@ -67,9 +74,17 @@ public class DashboardActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
-        this.stepCountTextView = (TextView) findViewById(R.id.text_view_step_count);
+        FastSave.init(getApplicationContext());
+
+        this.stepCountTextView = findViewById(R.id.text_view_step_count);
 
         this.mAuth = FirebaseAuth.getInstance();
+        this.mFirestore = FirebaseFirestore.getInstance();
+        this.mCurrentUser = this.mAuth.getCurrentUser();
+
+        if (this.mCurrentUser == null) {
+            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+        }
 
         dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -89,6 +104,19 @@ public class DashboardActivity extends AppCompatActivity
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .build();
+
+        FirebaseInstanceId.getInstance().getInstanceId()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        String token = FastSave.getInstance().getString(
+                                NotificationToken.Companion.getPREF_KEY_NAME(), null);
+                        if (token != null) {
+                            this.mFirestore.collection(NotificationToken.Companion.getCOLLECTION_NAME())
+                                .document(this.mCurrentUser.getUid())
+                                .set(new NotificationToken(token));
+                        }
+                    }
+                });
 
         Bundle bundle = getIntent().getExtras();
         this.userInfo = new Gson().fromJson(bundle != null ?

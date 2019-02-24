@@ -1,11 +1,13 @@
 *.iml
 .gradle
 /app/lint-report.html
+/app/node_modules
 /local.properties
 /.idea/caches/
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
+/.idea/misc.xml
 .DS_Store
 /build
 /captures

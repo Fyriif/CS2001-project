@@ -13,6 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
         <activity
             android:name=".DashboardActivity"
             android:noHistory="true" />
@@ -31,6 +32,13 @@
         <activity
             android:name=".SettingUpActivity"
             android:noHistory="true" />
+
+        <service android:name=".Custom.CustomFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>
