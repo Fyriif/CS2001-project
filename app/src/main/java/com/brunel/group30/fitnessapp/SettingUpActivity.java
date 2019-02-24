@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.brunel.group30.fitnessapp.Custom.CustomTimeRangePicker;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
@@ -26,9 +27,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
-import com.mcsoft.timerangepickerdialog.RangeTimePickerDialog;
-
-import org.joda.time.DateTime;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,8 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class SettingUpActivity extends AppCompatActivity
-        implements RangeTimePickerDialog.ISelectedTime {
+public class SettingUpActivity extends AppCompatActivity {
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -52,7 +49,7 @@ public class SettingUpActivity extends AppCompatActivity
     private UserInfo userInfo;
     private HashMap<String, List<String>> workOutTimes;
 
-    private RangeTimePickerDialog rangeTimePickerDialog;
+    private CustomTimeRangePicker rangeTimePickerDialog;
     private Calendar calendar;
 
     /**
@@ -260,28 +257,44 @@ public class SettingUpActivity extends AppCompatActivity
         CheckBox dayCheckBox = ((CheckBox) v);
 
         if (dayCheckBox.isChecked()) {
-            this.rangeTimePickerDialog = new RangeTimePickerDialog();
-            this.rangeTimePickerDialog.newInstance(R.color.colorAccent, R.color.White,
-                    R.color.colorPrimary, R.color.colorAccent, false);
-            this.rangeTimePickerDialog.setValidateRange(true);
-            this.rangeTimePickerDialog.setInitialOpenedTab(
-                    RangeTimePickerDialog.InitialOpenedTab.START_CLOCK_TAB);
-            DateTime endTime = new DateTime().plusHours(1);
-            this.rangeTimePickerDialog.setInitialEndClock(endTime.getHourOfDay(),
-                    endTime.getMinuteOfDay());
-            this.rangeTimePickerDialog.show(getFragmentManager(), String.valueOf(Day.valueOf(
-                    dayCheckBox.getText().toString().toUpperCase())));
+            this.rangeTimePickerDialog = new CustomTimeRangePicker(this);
+            this.rangeTimePickerDialog.show();
+
+            this.rangeTimePickerDialog.setOnCancelListener(dialog -> dayCheckBox.setChecked(false));
+            this.rangeTimePickerDialog.setTimeRangeBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int startTimeHour = rangeTimePickerDialog.startTimePicker.getCurrentHour();
+                    int startTimeMin = rangeTimePickerDialog.startTimePicker.getCurrentMinute();
+                    int endTimeHour = rangeTimePickerDialog.endTimePicker.getCurrentHour();
+                    int endTimeMin = rangeTimePickerDialog.endTimePicker.getCurrentMinute();
+
+                    if (endTimeHour > startTimeHour) {
+                        addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),
+                                startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+                        rangeTimePickerDialog.dismiss();
+                    } else if (endTimeHour == startTimeHour && endTimeMin > startTimeMin) {
+                        addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),
+                                startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+                        rangeTimePickerDialog.dismiss();
+                    } else {
+                        Toast.makeText(SettingUpActivity.this,
+                                R.string.error_time_greater,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         } else {
-            this.workOutTimes.remove(dayCheckBox.getText().toString().toUpperCase().toLowerCase());
+            this.workOutTimes.remove(Day.valueOf(dayCheckBox.getText().toString().toUpperCase())
+                    .toString());
         }
     }
 
-    @Override
-    public void onSelectedTime(int hourStart, int minuteStart, int hourEnd, int minuteEnd) {
-        this.workOutTimes.put(this.rangeTimePickerDialog.getTag().toLowerCase(),
-                Arrays.asList(hourStart + ":" + minuteStart, hourEnd + ":" + minuteEnd));
+    void addToWorkOutTimes(Day day, int startTimeHour, int startTimeMin,
+                           int endTimeHour, int endTimeMin) {
+        workOutTimes.put(day.toString(), Arrays.asList(startTimeHour + ":" + startTimeMin,
+                    endTimeHour + ":" + endTimeMin));
     }
-
 
     /**
      * Send data off to Firebase Firestore

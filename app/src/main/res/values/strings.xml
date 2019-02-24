@@ -34,7 +34,7 @@
     <string name="sign_up_title_height">Height (CM)</string>
     <string name="sign_up_disabilities">Do you consider yourself to have a disability?</string>
     <string name="sign_up_title_location">Training Location</string>
-    <string name="sign_up_title_times">Days to Work Out</string>
+    <string name="sign_up_title_times">Work Out Schedule</string>
     <string name="btn_male">Male</string>
     <string name="btn_female">Female</string>
     <string name="btn_prefer_not_to_say">Prefer not to say</string>
@@ -50,10 +50,11 @@
     <string name="text_friday">Friday</string>
     <string name="text_saturday">Saturday</string>
     <string name="text_sunday">Sunday</string>
+    <string name="text_start_time">Start Time</string>
+    <string name="text_end_time">End Time</string>
     <string name="error_field_empty">Field cannot be left empty</string>
     <string name="error_option_is_required">One of the options must be selected</string>
-    <string name="error_enter_valid_email">Please enter a valid email address</string>
-    <string name="error_password_weak">Password is weak, password must be at least 6 characters in length and contain at least one upper case and lower case </string>
+    <string name="error_time_greater">Your workout end time seems to be before your start time</string>
     <string name="title_sign_out">Sign out</string>
     <string name="confirm_sign_out">Are you sure you want to sign out?</string>
     <string name="option_cancel">Cancel</string>
