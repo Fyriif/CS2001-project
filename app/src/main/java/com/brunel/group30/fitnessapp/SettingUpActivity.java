@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Custom.CustomTimeRangePicker;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
@@ -90,7 +91,7 @@ public class SettingUpActivity extends AppCompatActivity {
         super.onStart();
         if (this.currentUser == null) {
             this.mAuth.signOut();
-            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+            startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
         }
     }
 
@@ -102,7 +103,7 @@ public class SettingUpActivity extends AppCompatActivity {
                 .setNegativeButton(getString(R.string.option_cancel), null)
                 .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
                     mAuth.signOut();
-                    startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
                 }).create().show();
     }
 
@@ -317,6 +318,9 @@ public class SettingUpActivity extends AppCompatActivity {
         } else {
             if (this.workOutTimes != null && !this.workOutTimes.isEmpty()) {
                 this.userInfo.setWorkOutDays(this.workOutTimes);
+
+                FastSave.init(getApplicationContext());
+                FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, this.userInfo);
 
                 firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
                         .document(currentUser.getUid())

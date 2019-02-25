@@ -18,9 +18,6 @@
             android:name=".DashboardActivity"
             android:noHistory="true" />
         <activity
-            android:name=".WelcomeActivity"
-            android:noHistory="true" />
-        <activity
             android:name=".SplashScreenActivity"
             android:noHistory="true">
             <intent-filter>

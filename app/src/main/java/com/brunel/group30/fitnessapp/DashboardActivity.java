@@ -83,7 +83,7 @@ public class DashboardActivity extends AppCompatActivity
         this.mCurrentUser = this.mAuth.getCurrentUser();
 
         if (this.mCurrentUser == null) {
-            startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+            startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
         }
 
         dashboardViewFlipper = findViewById(R.id.view_dashboard);
@@ -112,8 +112,8 @@ public class DashboardActivity extends AppCompatActivity
                                 NotificationToken.Companion.getPREF_KEY_NAME(), null);
                         if (token != null) {
                             this.mFirestore.collection(NotificationToken.Companion.getCOLLECTION_NAME())
-                                .document(this.mCurrentUser.getUid())
-                                .set(new NotificationToken(token));
+                                    .document(this.mCurrentUser.getUid())
+                                    .set(new NotificationToken(token));
                         }
                     }
                 });
@@ -161,7 +161,7 @@ public class DashboardActivity extends AppCompatActivity
             } else if (resultCode == RESULT_CANCELED) {
                 Log.e("FIT", "RESULT_CANCELED");
                 mAuth.signOut();
-                startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
             }
         } else {
             Log.e("FIT", "request_oauth");
@@ -182,7 +182,7 @@ public class DashboardActivity extends AppCompatActivity
                 .setNegativeButton(getString(R.string.option_cancel), null)
                 .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
                     mAuth.signOut();
-                    startActivity(new Intent(getApplicationContext(), WelcomeActivity.class));
+                    startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
                 }).create().show();
     }
 
@@ -195,7 +195,7 @@ public class DashboardActivity extends AppCompatActivity
                 connectionResult.startResolutionForResult(this, REQUEST_OAUTH);
             } catch (IntentSender.SendIntentException e) {
                 mAuth.signOut();
-                startActivity(new Intent(getApplicationContext(),WelcomeActivity.class));
+                startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
             }
         } else {
             Log.e("FIT", "authInProgress");
