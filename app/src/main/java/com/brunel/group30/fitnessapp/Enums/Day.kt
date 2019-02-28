@@ -1,5 +1,5 @@
-package com.brunel.group30.fitnessapp.Enums;
+package com.brunel.group30.fitnessapp.Enums
 
-public enum Day {
+enum class Day {
     MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 }
