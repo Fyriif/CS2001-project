@@ -21,7 +21,6 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.auth.User;
 import com.google.gson.Gson;
 
 public class SplashScreenActivity extends AppCompatActivity {
@@ -32,6 +31,7 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore firebaseDatabase;
+    private FirebaseUser user;
 
     UserInfo userInfo;
 
@@ -56,40 +56,40 @@ public class SplashScreenActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        isUserSetUp();
+
+        this.user = this.mAuth.getCurrentUser();
+        if (this.user == null) {
+            startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
+        } else {
+            isUserSetUp();
+        }
     }
 
     void isUserSetUp() {
-        FirebaseUser user = this.mAuth.getCurrentUser();
-        if (user != null) {
-            this.userInfo = FastSave.getInstance().getObject(user.getUid(), UserInfo.class);
-            if (this.userInfo == null) {
-                DocumentReference docRef = this.firebaseDatabase.collection(
-                        UserInfo.COLLECTION_NAME)
-                        .document(user.getUid());
+        this.userInfo = FastSave.getInstance().getObject(user.getUid(), UserInfo.class);
+        if (this.userInfo == null) {
+            DocumentReference docRef = this.firebaseDatabase.collection(
+                    UserInfo.COLLECTION_NAME)
+                    .document(user.getUid());
 
-                docRef.get().addOnCompleteListener(this, task -> {
-                    if (task.isComplete() && task.isSuccessful()) {
-                        DocumentSnapshot documentResult = task.getResult();
-                        if (documentResult != null && documentResult.exists()) {
-                            this.userInfo = documentResult.toObject(UserInfo.class);
-                            FastSave.getInstance().saveObject(user.getUid(), this.userInfo);
-                            nextActivity(DashboardActivity.class);
-                        } else {
-                            nextActivity(SettingUpActivity.class);
-                        }
+            docRef.get().addOnCompleteListener(this, task -> {
+                if (task.isComplete() && task.isSuccessful()) {
+                    DocumentSnapshot documentResult = task.getResult();
+                    if (documentResult != null && documentResult.exists()) {
+                        this.userInfo = documentResult.toObject(UserInfo.class);
+                        FastSave.getInstance().saveObject(user.getUid(), this.userInfo);
+                        nextActivity(DashboardActivity.class);
                     } else {
-                        Toast.makeText(getApplicationContext(),
-                                getString(R.string.error_auth_failed),
-                                Toast.LENGTH_SHORT).show();
+                        nextActivity(SettingUpActivity.class);
                     }
-                });
-            } else {
-                nextActivity(DashboardActivity.class);
-            }
+                } else {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_auth_failed),
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
         } else {
-            mGoogleSignInClient.signOut();
-            startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
+            nextActivity(DashboardActivity.class);
         }
     }
 
@@ -102,6 +102,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 getString(R.string.error_auth_failed),
                                 Toast.LENGTH_SHORT).show();
                     } else {
+                        this.user = this.mAuth.getCurrentUser();
                         isUserSetUp();
                     }
                 });

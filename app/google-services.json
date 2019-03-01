@@ -15,19 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "510873132832-q0pftcol0a1m7h3kbf16pkbt6ii7m7q6.apps.googleusercontent.com",
+          "client_id": "510873132832-nc3485saeetrii4vjoos57303tkja5i3.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.brunel.group30.fitnessapp",
             "certificate_hash": "1850abed0abc634ea0b2b78bb25aae5c75dc72bd"
-          }
-        },
-        {
-          "client_id": "510873132832-epvkausp86pqtngajcir9v5thu44bfao.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.brunel.group30.fitnessapp",
-            "certificate_hash": "86c0a0d18e580701b1df921c26373564e73d36de"
           }
         },
         {
