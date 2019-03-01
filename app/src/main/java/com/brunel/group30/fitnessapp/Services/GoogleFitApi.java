@@ -27,7 +27,6 @@ public class GoogleFitApi {
                 FitnessOptions.builder()
                         .addDataType(DataType.TYPE_LOCATION_SAMPLE)
                         .addDataType(DataType.TYPE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE)
-                        .addDataType(DataType.AGGREGATE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE)
                         .build();
 
         if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(this.activity), fitnessOptions)) {
@@ -44,7 +43,7 @@ public class GoogleFitApi {
     public void subscribe() {
         if (mGoogleSignInAccount != null) {
             Fitness.getRecordingClient(activity, mGoogleSignInAccount)
-                    .subscribe(DataType.TYPE_STEP_COUNT_DELTA)
+                    .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
                     .addOnCompleteListener(
                             task -> {
                                 if (task.isSuccessful()) {

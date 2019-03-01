@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.data.DataPoint;
 import com.google.android.gms.fitness.data.DataSource;
@@ -21,9 +22,6 @@ public class StepCountSensor extends GoogleFitApi {
     private OnDataPointListener mListener;
     private static final String TAG = "StepSensorsApi";
     private TextView stepCountTextView;
-
-    int stepCount = 0;
-
     /**
      * Finds available data sources and attempts to register on a specific {@link DataType}.
      */
@@ -31,29 +29,32 @@ public class StepCountSensor extends GoogleFitApi {
         super(activity);
 
         this.stepCountTextView = stepCountTextView;
-        getDailyStepCount();
 
-        Fitness.getSensorsClient(activity, mGoogleSignInAccount)
-                .findDataSources(
-                        new DataSourcesRequest.Builder()
-                                .setDataTypes(DataType.TYPE_STEP_COUNT_CUMULATIVE)
-                                .setDataSourceTypes(DataSource.TYPE_RAW)
-                                .build())
-                .addOnSuccessListener(
-                        dataSources -> {
-                            for (DataSource dataSource : dataSources) {
-                                Log.i(TAG, "Data source found: " + dataSource.toString());
-                                Log.i(TAG, "Data Source type: " + dataSource.getDataType().getName());
+        if (Utils.INSTANCE.isEmulator()) {
+            this.getDailyStepCount();
+        }  else {
+            Fitness.getSensorsClient(activity, mGoogleSignInAccount)
+                    .findDataSources(
+                            new DataSourcesRequest.Builder()
+                                    .setDataTypes(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                                    .setDataSourceTypes(DataSource.TYPE_RAW)
+                                    .build())
+                    .addOnSuccessListener(
+                            dataSources -> {
+                                for (DataSource dataSource : dataSources) {
+                                    Log.i(TAG, "Data source found: " + dataSource.toString());
+                                    Log.i(TAG, "Data Source type: " + dataSource.getDataType().getName());
 
-                                if (dataSource.getDataType().equals(DataType.TYPE_STEP_COUNT_CUMULATIVE)
-                                        && mListener == null) {
-                                    registerFitnessDataListener(dataSource,
-                                            DataType.TYPE_STEP_COUNT_CUMULATIVE);
+                                    if (dataSource.getDataType().equals(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                                            && mListener == null) {
+                                        registerFitnessDataListener(dataSource,
+                                                DataType.TYPE_STEP_COUNT_CUMULATIVE);
+                                    }
                                 }
-                            }
-                        })
-                .addOnFailureListener(
-                        e -> Log.e(TAG, "failed", e));
+                            })
+                    .addOnFailureListener(
+                            e -> Log.e(TAG, "failed", e));
+        }
     }
 
     /**
@@ -69,8 +70,7 @@ public class StepCountSensor extends GoogleFitApi {
                         Log.i(TAG, "Detected DataPoint value: " + val);
 
                         if (dataPoint.getDataType().equals(DataType.TYPE_STEP_COUNT_CUMULATIVE)) {
-                            this.stepCount += val.asInt();
-                            this.stepCountTextView.setText(String.valueOf(this.stepCount));
+                            this.stepCountTextView.setText(val.toString());
                         }
                     }
                 };
@@ -111,7 +111,6 @@ public class StepCountSensor extends GoogleFitApi {
                         });
     }
 
-
     private void getDailyStepCount() {
         Fitness.getHistoryClient(super.activity, super.mGoogleSignInAccount)
                 .readDailyTotal(DataType.AGGREGATE_STEP_COUNT_DELTA)
@@ -119,8 +118,8 @@ public class StepCountSensor extends GoogleFitApi {
                     if (task.isComplete() && task.isSuccessful()) {
                         List<DataPoint> results = task.getResult().getDataPoints();
                         if (results.size() > 0) {
-                            this.stepCount = results.get(0).getValue(Field.FIELD_STEPS).asInt();
-                            this.stepCountTextView.setText(String.valueOf(this.stepCount));
+                            this.stepCountTextView.setText(String.valueOf(
+                                    results.get(0).getValue(Field.FIELD_STEPS).asInt()));
                         } else {
                             this.stepCountTextView.setText("0");
                         }
