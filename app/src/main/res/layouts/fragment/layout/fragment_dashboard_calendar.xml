@@ -14,8 +14,6 @@
         android:textSize="40sp"
         android:textColor="@color/textColorPrimary"/>
 
-
-
     <CalendarView
         android:id="@+id/calendar_view"
         android:layout_marginTop="32dp"

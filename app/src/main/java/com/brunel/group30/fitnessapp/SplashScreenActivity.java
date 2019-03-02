@@ -71,6 +71,12 @@ public class SplashScreenActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        requestPermissions();
+    }
+
     void isUserSetUp() {
         this.userInfo = FastSave.getInstance().getObject(user.getUid(), UserInfo.class);
         if (this.userInfo == null) {
@@ -95,7 +101,6 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             });
         } else {
-            requestPermissions();
             nextActivity(DashboardActivity.class);
         }
     }

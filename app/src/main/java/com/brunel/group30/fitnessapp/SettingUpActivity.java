@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Custom.CustomTimeRangePicker;
+import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
@@ -262,13 +264,13 @@ public class SettingUpActivity extends AppCompatActivity {
             this.rangeTimePickerDialog.show();
 
             this.rangeTimePickerDialog.setOnCancelListener(dialog -> dayCheckBox.setChecked(false));
-            this.rangeTimePickerDialog.setTimeRangeBtn.setOnClickListener(new View.OnClickListener() {
+            this.rangeTimePickerDialog.getSetTimeRangeBtn().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int startTimeHour = rangeTimePickerDialog.startTimePicker.getCurrentHour();
-                    int startTimeMin = rangeTimePickerDialog.startTimePicker.getCurrentMinute();
-                    int endTimeHour = rangeTimePickerDialog.endTimePicker.getCurrentHour();
-                    int endTimeMin = rangeTimePickerDialog.endTimePicker.getCurrentMinute();
+                    int startTimeHour = rangeTimePickerDialog.getStartTimePicker().getCurrentHour();
+                    int startTimeMin = rangeTimePickerDialog.getStartTimePicker().getCurrentMinute();
+                    int endTimeHour = rangeTimePickerDialog.getEndTimePicker().getCurrentHour();
+                    int endTimeMin = rangeTimePickerDialog.getEndTimePicker().getCurrentMinute();
 
                     if (endTimeHour > startTimeHour) {
                         addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),

@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.CalendarView;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -52,6 +54,9 @@ public class DashboardActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_dashboard_calendar:
                     dashboardViewFlipper.setDisplayedChild(1);
+                    CalendarView calendarView = findViewById(R.id.calendar_view);
+                    calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
+                            -> Log.i("CalenderView", "Day selected: " + dayOfMonth));
                     return true;
                 case R.id.navigation_dashboard_notifications:
                     dashboardViewFlipper.setDisplayedChild(2);
