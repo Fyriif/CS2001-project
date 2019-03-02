@@ -118,12 +118,36 @@ public class StepCountSensor extends GoogleFitApi {
                     if (task.isComplete() && task.isSuccessful()) {
                         List<DataPoint> results = task.getResult().getDataPoints();
                         if (results.size() > 0) {
-                            this.stepCountTextView.setText(String.valueOf(
-                                    results.get(0).getValue(Field.FIELD_STEPS).asInt()));
+                            DataPoint dataPoint = results.get(0);
+                            if (Utils.INSTANCE.isDateToday(dataPoint.getTimestamp(TimeUnit.MILLISECONDS))) {
+                                this.stepCountTextView.setText(String.valueOf(
+                                        dataPoint.getValue(Field.FIELD_STEPS).asInt()));
+                            } else {
+                                this.stepCountTextView.setText("0");
+                            }
                         } else {
                             this.stepCountTextView.setText("0");
                         }
                     }
                 });
+    }
+
+    @Override
+    public void subscribe() {
+        if (super.mGoogleSignInAccount != null) {
+            Fitness.getRecordingClient(super.activity, super.mGoogleSignInAccount)
+                    .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                    .addOnCompleteListener(
+                            task -> {
+                                if (task.isSuccessful()) {
+                                    Log.i(TAG, "Successfully subscribed!");
+                                } else {
+                                    Log.w(TAG, "There was a problem subscribing.",
+                                            task.getException());
+                                }
+
+                                this.getDailyStepCount();
+                            });
+        }
     }
 }

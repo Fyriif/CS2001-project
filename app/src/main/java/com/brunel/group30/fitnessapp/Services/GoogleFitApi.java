@@ -49,7 +49,8 @@ public class GoogleFitApi {
                                 if (task.isSuccessful()) {
                                     Log.i(TAG, "Successfully subscribed!");
                                 } else {
-                                    Log.w(TAG, "There was a problem subscribing.", task.getException());
+                                    Log.w(TAG, "There was a problem subscribing.",
+                                            task.getException());
                                 }
                             });
         }

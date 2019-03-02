@@ -1,8 +1,6 @@
 package com.brunel.group30.fitnessapp;
 
-import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -17,13 +15,8 @@ import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
-import com.nabinbhandari.android.permissions.PermissionHandler;
-import com.nabinbhandari.android.permissions.Permissions;
-
-import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
-
     GoogleFitApi mGoogleFitApi;
 
     private FirebaseAuth mAuth;
@@ -32,25 +25,6 @@ public class DashboardActivity extends AppCompatActivity {
 
     private TextView stepCountTextView;
     private ViewFlipper dashboardViewFlipper;
-
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = item -> {
-        switch (item.getItemId()) {
-            case R.id.navigation_dashboard_home:
-                dashboardViewFlipper.setDisplayedChild(0);
-                return true;
-            case R.id.navigation_dashboard_calendar:
-                dashboardViewFlipper.setDisplayedChild(1);
-                return true;
-            case R.id.navigation_dashboard_notifications:
-                dashboardViewFlipper.setDisplayedChild(2);
-                return true;
-            case R.id.navigation_dashboard_account:
-                dashboardViewFlipper.setDisplayedChild(3);
-                return true;
-        }
-        return false;
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +42,27 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
         }
 
-        Permissions.check(this, Manifest.permission.ACCESS_FINE_LOCATION, null, new PermissionHandler() {
-            @Override
-            public void onGranted() {
-                invokeApi();
+        invokeApi();
+
+        BottomNavigationView.OnNavigationItemSelectedListener
+                mOnNavigationItemSelectedListener = item -> {
+            switch (item.getItemId()) {
+                case R.id.navigation_dashboard_home:
+                    dashboardViewFlipper.setDisplayedChild(0);
+                    return true;
+                case R.id.navigation_dashboard_calendar:
+                    dashboardViewFlipper.setDisplayedChild(1);
+                    return true;
+                case R.id.navigation_dashboard_notifications:
+                    dashboardViewFlipper.setDisplayedChild(2);
+                    return true;
+                case R.id.navigation_dashboard_account:
+                    dashboardViewFlipper.setDisplayedChild(3);
+                    return true;
             }
 
-            @Override
-            public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                finish();
-            }
-        });
+            return false;
+        };
 
         dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.navigation);
@@ -94,6 +78,7 @@ public class DashboardActivity extends AppCompatActivity {
             this.mGoogleFitApi = new StepCountSensor(this, stepCountTextView);
         } catch (Exception e) {
             e.printStackTrace();
+            startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
         }
     }
 
@@ -107,8 +92,10 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        ((StepCountSensor) this.mGoogleFitApi).unregisterFitnessDataListener();
+    protected void onPause() {
+        super.onPause();
+        if (this.mGoogleFitApi != null && this.mCurrentUser != null) {
+            ((StepCountSensor) this.mGoogleFitApi).unregisterFitnessDataListener();
+        }
     }
 }

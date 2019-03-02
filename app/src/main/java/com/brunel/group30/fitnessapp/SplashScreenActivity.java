@@ -1,5 +1,7 @@
 package com.brunel.group30.fitnessapp;
 
+import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +24,10 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
+import com.nabinbhandari.android.permissions.PermissionHandler;
+import com.nabinbhandari.android.permissions.Permissions;
+
+import java.util.ArrayList;
 
 public class SplashScreenActivity extends AppCompatActivity {
     private final static int NEXT_ACTIVITY_DELAY = 750;
@@ -89,6 +95,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                 }
             });
         } else {
+            requestPermissions();
             nextActivity(DashboardActivity.class);
         }
     }
@@ -141,5 +148,18 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 new Gson().toJson(this.userInfo))),
                 NEXT_ACTIVITY_DELAY
         );
+    }
+
+    private void requestPermissions() {
+        Permissions.check(this, Manifest.permission.ACCESS_FINE_LOCATION,
+                null, new PermissionHandler() {
+                    @Override
+                    public void onGranted() { }
+
+                    @Override
+                    public void onDenied(Context context, ArrayList<String> deniedPermissions) {
+                        finish();
+                    }
+                });
     }
 }
