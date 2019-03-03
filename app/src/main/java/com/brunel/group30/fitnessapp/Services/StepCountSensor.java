@@ -22,6 +22,7 @@ public class StepCountSensor extends GoogleFitApi {
     private OnDataPointListener mListener;
     private static final String TAG = "StepSensorsApi";
     private TextView stepCountTextView;
+
     /**
      * Finds available data sources and attempts to register on a specific {@link DataType}.
      */
@@ -70,7 +71,7 @@ public class StepCountSensor extends GoogleFitApi {
                         Log.i(TAG, "Detected DataPoint value: " + val);
 
                         if (dataPoint.getDataType().equals(DataType.TYPE_STEP_COUNT_CUMULATIVE)) {
-                            this.stepCountTextView.setText(val.toString());
+                            this.getDailyStepCount();
                         }
                     }
                 };
@@ -80,7 +81,7 @@ public class StepCountSensor extends GoogleFitApi {
                         new SensorRequest.Builder()
                                 .setDataSource(dataSource)
                                 .setDataType(dataType)
-                                .setSamplingRate(10, TimeUnit.SECONDS)
+                                .setSamplingRate(1, TimeUnit.SECONDS)
                                 .build(),
                         mListener)
                 .addOnCompleteListener(
@@ -134,19 +135,31 @@ public class StepCountSensor extends GoogleFitApi {
 
     @Override
     public void subscribe() {
-        if (super.mGoogleSignInAccount != null) {
-            Fitness.getRecordingClient(super.activity, super.mGoogleSignInAccount)
-                    .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+        if (mGoogleSignInAccount != null && !Utils.INSTANCE.isEmulator()) {
+            Fitness.getRecordingClient(activity, mGoogleSignInAccount)
+                    .subscribe(DataType.TYPE_STEP_COUNT_DELTA)
                     .addOnCompleteListener(
                             task -> {
                                 if (task.isSuccessful()) {
-                                    Log.i(TAG, "Successfully subscribed!");
+                                    Log.i(TAG, "Successfully subscribed! "
+                                            + DataType.TYPE_STEP_COUNT_DELTA);
                                 } else {
                                     Log.w(TAG, "There was a problem subscribing.",
                                             task.getException());
                                 }
+                            });
 
-                                this.getDailyStepCount();
+            Fitness.getRecordingClient(activity, mGoogleSignInAccount)
+                    .subscribe(DataType.TYPE_STEP_COUNT_CUMULATIVE)
+                    .addOnCompleteListener(
+                            task -> {
+                                if (task.isSuccessful()) {
+                                    Log.i(TAG, "Successfully subscribed! "
+                                            + DataType.TYPE_STEP_COUNT_CUMULATIVE);
+                                } else {
+                                    Log.w(TAG, "There was a problem subscribing.",
+                                            task.getException());
+                                }
                             });
         }
     }

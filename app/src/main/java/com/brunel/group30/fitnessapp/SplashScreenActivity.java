@@ -14,7 +14,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.Scope;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,6 +54,9 @@ public class SplashScreenActivity extends AppCompatActivity {
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.web_client_id))
                         .requestEmail()
+                        .requestScopes(new Scope(Scopes.FITNESS_LOCATION_READ))
+                        .requestScopes(new Scope(Scopes.FITNESS_BODY_READ_WRITE))
+                        .requestScopes(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
                         .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 

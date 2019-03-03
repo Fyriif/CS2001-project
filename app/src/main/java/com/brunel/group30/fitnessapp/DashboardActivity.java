@@ -80,7 +80,9 @@ public class DashboardActivity extends AppCompatActivity {
 
     void invokeApi() {
         try {
-            this.mGoogleFitApi = new StepCountSensor(this, stepCountTextView);
+            if (this.mGoogleFitApi == null) {
+                this.mGoogleFitApi = new StepCountSensor(this, stepCountTextView);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
