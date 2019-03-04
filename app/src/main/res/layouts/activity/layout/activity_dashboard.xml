@@ -10,34 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <ViewFlipper
+            android:id="@+id/view_dashboard"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:inAnimation="@anim/slide_in_right"
+            android:outAnimation="@anim/slide_out_left">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <include layout="@layout/fragment_dashboard_home" />
+            <include layout="@layout/fragment_dashboard_calendar" />
+            <include layout="@layout/fragment_dashboard_workouts" />
+            <include layout="@layout/fragment_dashboard_account" />
+        </ViewFlipper>
 
-                <ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/view_dashboard"
-                    android:layout_width="fill_parent"
-                    android:layout_height="match_parent"
-                    android:inAnimation="@android:anim/slide_in_left"
-                    android:outAnimation="@android:anim/slide_out_right">
-
-                    <include layout="@layout/fragment_dashboard_home" />
-
-                    <include layout="@layout/fragment_dashboard_calendar" />
-
-                    <include layout="@layout/fragment_dashboard_workouts" />
-
-                    <include layout="@layout/fragment_dashboard_account" />
-
-                </ViewFlipper>
-
-            </RelativeLayout>
-        </LinearLayout>
     </ScrollView>
 
     <android.support.design.widget.BottomNavigationView
