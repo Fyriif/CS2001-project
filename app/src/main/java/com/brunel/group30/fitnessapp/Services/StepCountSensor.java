@@ -18,18 +18,20 @@ import com.google.android.gms.fitness.request.SensorRequest;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
+
 public class StepCountSensor extends GoogleFitApi {
     private OnDataPointListener mListener;
     private static final String TAG = "StepSensorsApi";
-    private TextView stepCountTextView;
+    private CircularProgressIndicator stepCountCircularProgressIndicator;
 
     /**
      * Finds available data sources and attempts to register on a specific {@link DataType}.
      */
-    public StepCountSensor(Activity activity, TextView stepCountTextView) throws Exception {
+    public StepCountSensor(Activity activity, CircularProgressIndicator stepCountCircularProgressIndicator) throws Exception {
         super(activity);
 
-        this.stepCountTextView = stepCountTextView;
+        this.stepCountCircularProgressIndicator = stepCountCircularProgressIndicator;
 
         if (Utils.INSTANCE.isEmulator()) {
             this.getDailyStepCount();
@@ -121,13 +123,13 @@ public class StepCountSensor extends GoogleFitApi {
                         if (results.size() > 0) {
                             DataPoint dataPoint = results.get(0);
                             if (Utils.INSTANCE.isDateToday(dataPoint.getTimestamp(TimeUnit.MILLISECONDS))) {
-                                this.stepCountTextView.setText(String.valueOf(
-                                        dataPoint.getValue(Field.FIELD_STEPS).asInt()));
+                                this.stepCountCircularProgressIndicator.setCurrentProgress(
+                                        dataPoint.getValue(Field.FIELD_STEPS).asInt());
                             } else {
-                                this.stepCountTextView.setText("0");
+                                this.stepCountCircularProgressIndicator.setCurrentProgress(0);
                             }
                         } else {
-                            this.stepCountTextView.setText("0");
+                            this.stepCountCircularProgressIndicator.setCurrentProgress(0);
                         }
                     }
                 });

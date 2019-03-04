@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
+import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
+
 public class DashboardActivity extends AppCompatActivity {
     GoogleFitApi mGoogleFitApi;
 
@@ -25,7 +27,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     private UserInfo userInfo;
 
-    private TextView stepCountTextView;
+    private CircularProgressIndicator stepCountCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
 
     @Override
@@ -35,7 +37,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         FastSave.init(getApplicationContext());
 
-        this.stepCountTextView = findViewById(R.id.text_view_step_count);
+        this.stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
+        this.stepCountCircularProgressIndicator.setMaxProgress(10000);
 
         this.mAuth = FirebaseAuth.getInstance();
         this.mCurrentUser = this.mAuth.getCurrentUser();
@@ -81,7 +84,8 @@ public class DashboardActivity extends AppCompatActivity {
     void invokeApi() {
         try {
             if (this.mGoogleFitApi == null) {
-                this.mGoogleFitApi = new StepCountSensor(this, stepCountTextView);
+                this.mGoogleFitApi = new StepCountSensor(this,
+                        this.stepCountCircularProgressIndicator);
             }
         } catch (Exception e) {
             e.printStackTrace();
