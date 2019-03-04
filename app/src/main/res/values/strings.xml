@@ -67,5 +67,10 @@
     <string name="title_workouts">Workouts</string>
     <string name="title_my_account">My Account</string>
     <string name="title_calendar">Calendar</string>
+    <string name="title_calendar_dialog">Record Data</string>
+    <string name="enter_weight">Enter Weight</string>
+    <string name="enter_calories">Enter Calories (Intake per day) </string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="enter_hydration">Litres of Water (Estimate)</string>
     <string name="homepage_title">Hope you had a great day, let\'s get working!</string>
 </resources>
