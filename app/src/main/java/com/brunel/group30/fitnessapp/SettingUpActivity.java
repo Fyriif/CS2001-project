@@ -112,21 +112,7 @@ public class SettingUpActivity extends AppCompatActivity {
     public void nextFragment(View v) {
         switch (this.mViewPager.getCurrentItem() + 1) {
             case 1:
-                EditText forenameEditText = findViewById(R.id.edit_text_forename);
-                EditText surnameEditText = findViewById(R.id.edit_text_surname);
                 EditText dobEditText = findViewById(R.id.edit_text_dob);
-
-                if (forenameEditText.getText().toString().isEmpty()) {
-                    forenameEditText.setError(getString(R.string.error_field_empty));
-                } else {
-                    forenameEditText.setError(null);
-                }
-
-                if (surnameEditText.getText().toString().isEmpty()) {
-                    surnameEditText.setError(getString(R.string.error_field_empty));
-                } else {
-                    surnameEditText.setError(null);
-                }
 
                 if (dobEditText.getText().toString().isEmpty()) {
                     dobEditText.setError(getString(R.string.error_field_empty));
@@ -134,12 +120,9 @@ public class SettingUpActivity extends AppCompatActivity {
                     dobEditText.setError(null);
                 }
 
-                if (forenameEditText.getError() == null &&
-                        surnameEditText.getError() == null &&
-                        dobEditText.getError() == null) {
+                if (dobEditText.getError() == null) {
 
-                    this.userInfo.setForename(forenameEditText.getText().toString());
-                    this.userInfo.setSurname(surnameEditText.getText().toString());
+                    this.userInfo.setName(this.currentUser.getDisplayName());
 
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }

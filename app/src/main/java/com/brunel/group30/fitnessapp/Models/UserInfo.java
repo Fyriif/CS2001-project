@@ -9,11 +9,8 @@ public class UserInfo {
 
     public static final String COLLECTION_NAME = "user-info";
 
-    @PropertyName("forename")
-    private String forename;
-
-    @PropertyName("surname")
-    private String surname;
+    @PropertyName("name")
+    private String name;
 
     @PropertyName("dob")
     private String dob;
@@ -40,26 +37,17 @@ public class UserInfo {
 
     }
 
-    public UserInfo(String forename, String surname, String dob) {
-        this.forename = forename;
-        this.surname = surname;
+    public UserInfo(String name, String surname, String dob) {
+        this.name = name;
         this.dob = dob;
     }
 
-    public String getForename() {
-        return forename;
+    public String getName() {
+        return name;
     }
 
-    public void setForename(String forename) {
-        this.forename = forename;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getDob() {
