@@ -73,4 +73,7 @@
     <string name="btn_confirm">Confirm</string>
     <string name="enter_hydration">Litres of Water (Estimate)</string>
     <string name="homepage_title">Hope you had a great day, let\'s get working!</string>
+    <string name="num_of_hours_worked_desc">Number of hours worked (per week)</string>
+    <string name="ttl_workouts_completed">Total workouts completed (per week)</string>
+    <string name="insights">Insights</string>
 </resources>
