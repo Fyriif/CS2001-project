@@ -7,7 +7,6 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.CalendarView;
-import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
@@ -61,7 +60,7 @@ public class DashboardActivity extends AppCompatActivity {
                     calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
                             -> Log.i("CalenderView", "Day selected: " + dayOfMonth));
                     return true;
-                case R.id.navigation_dashboard_notifications:
+                case R.id.navigation_dashboard_workouts:
                     dashboardViewFlipper.setDisplayedChild(2);
                     return true;
                 case R.id.navigation_dashboard_account:

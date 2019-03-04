@@ -19,7 +19,7 @@
 
             <include layout="@layout/fragment_dashboard_home" />
             <include layout="@layout/fragment_dashboard_calendar" />
-            <include layout="@layout/fragment_dashboard_notifications" />
+            <include layout="@layout/fragment_dashboard_workouts" />
             <include layout="@layout/fragment_dashboard_account" />
 
         </ViewFlipper>

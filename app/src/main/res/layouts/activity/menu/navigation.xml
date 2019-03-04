@@ -12,10 +12,9 @@
         android:title="@string/title_calendar" />
 
     <item
-        android:id="@+id/navigation_dashboard_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
-
+        android:id="@+id/navigation_dashboard_workouts"
+        android:icon="@drawable/ic_fitness_center_black_24dp"
+        android:title="@string/title_workouts" />
 
     <item
         android:id="@+id/navigation_dashboard_account"

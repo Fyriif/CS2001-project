@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/title_notifications"
+        android:text="@string/title_workouts"
         android:fontFamily="@font/questrial_regular"
         android:textSize="40sp"
         android:textColor="@color/textColorPrimary"/>
