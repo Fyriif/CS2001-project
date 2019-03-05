@@ -1,15 +1,20 @@
 package com.brunel.group30.fitnessapp;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.View;
 import android.widget.CalendarView;
+import android.widget.NumberPicker;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
@@ -26,6 +31,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     private UserInfo userInfo;
 
+    private CardView stepsCardView;
     private CircularProgressIndicator stepCountCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
 
@@ -74,6 +80,18 @@ public class DashboardActivity extends AppCompatActivity {
         dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        this.stepsCardView = findViewById(R.id.card_view_steps);
+        stepsCardView.setOnClickListener(v -> {
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.dialog_insert_step_target);
+
+            CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
+            String[] valsToDisplay = numberPicker.getArrayWithSteps(500);
+            numberPicker.setDisplayedValues(valsToDisplay);
+            
+            dialog.show();
+        });
 
         Bundle bundle = getIntent().getExtras();
         this.userInfo = new Gson().fromJson(bundle != null ?

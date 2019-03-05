@@ -76,5 +76,6 @@
     <string name="num_of_hours_worked_desc">Number of hours worked (per week)</string>
     <string name="workouts_completed_desc">Total workouts completed (per week)</string>
     <string name="insights_desc">Insights</string>
-    <string name="progress_steps_pattern">Steps</string>
+    <string name="progress_steps_pattern">%.0f Steps</string>
+    <string name="title_step_target_dialog">Record Step Target</string>
 </resources>
