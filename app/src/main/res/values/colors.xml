@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#f1ea43</color>
-    <color name="colorPrimaryDark">#26273a</color>
+    <color name="colorPrimaryDark">@color/colorAccent</color>
     <color name="colorAccent">#26273a</color>
     <color name="textColorPrimary">#000000</color>
     <color name="textColorSecondary">#ffffff</color>
+    <color name="ic_launcher_background">@color/colorAccent</color>
 </resources>
