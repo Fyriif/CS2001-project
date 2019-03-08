@@ -31,7 +31,6 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
     private UserInfo userInfo;
 
-    private CardView stepsCardView;
     private CircularProgressIndicator stepCountCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
 
@@ -64,7 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
                     dashboardViewFlipper.setDisplayedChild(1);
                     CalendarView calendarView = findViewById(R.id.calendar_view);
                     calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
-                            -> Log.i("CalenderView", "Day selected: " + dayOfMonth));
+                            -> recordDataForDate());
                     return true;
                 case R.id.navigation_dashboard_workouts:
                     dashboardViewFlipper.setDisplayedChild(2);
@@ -80,18 +79,6 @@ public class DashboardActivity extends AppCompatActivity {
         dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        this.stepsCardView = findViewById(R.id.card_view_steps);
-        stepsCardView.setOnClickListener(v -> {
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.dialog_insert_step_target);
-
-            CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
-            String[] valsToDisplay = numberPicker.getArrayWithSteps(500);
-            numberPicker.setDisplayedValues(valsToDisplay);
-            
-            dialog.show();
-        });
 
         Bundle bundle = getIntent().getExtras();
         this.userInfo = new Gson().fromJson(bundle != null ?
@@ -125,5 +112,24 @@ public class DashboardActivity extends AppCompatActivity {
         if (this.mGoogleFitApi != null && this.mCurrentUser != null) {
             ((StepCountSensor) this.mGoogleFitApi).unregisterFitnessDataListener();
         }
+    }
+
+    public void stepCountTarget(View v) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_insert_step_target);
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> dialog.dismiss());
+
+        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
+        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
+
+        dialog.show();
+    }
+
+    private void recordDataForDate() {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_insert_data_calendar);
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> dialog.dismiss());
+
+        dialog.show();
     }
 }

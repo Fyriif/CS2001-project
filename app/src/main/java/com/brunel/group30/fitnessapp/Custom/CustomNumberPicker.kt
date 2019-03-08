@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.NumberPicker
 import com.brunel.group30.fitnessapp.R
+import java.text.NumberFormat
+import java.util.*
 
 
 class CustomNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(context, attrs) {
@@ -30,7 +32,8 @@ class CustomNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(c
 
         val arrayValues = arrayOfNulls<String>(iStepsArray)
         for (i in 0 until iStepsArray) {
-            arrayValues[i] = (this.minValue + i * iStep).toString()
+            arrayValues[i] = NumberFormat.getNumberInstance(Locale.getDefault())
+                    .format(this.minValue + i * iStep).toString()
         }
 
         this.minValue = 0
