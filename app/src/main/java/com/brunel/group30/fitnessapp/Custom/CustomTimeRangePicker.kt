@@ -22,7 +22,7 @@ class CustomTimeRangePicker(context: Context) : Dialog(context) {
     lateinit var startTimePicker: TimePicker
     lateinit var endTimePicker: TimePicker
 
-    override fun onCreate(savedInstanceState: Bundle) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.dialog_custom_time_range_picker)
@@ -32,13 +32,11 @@ class CustomTimeRangePicker(context: Context) : Dialog(context) {
         this.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         val cancelBtn = findViewById<Button>(R.id.button_cancel)
-        setTimeRangeBtn = findViewById(R.id.button_set_time)
-
         cancelBtn.setOnClickListener { cancel() }
-        setTimeRangeBtn.setOnClickListener { dismiss() }
 
-        startTimePicker = findViewById(R.id.time_picker_start)
-        endTimePicker = findViewById(R.id.time_picker_end)
+        this.setTimeRangeBtn = findViewById(R.id.button_set_time)
+        this.startTimePicker = findViewById(R.id.time_picker_start)
+        this.endTimePicker = findViewById(R.id.time_picker_end)
 
         val tabLayout = findViewById<TabLayout>(R.id.tab_layout)
         tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {

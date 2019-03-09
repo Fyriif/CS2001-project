@@ -80,7 +80,7 @@ public class SettingUpActivity extends AppCompatActivity {
         this.currentUser = this.mAuth.getCurrentUser();
 
         Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in) + ": "
-                        + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
+                + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
         this.userInfo = new UserInfo();
         this.calendar = Calendar.getInstance();
@@ -121,9 +121,6 @@ public class SettingUpActivity extends AppCompatActivity {
                 }
 
                 if (dobEditText.getError() == null) {
-
-                    this.userInfo.setName(this.currentUser.getDisplayName());
-
                     this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
                 }
 
@@ -247,39 +244,36 @@ public class SettingUpActivity extends AppCompatActivity {
             this.rangeTimePickerDialog.show();
 
             this.rangeTimePickerDialog.setOnCancelListener(dialog -> dayCheckBox.setChecked(false));
-            this.rangeTimePickerDialog.getSetTimeRangeBtn().setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int startTimeHour = rangeTimePickerDialog.getStartTimePicker().getCurrentHour();
-                    int startTimeMin = rangeTimePickerDialog.getStartTimePicker().getCurrentMinute();
-                    int endTimeHour = rangeTimePickerDialog.getEndTimePicker().getCurrentHour();
-                    int endTimeMin = rangeTimePickerDialog.getEndTimePicker().getCurrentMinute();
+            this.rangeTimePickerDialog.getSetTimeRangeBtn().setOnClickListener(v1 -> {
+                int startTimeHour = rangeTimePickerDialog.getStartTimePicker().getCurrentHour();
+                int startTimeMin = rangeTimePickerDialog.getStartTimePicker().getCurrentMinute();
+                int endTimeHour = rangeTimePickerDialog.getEndTimePicker().getCurrentHour();
+                int endTimeMin = rangeTimePickerDialog.getEndTimePicker().getCurrentMinute();
 
-                    if (endTimeHour > startTimeHour) {
-                        addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),
-                                startTimeHour, startTimeMin, endTimeHour, endTimeMin);
-                        rangeTimePickerDialog.dismiss();
-                    } else if (endTimeHour == startTimeHour && endTimeMin > startTimeMin) {
-                        addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),
-                                startTimeHour, startTimeMin, endTimeHour, endTimeMin);
-                        rangeTimePickerDialog.dismiss();
-                    } else {
-                        Toast.makeText(SettingUpActivity.this,
-                                R.string.error_time_greater,
-                                Toast.LENGTH_SHORT).show();
-                    }
+                if (endTimeHour > startTimeHour) {
+                    addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),
+                            startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+                    rangeTimePickerDialog.dismiss();
+                } else if (endTimeHour == startTimeHour && endTimeMin > startTimeMin) {
+                    addToWorkOutTimes(Day.valueOf(dayCheckBox.getText().toString().toUpperCase()),
+                            startTimeHour, startTimeMin, endTimeHour, endTimeMin);
+                    rangeTimePickerDialog.dismiss();
+                } else {
+                    Toast.makeText(SettingUpActivity.this,
+                            R.string.error_time_greater,
+                            Toast.LENGTH_SHORT).show();
                 }
             });
         } else {
             this.workOutTimes.remove(Day.valueOf(dayCheckBox.getText().toString().toUpperCase())
-                    .toString());
+                    .toString().toLowerCase());
         }
     }
 
     void addToWorkOutTimes(Day day, int startTimeHour, int startTimeMin,
                            int endTimeHour, int endTimeMin) {
-        workOutTimes.put(day.toString(), Arrays.asList(startTimeHour + ":" + startTimeMin,
-                    endTimeHour + ":" + endTimeMin));
+        workOutTimes.put(day.toString().toLowerCase(), Arrays.asList(startTimeHour + ":" + startTimeMin,
+                endTimeHour + ":" + endTimeMin));
     }
 
     /**
