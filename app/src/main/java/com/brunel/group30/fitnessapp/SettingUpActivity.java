@@ -298,16 +298,17 @@ public class SettingUpActivity extends AppCompatActivity {
             if (this.workOutTimes != null && !this.workOutTimes.isEmpty()) {
                 this.userInfo.setWorkOutDays(this.workOutTimes);
 
-                FastSave.init(getApplicationContext());
-                FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, this.userInfo);
-
                 firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
                         .document(currentUser.getUid())
                         .set(this.userInfo)
-                        .addOnSuccessListener(aVoid -> startActivity(
-                                new Intent(getApplicationContext(), DashboardActivity.class)
-                                        .putExtra(UserInfo.COLLECTION_NAME,
-                                                new Gson().toJson(this.userInfo))))
+                        .addOnSuccessListener(aVoid -> {
+                            FastSave.init(getApplicationContext());
+                            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, this.userInfo);
+
+                            startActivity(new Intent(getApplicationContext(), DashboardActivity.class)
+                                    .putExtra(UserInfo.COLLECTION_NAME,
+                                            new Gson().toJson(this.userInfo)));
+                        })
                         // TODO: improve error here
                         .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),
                                 "Error writing document", Toast.LENGTH_LONG).show());

@@ -3,38 +3,34 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
-var weekday = new Array(7);
-weekday[0] =  "Sunday";
-weekday[1] = "Monday";
-weekday[2] = "Tuesday";
-weekday[3] = "Wednesday";
-weekday[4] = "Thursday";
-weekday[5] = "Friday";
-weekday[6] = "Saturday";
+function dayOfWeekAsString(dayIndex) {
+    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex];
+}
 
 exports.sendWorkOutNotification = functions
     .region('europe-west1')
     .https.onRequest((req, res) => {
+        var now = new Date();
+
         admin.firestore().collection('notification-tokens').get().then(snapshot => {
-            var userUids = [];
+            var users = [];
             snapshot.forEach(doc => {
                 var user = {
                     uid: doc.id,
                     token: doc.data().token,
+                    timeZone: doc.data().time_zone,
                 };
-                userUids.push(user);
+                users.push(user);
             });
 
-            userUids.forEach(function(entry) {
+            users.forEach(function(entry) {
                 var docRef = admin.firestore().collection('user-info').doc(entry.uid);
                 docRef.get().then(function(doc) {
                     if (doc.exists) {
-                        const workOutDays = doc.data().workOutDays;
+                        const workOutDays = doc.data().work_out_days; 
+                        const userTime = new Date(Date.parse(new Date().toLocaleString("en-US", {timeZone: entry.timeZone})));
+                        const times = workOutDays[dayOfWeekAsString(userTime.getDay()).toLowerCase()];
 
-                        var d = new Date();
-                        var times = workOutDays[weekday[d.getDay()].toLowerCase()];
-
-                        // We have workout times
                         if (times.length > 0) {
                             var startTimeHour = times[0].split(":")[0].trim();
                             var startTimeMin = times[0].split(":")[1].trim();
@@ -42,7 +38,7 @@ exports.sendWorkOutNotification = functions
                             var endTimeHour = times[1].split(":")[0].trim();
                             var endTimeMin = times[1].split(":")[1].trim();
 
-                            if (startTimeHour == d.getHours() && startTimeMin == d.getMinutes()) {
+                            if (startTimeHour == userTime.getHours() && startTimeMin == userTime.getMinutes()) {
                                 const payload = {
                                     notification: {
                                         title: 'BFit: Workout Time!',
@@ -62,7 +58,7 @@ exports.sendWorkOutNotification = functions
                 })
             });
 
-            res.send(userUids)
+            res.send(users)
             return "";
         }).catch(reason => {
             res.send(reason)

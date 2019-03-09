@@ -16,10 +16,12 @@ import android.widget.ViewFlipper;
 import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
+import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
@@ -83,6 +85,8 @@ public class DashboardActivity extends AppCompatActivity {
         Bundle bundle = getIntent().getExtras();
         this.userInfo = new Gson().fromJson(bundle != null ?
                 bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
+
+        CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
     }
 
     void invokeApi() {

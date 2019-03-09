@@ -15,6 +15,21 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
+        <meta-data
+            android:name="firebase_messaging_auto_init_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="firebase_analytics_collection_enabled"
+            android:value="false" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/logo" />
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorPrimary" />
+
         <activity
             android:name=".DashboardActivity"
             android:noHistory="true" />
@@ -31,7 +46,7 @@
             android:name=".SettingUpActivity"
             android:noHistory="true" />
 
-        <service android:name=".Custom.CustomFirebaseMessagingService">
+        <service android:name=".Services.CustomFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
