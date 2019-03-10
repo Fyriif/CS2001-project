@@ -125,6 +125,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
         numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
+        numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
         dialog.show();
     }
