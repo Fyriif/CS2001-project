@@ -1,12 +1,13 @@
 package com.brunel.group30.fitnessapp.Services
 
 import android.content.Context
-import android.widget.Toast
 import com.appizona.yehiahd.fastsave.FastSave
 import com.brunel.group30.fitnessapp.Models.NotificationToken
+import com.brunel.group30.fitnessapp.Models.UserInfo
+import com.brunel.group30.fitnessapp.Utils.Exceptions
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -51,13 +52,19 @@ class CustomFirebaseMessagingService : FirebaseMessagingService() {
             val notificationToken = NotificationToken(token, TimeZone.getDefault().id)
             FastSave.getInstance().saveObject(NotificationToken.PREF_KEY_NAME, notificationToken)
 
-            FirebaseFirestore.getInstance().collection(NotificationToken.COLLECTION_NAME)
-                    .document(FirebaseAuth.getInstance().currentUser?.uid.toString())
-                    .set(notificationToken)
-                    .addOnFailureListener {
-                        Toast.makeText(applicationContext, "Error writing document",
-                                Toast.LENGTH_LONG).show()
-                    }
+            val userUid: String = FirebaseAuth.getInstance().currentUser?.uid.toString();
+            val task: Task<Void> = CustomFirebaseFirestoreService.sendDocument(
+                    NotificationToken.COLLECTION_NAME,
+                    userUid,
+                    notificationToken
+            )
+
+            task.addOnFailureListener {
+                Exceptions.FirestoreExceptions.errorFailedToWriteDocument(
+                        UserInfo.COLLECTION_NAME,
+                        userUid
+                )
+            }
         }
     }
 }

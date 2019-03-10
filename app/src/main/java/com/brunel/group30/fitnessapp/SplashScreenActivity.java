@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
+import com.brunel.group30.fitnessapp.Services.CustomFirebaseFirestoreService;
+import com.brunel.group30.fitnessapp.Utils.Exceptions;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -22,9 +24,7 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 import com.nabinbhandari.android.permissions.PermissionHandler;
 import com.nabinbhandari.android.permissions.Permissions;
@@ -38,7 +38,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore firebaseDatabase;
     private FirebaseUser user;
 
     UserInfo userInfo;
@@ -61,7 +60,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         this.mAuth = FirebaseAuth.getInstance();
-        this.firebaseDatabase = FirebaseFirestore.getInstance();
     }
 
     @Override
@@ -85,25 +83,26 @@ public class SplashScreenActivity extends AppCompatActivity {
     void isUserSetUp() {
         this.userInfo = FastSave.getInstance().getObject(user.getUid(), UserInfo.class);
         if (this.userInfo == null) {
-            DocumentReference docRef = this.firebaseDatabase.collection(
-                    UserInfo.COLLECTION_NAME)
-                    .document(user.getUid());
+            Task<DocumentSnapshot> userDocTask = CustomFirebaseFirestoreService.INSTANCE.getDocument(
+                    UserInfo.COLLECTION_NAME,
+                    user.getUid()
+            );
 
-            docRef.get().addOnCompleteListener(this, task -> {
-                if (task.isComplete() && task.isSuccessful()) {
-                    DocumentSnapshot documentResult = task.getResult();
-                    if (documentResult != null && documentResult.exists()) {
-                        this.userInfo = documentResult.toObject(UserInfo.class);
-                        FastSave.getInstance().saveObject(user.getUid(), this.userInfo);
-                        nextActivity(DashboardActivity.class);
-                    } else {
-                        nextActivity(SettingUpActivity.class);
-                    }
+            userDocTask.addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.exists()) {
+                    userInfo = documentSnapshot.toObject(UserInfo.class);
+                    FastSave.getInstance().saveObject(user.getUid(), userInfo);
+                    nextActivity(DashboardActivity.class);
                 } else {
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_auth_failed),
-                            Toast.LENGTH_SHORT).show();
+                    nextActivity(SettingUpActivity.class);
                 }
+            });
+
+            userDocTask.addOnFailureListener(e -> {
+                Exceptions.FirestoreExceptions.errorFailedToGetDocument(
+                        UserInfo.COLLECTION_NAME,
+                        mAuth.getUid()
+                );
             });
         } else {
             nextActivity(DashboardActivity.class);

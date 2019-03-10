@@ -6,11 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
-import android.widget.NumberPicker;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
@@ -21,7 +18,6 @@ import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;

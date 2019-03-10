@@ -26,9 +26,11 @@ import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
+import com.brunel.group30.fitnessapp.Services.CustomFirebaseFirestoreService;
+import com.brunel.group30.fitnessapp.Utils.Exceptions;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.Gson;
 
 import java.text.DateFormat;
@@ -46,7 +48,6 @@ public class SettingUpActivity extends AppCompatActivity {
     private CustomViewPager mViewPager;
 
     private FirebaseAuth mAuth;
-    private FirebaseFirestore firebaseDatabase;
     private FirebaseUser currentUser;
 
     private UserInfo userInfo;
@@ -75,7 +76,6 @@ public class SettingUpActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setSwipeable(false);
 
-        this.firebaseDatabase = FirebaseFirestore.getInstance();
         this.mAuth = FirebaseAuth.getInstance();
         this.currentUser = this.mAuth.getCurrentUser();
 
@@ -298,20 +298,27 @@ public class SettingUpActivity extends AppCompatActivity {
             if (this.workOutTimes != null && !this.workOutTimes.isEmpty()) {
                 this.userInfo.setWorkOutDays(this.workOutTimes);
 
-                firebaseDatabase.collection(UserInfo.COLLECTION_NAME)
-                        .document(currentUser.getUid())
-                        .set(this.userInfo)
-                        .addOnSuccessListener(aVoid -> {
-                            FastSave.init(getApplicationContext());
-                            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, this.userInfo);
+                Task<Void> sendUserDataTask = CustomFirebaseFirestoreService.INSTANCE.sendDocument(
+                        UserInfo.COLLECTION_NAME,
+                        currentUser.getUid(),
+                        this.userInfo
+                );
 
-                            startActivity(new Intent(getApplicationContext(), DashboardActivity.class)
-                                    .putExtra(UserInfo.COLLECTION_NAME,
-                                            new Gson().toJson(this.userInfo)));
-                        })
-                        // TODO: improve error here
-                        .addOnFailureListener(e -> Toast.makeText(getApplicationContext(),
-                                "Error writing document", Toast.LENGTH_LONG).show());
+                sendUserDataTask.addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        FastSave.init(getApplicationContext());
+                        FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+
+                        startActivity(new Intent(getApplicationContext(), DashboardActivity.class)
+                                .putExtra(UserInfo.COLLECTION_NAME,
+                                        new Gson().toJson(userInfo)));
+                    } else {
+                        Exceptions.FirestoreExceptions.errorFailedToWriteDocument(
+                                UserInfo.COLLECTION_NAME,
+                                currentUser.getUid()
+                        );
+                    }
+                });
             }
         }
     }
