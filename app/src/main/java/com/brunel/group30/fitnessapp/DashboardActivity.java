@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.CalendarView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
+import com.brunel.group30.fitnessapp.Enums.BMI;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
@@ -83,6 +85,8 @@ public class DashboardActivity extends AppCompatActivity {
                 bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
 
         CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
+
+        Log.i("BMI", BMI.Companion.getString(this.userInfo.calculateBMI()).toString());
     }
 
     void invokeApi() {

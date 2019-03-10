@@ -94,4 +94,13 @@ public class UserInfo {
     public void setWorkOutDays(HashMap<String, List<String>> workOutDays) {
         this.workOutDays = workOutDays;
     }
+
+    public double calculateBMI (){
+        double height = this.getHeight();
+        double weight = this.getWeight();
+
+        double heightInMeters = height / 100;
+
+        return weight / (heightInMeters * height);
+    }
 }
