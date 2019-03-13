@@ -57,19 +57,27 @@ public class DashboardActivity extends AppCompatActivity {
                 mOnNavigationItemSelectedListener = item -> {
             switch (item.getItemId()) {
                 case R.id.navigation_dashboard_home:
-                    dashboardViewFlipper.setDisplayedChild(0);
+                    if (dashboardViewFlipper.getCurrentView() != dashboardViewFlipper.getChildAt(0)) {
+                        dashboardViewFlipper.setDisplayedChild(0);
+                    }
                     return true;
                 case R.id.navigation_dashboard_calendar:
-                    dashboardViewFlipper.setDisplayedChild(1);
-                    CalendarView calendarView = findViewById(R.id.calendar_view);
-                    calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
-                            -> recordDataForDate());
+                    if (dashboardViewFlipper.getCurrentView() != dashboardViewFlipper.getChildAt(1)) {
+                        dashboardViewFlipper.setDisplayedChild(1);
+                        CalendarView calendarView = findViewById(R.id.calendar_view);
+                        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
+                                -> recordDataForDate());
+                    }
                     return true;
                 case R.id.navigation_dashboard_workouts:
-                    dashboardViewFlipper.setDisplayedChild(2);
+                    if (dashboardViewFlipper.getCurrentView() != dashboardViewFlipper.getChildAt(2)) {
+                        dashboardViewFlipper.setDisplayedChild(2);
+                    }
                     return true;
                 case R.id.navigation_dashboard_account:
-                    dashboardViewFlipper.setDisplayedChild(3);
+                    if (dashboardViewFlipper.getCurrentView() != dashboardViewFlipper.getChildAt(3)) {
+                        dashboardViewFlipper.setDisplayedChild(3);
+                    }
                     return true;
             }
 
