@@ -8,6 +8,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ViewFlipper;
 
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
+import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class DashboardActivity extends AppCompatActivity {
     GoogleFitApi mGoogleFitApi;
@@ -33,6 +35,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private CircularProgressIndicator stepCountCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
+
+    ZBarScannerView mScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,9 @@ public class DashboardActivity extends AppCompatActivity {
                         CalendarView calendarView = findViewById(R.id.calendar_view);
                         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
                                 -> recordDataForDate());
+
+                        Button barcodeScannerBtn = findViewById(R.id.button_barcode_scanner);
+                        barcodeScannerBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), BarcodeScannerActivity.class)));
                     }
                     return true;
                 case R.id.navigation_dashboard_workouts:
@@ -115,14 +122,6 @@ public class DashboardActivity extends AppCompatActivity {
             if (requestCode == GoogleFitApi.REQUEST_OAUTH_REQUEST_CODE) {
                 mGoogleFitApi.subscribe();
             }
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        if (this.mGoogleFitApi != null && this.mCurrentUser != null) {
-            ((StepCountSensor) this.mGoogleFitApi).unregisterFitnessDataListener();
         }
     }
 
