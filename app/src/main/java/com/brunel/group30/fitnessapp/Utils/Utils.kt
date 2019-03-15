@@ -30,4 +30,10 @@ object Utils {
 
         return getDate > startDate
     }
+
+    fun getTimeDateInMillis(): Long {
+        val calendar = Calendar.getInstance()
+
+        return calendar.timeInMillis
+    }
 }

@@ -2,11 +2,17 @@ package com.brunel.group30.fitnessapp.Services;
 
 import android.app.Activity;
 
+import com.brunel.group30.fitnessapp.Models.Product;
 import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.fitness.FitnessOptions;
+import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.DataSource;
 import com.google.android.gms.fitness.data.DataType;
+import com.google.android.gms.fitness.data.Field;
+
+import java.util.concurrent.TimeUnit;
 
 public class GoogleFitApi {
     private static final String TAG = "GoogleFitApi";
@@ -30,6 +36,7 @@ public class GoogleFitApi {
                         .addDataType(DataType.TYPE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE)
                         .addDataType(DataType.AGGREGATE_STEP_COUNT_DELTA, FitnessOptions.ACCESS_WRITE)
                         .addDataType(DataType.TYPE_STEP_COUNT_CUMULATIVE, FitnessOptions.ACCESS_WRITE)
+                        .addDataType(DataType.TYPE_NUTRITION, FitnessOptions.ACCESS_WRITE)
                         .build();
 
         if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(this.activity), fitnessOptions)) {
@@ -47,5 +54,24 @@ public class GoogleFitApi {
         if (mGoogleSignInAccount != null && !Utils.INSTANCE.isEmulator()) {
 
         }
+    }
+
+    public static void sendNutritionalData(Product product) {
+        DataSource nutritionSource = new DataSource.Builder()
+                .setType(DataSource.TYPE_RAW)
+                .setDataType(DataType.TYPE_NUTRITION)
+                .build();
+
+        DataPoint food = DataPoint.create(nutritionSource);
+        food.setTimestamp(Utils.INSTANCE.getTimeDateInMillis(), TimeUnit.MILLISECONDS);
+        food.getValue(Field.FIELD_FOOD_ITEM).setString(product.getName());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_FAT, product.getNutriments().getFat());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SODIUM, product.getNutriments().getSodium());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SATURATED_FAT, product.getNutriments().getSaturatedFat());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_PROTEIN, product.getNutriments().getProtein());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_CARBS, product.getNutriments().getCarbohydrates());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, product.getNutriments().getCalories());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, product.getNutriments().getSugar());
+        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, product.getNutriments().getFiber());
     }
 }
