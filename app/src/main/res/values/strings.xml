@@ -79,4 +79,8 @@
     <string name="insights_title">Insights</string>
     <string name="progress_steps_pattern">%.0f Steps</string>
     <string name="title_step_target_dialog">Step Target</string>
+    <string name="progress_nutrients_weight">0kg</string>
+    <string name="nutrients_calories_title">Calories Intake</string>
+    <string name="hydration_data_title">Amount of water (litres/day)</string>
+    <string name="nutrients_add_barcode_title">Add nutrients with barcode</string>
 </resources>

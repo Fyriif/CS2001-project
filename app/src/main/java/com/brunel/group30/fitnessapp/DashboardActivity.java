@@ -5,17 +5,18 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CalendarView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
+import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
 import com.brunel.group30.fitnessapp.Enums.BMI;
+import com.brunel.group30.fitnessapp.Fragments.NutrientsPageAdapter;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
@@ -65,15 +66,16 @@ public class DashboardActivity extends AppCompatActivity {
                         dashboardViewFlipper.setDisplayedChild(0);
                     }
                     return true;
-                case R.id.navigation_dashboard_calendar:
+                case R.id.navigation_dashboard_nutrients:
                     if (dashboardViewFlipper.getCurrentView() != dashboardViewFlipper.getChildAt(1)) {
                         dashboardViewFlipper.setDisplayedChild(1);
-                        CalendarView calendarView = findViewById(R.id.calendar_view);
-                        calendarView.setOnDateChangeListener((view, year, month, dayOfMonth)
-                                -> recordDataForDate());
 
-                        Button barcodeScannerBtn = findViewById(R.id.button_barcode_scanner);
-                        barcodeScannerBtn.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), BarcodeScannerActivity.class)));
+                        TabLayout nutrientsTabLayout = findViewById(R.id.tabs_nutrients_fragment);
+                        CustomViewPager customViewPager = findViewById(R.id.view_pager_nutrients_fragment);
+                        NutrientsPageAdapter nutrientsPageAdapter = new NutrientsPageAdapter(getSupportFragmentManager());
+
+                        customViewPager.setAdapter(nutrientsPageAdapter);
+                        nutrientsTabLayout.setupWithViewPager(customViewPager);
                     }
                     return true;
                 case R.id.navigation_dashboard_workouts:
