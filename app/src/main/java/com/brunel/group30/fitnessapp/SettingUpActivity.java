@@ -28,7 +28,11 @@ import com.brunel.group30.fitnessapp.Enums.Location;
 import com.brunel.group30.fitnessapp.Models.Goals;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseFirestoreService;
+import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Utils.Exceptions;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -56,6 +60,9 @@ public class SettingUpActivity extends AppCompatActivity {
 
     private CustomTimeRangePicker rangeTimePickerDialog;
     private Calendar calendar;
+
+    CustomNumberPicker heightNumberPicker;
+    CustomNumberPicker weightNumberPicker;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -140,21 +147,36 @@ public class SettingUpActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 } else {
                     this.userInfo.setIsMale(maleRadioButton.isChecked());
-                    this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
+
+                    GoogleFitApi.getHeight(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
+                        List<DataPoint> dataPoints = dataReadResponse.getDataSets().get(0).getDataPoints();
+                        userInfo.setHeight(dataPoints.isEmpty() ? 175 : dataPoints.get(0).getValue(Field.FIELD_HEIGHT).asInt());
+
+                        heightNumberPicker = findViewById(R.id.number_picker_height);
+                        heightNumberPicker.setValue(userInfo.getHeight());
+
+                        mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                    });
                 }
 
                 break;
 
             case 3:
-                CustomNumberPicker heightNumberPicker = findViewById(R.id.number_picker_height);
-
                 this.userInfo.setHeight(heightNumberPicker.getValue());
-                this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
+
+                GoogleFitApi.getWeight(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
+                    List<DataPoint> dataPoints = dataReadResponse.getDataSets().get(0).getDataPoints();
+                    userInfo.setWeight(dataPoints.isEmpty() ? 75 : dataPoints.get(0).getValue(Field.FIELD_WEIGHT).asInt());
+
+                    weightNumberPicker = findViewById(R.id.number_picker_weight);
+                    weightNumberPicker.setValue(userInfo.getWeight());
+
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                });
 
                 break;
 
             case 4:
-                CustomNumberPicker weightNumberPicker = findViewById(R.id.number_picker_weight);
                 preferNotToSayRadioButton = findViewById(R.id.button_weight_prefer_not_to_say);
 
                 this.userInfo.setWeight(preferNotToSayRadioButton.isChecked() ?

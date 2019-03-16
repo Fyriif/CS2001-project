@@ -6,11 +6,16 @@ import com.brunel.group30.fitnessapp.Models.Product;
 import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.FitnessOptions;
 import com.google.android.gms.fitness.data.DataPoint;
 import com.google.android.gms.fitness.data.DataSource;
 import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
+import com.google.android.gms.fitness.request.DataReadRequest;
+import com.google.android.gms.fitness.result.DataReadResponse;
+import com.google.android.gms.fitness.result.DataReadResult;
+import com.google.android.gms.tasks.Task;
 
 import java.util.concurrent.TimeUnit;
 
@@ -73,5 +78,29 @@ public class GoogleFitApi {
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, product.getNutriments().getCalories());
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, product.getNutriments().getSugar());
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, product.getNutriments().getFiber());
+    }
+
+    public static Task<DataReadResponse> getHeight(Activity activity, GoogleSignInAccount account) {
+        DataReadRequest readHeightRequest = new DataReadRequest.Builder()
+                .read(DataType.TYPE_HEIGHT)
+                .setTimeRange(1, Utils.INSTANCE.getTimeDateInMillis(), TimeUnit.MILLISECONDS)
+                .setLimit(1)
+                .enableServerQueries()
+                .build();
+
+        return Fitness.getHistoryClient(
+                activity, account).readData(readHeightRequest);
+    }
+
+    public static Task<DataReadResponse> getWeight(Activity activity, GoogleSignInAccount account) {
+        DataReadRequest readWeightRequest = new DataReadRequest.Builder()
+                .read(DataType.TYPE_WEIGHT)
+                .setTimeRange(1, Utils.INSTANCE.getTimeDateInMillis(), TimeUnit.MILLISECONDS)
+                .setLimit(1)
+                .enableServerQueries()
+                .build();
+
+        return Fitness.getHistoryClient(
+                activity, account).readData(readWeightRequest);
     }
 }
