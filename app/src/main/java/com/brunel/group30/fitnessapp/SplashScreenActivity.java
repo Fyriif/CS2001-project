@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Models.Goals;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseFirestoreService;
 import com.brunel.group30.fitnessapp.Utils.Exceptions;
@@ -91,8 +92,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             userDocTask.addOnSuccessListener(documentSnapshot -> {
                 if (documentSnapshot.exists()) {
                     userInfo = documentSnapshot.toObject(UserInfo.class);
-                    FastSave.getInstance().saveObject(user.getUid(), userInfo);
-                    nextActivity(DashboardActivity.class);
+                    getGoals();
                 } else {
                     nextActivity(SettingUpActivity.class);
                 }
@@ -104,9 +104,24 @@ public class SplashScreenActivity extends AppCompatActivity {
                         mAuth.getUid()
                 );
             });
-        } else {
-            nextActivity(DashboardActivity.class);
         }
+    }
+
+    void getGoals() {
+        Task<DocumentSnapshot> goalsDocTask = CustomFirebaseFirestoreService.INSTANCE.getDocument(
+                Goals.COLLECTION_NAME,
+                user.getUid()
+        );
+
+        goalsDocTask.addOnSuccessListener(documentSnapshot -> {
+            if (documentSnapshot.exists()) {
+                userInfo.setGoals(documentSnapshot.toObject(Goals.class));
+                nextActivity(DashboardActivity.class);
+            } else {
+                nextActivity(SettingUpActivity.class);
+            }
+        });
+
     }
 
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {

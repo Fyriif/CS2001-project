@@ -25,6 +25,7 @@ import com.brunel.group30.fitnessapp.Custom.CustomTimeRangePicker;
 import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
+import com.brunel.group30.fitnessapp.Models.Goals;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseFirestoreService;
 import com.brunel.group30.fitnessapp.Utils.Exceptions;
@@ -305,20 +306,38 @@ public class SettingUpActivity extends AppCompatActivity {
                 );
 
                 sendUserDataTask.addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        FastSave.init(getApplicationContext());
-                        FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-
-                        startActivity(new Intent(getApplicationContext(), DashboardActivity.class)
-                                .putExtra(UserInfo.COLLECTION_NAME,
-                                        new Gson().toJson(userInfo)));
-                    } else {
+                    if (!task.isSuccessful()) {
                         Exceptions.FirestoreExceptions.errorFailedToWriteDocument(
                                 UserInfo.COLLECTION_NAME,
                                 currentUser.getUid()
                         );
                     }
                 });
+
+                Goals goals = new Goals(10000);
+                Task<Void> sendUserGoalsTask = CustomFirebaseFirestoreService.INSTANCE.sendDocument(
+                        Goals.COLLECTION_NAME,
+                        currentUser.getUid(),
+                        goals
+                );
+
+                sendUserGoalsTask.addOnCompleteListener(task -> {
+                    if (!task.isSuccessful()) {
+                        Exceptions.FirestoreExceptions.errorFailedToWriteDocument(
+                                Goals.COLLECTION_NAME,
+                                currentUser.getUid()
+                        );
+                    }
+                });
+
+                this.userInfo.setGoals(goals);
+
+                FastSave.init(getApplicationContext());
+                FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+
+                startActivity(new Intent(getApplicationContext(), DashboardActivity.class)
+                        .putExtra(UserInfo.COLLECTION_NAME,
+                                new Gson().toJson(userInfo)));
             }
         }
     }

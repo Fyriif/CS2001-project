@@ -1,5 +1,6 @@
 package com.brunel.group30.fitnessapp.Models;
 
+import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 
 import java.util.HashMap;
@@ -16,6 +17,9 @@ public class UserInfo {
     private boolean isDisabled;
     private HashMap<String, Boolean> locations;
     private HashMap<String, List<String>> workOutDays;
+
+    @Exclude
+    private Goals goals;
 
     public UserInfo() {
 
@@ -102,5 +106,15 @@ public class UserInfo {
         double heightInMeters = height / 100;
 
         return weight / (heightInMeters * height);
+    }
+
+    @Exclude
+    public Goals getGoals() {
+        return goals;
+    }
+
+    @Exclude
+    public void setGoals(Goals goals) {
+        this.goals = goals;
     }
 }

@@ -46,7 +46,6 @@ public class DashboardActivity extends AppCompatActivity {
         FastSave.init(getApplicationContext());
 
         this.stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
-        this.stepCountCircularProgressIndicator.setMaxProgress(10000);
 
         this.mAuth = FirebaseAuth.getInstance();
         this.mCurrentUser = this.mAuth.getCurrentUser();
@@ -101,6 +100,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
 
+        this.stepCountCircularProgressIndicator.setMaxProgress(userInfo.getGoals().getStepsTarget());
         Log.i("BMI", BMI.Companion.getString(this.userInfo.calculateBMI()).toString());
     }
 
@@ -128,9 +128,17 @@ public class DashboardActivity extends AppCompatActivity {
     public void stepCountTarget(View v) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_insert_step_target);
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> dialog.dismiss());
-
         CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
+
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userInfo.getGoals().setStepsTarget((numberPicker.getValue() + 1) * 1000);
+                userInfo.getGoals().updateDB(mCurrentUser.getUid());
+                dialog.dismiss();
+            }
+        });
+
         numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
         numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
