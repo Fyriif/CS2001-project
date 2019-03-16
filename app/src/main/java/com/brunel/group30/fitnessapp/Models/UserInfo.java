@@ -1,5 +1,7 @@
 package com.brunel.group30.fitnessapp.Models;
 
+import android.annotation.SuppressLint;
+
 import com.google.firebase.firestore.Exclude;
 import com.google.firebase.firestore.PropertyName;
 
@@ -99,13 +101,14 @@ public class UserInfo {
         this.workOutDays = workOutDays;
     }
 
+    @SuppressLint("DefaultLocale")
     public double calculateBMI (){
         double height = this.getHeight();
         double weight = this.getWeight();
 
         double heightInMeters = height / 100;
 
-        return weight / (heightInMeters * height);
+        return Double.parseDouble(String.format("%.2f", weight / (Math.pow(heightInMeters, 2))));
     }
 
     @Exclude

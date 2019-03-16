@@ -45,6 +45,7 @@ android {
                             'src/main/res/layouts/fragment',
                             'src/main/res/layouts/fragment/setting_up',
                             'src/main/res/layouts/dialog',
+                            'src/main/res/layouts/views',
                             'src/main/res'
                     ]
         }

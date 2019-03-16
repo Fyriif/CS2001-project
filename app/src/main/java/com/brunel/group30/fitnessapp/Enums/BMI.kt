@@ -4,12 +4,12 @@ enum class BMI {
     UNDERWEIGHT, NORMAL, OVERWEIGHT;
 
     companion object {
-        fun getString(bmiNum: Double): BMI? {
-            if (bmiNum < 18.5) {
+        fun getString(bmiVal: Double): BMI? {
+            if (bmiVal < 18.5) {
                 return UNDERWEIGHT
-            } else if (bmiNum > 18.5 && bmiNum < 24.9) {
+            } else if (bmiVal > 18.5 && bmiVal < 24.9) {
                 return NORMAL
-            } else if (bmiNum > 25.0 && bmiNum < 29.0) {
+            } else if (bmiVal > 25.0 && bmiVal < 29.0) {
                 return OVERWEIGHT
             }
 

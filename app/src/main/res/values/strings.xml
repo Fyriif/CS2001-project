@@ -68,6 +68,7 @@
     <string name="title_my_account">My Account</string>
     <string name="title_calendar">Calendar</string>
     <string name="title_calendar_dialog">Record Data</string>
+    <string name="bmi">BMI</string>
     <string name="weight">Weight</string>
     <string name="calorie_intake">Calorie intake</string>
     <string name="water_intake">Water intake</string>
@@ -75,7 +76,7 @@
     <string name="homepage_title">Hope you had a great day, let\'s get working!</string>
     <string name="num_of_hours_worked_desc">Number of hours worked (per week)</string>
     <string name="workouts_completed_desc">Total workouts completed (per week)</string>
-    <string name="insights_desc">Insights</string>
+    <string name="insights_title">Insights</string>
     <string name="progress_steps_pattern">%.0f Steps</string>
     <string name="title_step_target_dialog">Step Target</string>
 </resources>

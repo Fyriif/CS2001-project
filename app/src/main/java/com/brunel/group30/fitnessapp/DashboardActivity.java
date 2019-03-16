@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
@@ -24,7 +25,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
-import me.dm7.barcodescanner.zbar.ZBarScannerView;
 
 public class DashboardActivity extends AppCompatActivity {
     GoogleFitApi mGoogleFitApi;
@@ -35,8 +35,8 @@ public class DashboardActivity extends AppCompatActivity {
 
     private CircularProgressIndicator stepCountCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
+    private ViewFlipper dashboardInsightsViewFlipper;
 
-    ZBarScannerView mScannerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +45,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         FastSave.init(getApplicationContext());
 
+        this.dashboardInsightsViewFlipper = findViewById(R.id.view_flipper_insights);
         this.stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
 
         this.mAuth = FirebaseAuth.getInstance();
@@ -90,7 +91,7 @@ public class DashboardActivity extends AppCompatActivity {
             return false;
         };
 
-        dashboardViewFlipper = findViewById(R.id.view_dashboard);
+        this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
@@ -101,7 +102,19 @@ public class DashboardActivity extends AppCompatActivity {
         CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
 
         this.stepCountCircularProgressIndicator.setMaxProgress(userInfo.getGoals().getStepsTarget());
-        Log.i("BMI", BMI.Companion.getString(this.userInfo.calculateBMI()).toString());
+
+        updateStats();
+    }
+
+    void updateStats() {
+        TextView weightInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_weight_kg);
+        weightInsightTextView.setText(String.valueOf(this.userInfo.getWeight()));
+
+        TextView bmiValInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi_val);
+        bmiValInsightTextView.setText(String.valueOf(this.userInfo.calculateBMI()));
+
+        TextView bmiInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi);
+        bmiInsightTextView.setText(String.valueOf(BMI.Companion.getString(this.userInfo.calculateBMI())));
     }
 
     void invokeApi() {
