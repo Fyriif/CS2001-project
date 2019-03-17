@@ -13,8 +13,8 @@ class NutrientsPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     }
 
     override fun getPageTitle(position: Int): CharSequence = when (position) {
-        0 -> "Summary"
-        1 -> "Nutrients Data"
+        0 -> "Weekly Summary"
+        1 -> "Daily Nutrients"
         else -> ""
     }
 
