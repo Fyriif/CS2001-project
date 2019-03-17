@@ -83,4 +83,12 @@
     <string name="nutrients_calories_title">Calories Intake</string>
     <string name="hydration_data_title">Amount of water (litres/day)</string>
     <string name="nutrients_add_barcode_title">Add nutrients with barcode</string>
+    <string name="daily_intake_fat">Fat</string>
+    <string name="daily_intake_saturated_fat">Saturated Fat</string>
+    <string name="daily_intake_sodium">Sodium</string>
+    <string name="daily_intake_protein">Protein</string>
+    <string name="daily_intake_carbs">Carbohydrates</string>
+    <string name="daily_intake_calories">Calories</string>
+    <string name="daily_intake_sugar">Sugar</string>
+    <string name="daily_intake_fibre">Fibre</string>
 </resources>
