@@ -58,7 +58,6 @@
             android:layout_gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:layout_marginTop="50dp"
             android:singleLine="true"
             android:textColor="#333333"
             android:textColorHint="#d8d8d8"
@@ -74,8 +73,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom|end">
+        android:gravity="bottom|end"
+        android:orientation="vertical">
 
         <Button
             android:layout_width="match_parent"
@@ -85,10 +84,10 @@
             android:layout_marginBottom="24dp"
             android:background="@drawable/btn_rounded_primary"
             android:fontFamily="@font/rubik_regular"
+            android:onClick="nextFragment"
             android:text="@string/btn_next"
             android:textAllCaps="true"
             android:textColor="@color/textColorSecondary"
-            android:textSize="20sp"
-            android:onClick="nextFragment" />
+            android:textSize="20sp" />
     </LinearLayout>
 </RelativeLayout>
