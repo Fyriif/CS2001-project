@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="36dp"
+    android:layout_marginRight="36dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:fontFamily="@font/questrial_regular"
+        android:gravity="center"
+        android:text="@string/title_weight_target_dialog"
+        android:textColor="@color/textColorPrimary"
+        android:textSize="30sp" />
+
+    <com.brunel.group30.fitnessapp.Custom.CustomNumberPicker
+        android:id="@+id/number_picker_weight_target"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:descendantFocusability="blocksDescendants"
+        android:theme="@style/NumberPickerStyle"
+        custom:maxValue="100"
+        custom:minValue="20" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/btn_rounded_primary"
+            android:fontFamily="@font/rubik_regular"
+            android:text="@string/btn_confirm"
+            android:textAllCaps="true"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

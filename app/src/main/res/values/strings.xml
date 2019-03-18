@@ -99,4 +99,5 @@
     <string name="daily_intake_calories">Calories</string>
     <string name="daily_intake_sugar">Sugar</string>
     <string name="daily_intake_fibre">Fibre</string>
+    <string name="title_weight_target_dialog">Weight Target (kg)</string>
 </resources>
