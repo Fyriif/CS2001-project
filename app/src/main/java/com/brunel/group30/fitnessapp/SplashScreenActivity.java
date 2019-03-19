@@ -168,6 +168,7 @@ public class SplashScreenActivity extends AppCompatActivity {
     void nextActivity(Class activity) {
         new Handler().postDelayed (() -> startActivity(
                 new Intent(getApplicationContext(), activity)
+                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
                         .putExtra(UserInfo.COLLECTION_NAME,
                                 new Gson().toJson(this.userInfo))),
                 NEXT_ACTIVITY_DELAY

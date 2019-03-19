@@ -34,8 +34,7 @@
         <activity
             android:name=".DashboardActivity" />
         <activity
-            android:name=".SplashScreenActivity"
-            android:noHistory="true">
+            android:name=".SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

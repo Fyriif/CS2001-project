@@ -145,13 +145,14 @@ public class DashboardActivity extends AppCompatActivity {
         dialog.setContentView(R.layout.dialog_insert_step_target);
         CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
 
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                userInfo.getGoals().setStepsTarget((numberPicker.getValue() + 1) * 1000);
-                userInfo.getGoals().updateDB(mCurrentUser.getUid());
-                dialog.dismiss();
-            }
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
+            userInfo.getGoals().setStepsTarget((numberPicker.getValue() + 1) * 1000);
+            userInfo.getGoals().updateDB(mCurrentUser.getUid());
+
+            // Re-save the object in device's SharedPreferences
+            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+
+            dialog.dismiss();
         });
 
         numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
