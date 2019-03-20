@@ -112,4 +112,5 @@
     <string name="btn_radio_metric">Metric (m/kg)</string>
     <string name="btn_radio_imperial">Imperial (ft/lbs)</string>
     <string name="btn_delete_acc">Delete Account</string>
+    <string name="title_water_target_dialog">Water Target (litres)</string>
 </resources>
