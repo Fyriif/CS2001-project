@@ -2,16 +2,141 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="15dp">
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/title_workouts"
-        android:fontFamily="@font/questrial_regular"
-        android:textSize="40sp"
-        android:textColor="@color/textColorPrimary"/>
+        android:layout_width="match_parent"
+        android:padding="8dp"
+        android:layout_margin="8dp"
+        app:cardBackgroundColor="@color/colorPrimaryDark">
+
+        <LinearLayout
+            android:layout_gravity="left"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="8dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Filters"
+                android:textAlignment="center"
+                android:textSize="13sp"
+                android:textColor="@color/textColorSecondary"
+                android:layout_marginBottom="4dp"/>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3">
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/difficulty_card"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_gravity="left"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Difficulty: "
+                            android:textSize="13sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="2dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Easy"
+                            android:textSize="13sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingRight="2dp"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/body_group_card"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_gravity="left"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Body Group: "
+                            android:textSize="13sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="2dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Core"
+                            android:textSize="13sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingRight="2dp"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/home_gym_card"
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_gravity="left"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Location: "
+                            android:textSize="13sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingLeft="2dp"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Home"
+                            android:textSize="13sp"
+                            android:paddingTop="2dp"
+                            android:paddingBottom="2dp"
+                            android:paddingRight="2dp"/>
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+            </GridLayout>
+        </LinearLayout>
+
+
+
+
+    </android.support.v7.widget.CardView>
+
+
+
+
 
 </LinearLayout>
