@@ -100,4 +100,15 @@
     <string name="daily_intake_sugar">Sugar</string>
     <string name="daily_intake_fibre">Fibre</string>
     <string name="title_weight_target_dialog">Weight Target (kg)</string>
+    <string name="metric_weight">%1$dkg</string>
+    <string name="imperial_weight">%1$dlbs</string>
+    <string name="weight_text_metric">%1$d kg starting weight</string>
+    <string name="weight_text_imperial">%1$d lbs starting weight</string>
+    <string name="steps">Steps</string>
+    <string name="week_steps">%1$d steps last week</string>
+    <string name="exercises">Exercises</string>
+    <string name="settings_units">Units of measure</string>
+    <string name="btn_radio_metric">Metric (m/kg)</string>
+    <string name="btn_radio_imperial">Imperial (ft/lbs)</string>
+    <string name="btn_delete_acc">Delete Account</string>
 </resources>
