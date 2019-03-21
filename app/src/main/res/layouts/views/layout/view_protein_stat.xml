@@ -15,7 +15,7 @@
         android:ems="10"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
-        android:text="@string/daily_intake_protein"
+        android:text="@string/protein"
         android:textSize="30sp" />
 
     <LinearLayout
