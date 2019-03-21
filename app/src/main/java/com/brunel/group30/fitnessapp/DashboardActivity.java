@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -76,6 +77,9 @@ public class DashboardActivity extends AppCompatActivity {
 
                         customViewPager.setAdapter(nutrientsPageAdapter);
                         nutrientsTabLayout.setupWithViewPager(customViewPager);
+
+                        FloatingActionButton barcodeFab = findViewById(R.id.button_barcode_scanner);
+                        barcodeFab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), BarcodeScannerActivity.class)));
                     }
                     return true;
                 case R.id.navigation_dashboard_workouts:
@@ -103,8 +107,6 @@ public class DashboardActivity extends AppCompatActivity {
 
         CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
 
-        this.stepCountCircularProgressIndicator.setMaxProgress(userInfo.getGoals().getStepsTarget());
-
         updateStats();
     }
 
@@ -117,6 +119,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         TextView bmiInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi);
         bmiInsightTextView.setText(String.valueOf(BMI.Companion.getString(this.userInfo.calculateBMI())));
+
+        this.stepCountCircularProgressIndicator.setProgress(
+                this.stepCountCircularProgressIndicator.getProgress(),
+                userInfo.getGoals().getStepsTarget()
+        );
     }
 
     void invokeApi() {
@@ -151,20 +158,13 @@ public class DashboardActivity extends AppCompatActivity {
 
             // Re-save the object in device's SharedPreferences
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
 
             dialog.dismiss();
         });
 
         numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
         numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
-
-        dialog.show();
-    }
-
-    private void recordDataForDate() {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_insert_data_calendar);
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> dialog.dismiss());
 
         dialog.show();
     }
