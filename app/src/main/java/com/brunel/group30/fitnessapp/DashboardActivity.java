@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -23,9 +24,18 @@ import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.fitness.data.Bucket;
+import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.Field;
+import com.google.android.gms.fitness.result.DataReadResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
@@ -81,6 +91,8 @@ public class DashboardActivity extends AppCompatActivity {
 
                         FloatingActionButton barcodeFab = findViewById(R.id.button_barcode_scanner);
                         barcodeFab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), BarcodeScannerActivity.class)));
+
+                        getDailyNutrition();
                     }
                     return true;
                 case R.id.navigation_dashboard_workouts:
@@ -123,9 +135,8 @@ public class DashboardActivity extends AppCompatActivity {
 
         this.stepCountCircularProgressIndicator.setProgress(
                 this.stepCountCircularProgressIndicator.getProgress(),
-                userInfo.getGoals().getStepsTarget()
-        );
-    }
+                userInfo.getGoals().getStepsTarget());
+        }
 
     void invokeApi() {
         try {
@@ -146,6 +157,15 @@ public class DashboardActivity extends AppCompatActivity {
                 mGoogleFitApi.subscribe();
             }
         }
+    }
+
+    void getDailyNutrition() {
+        GoogleFitApi.getDailyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
+            List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
+
+            TextView dailyNutritionTextView = findViewById(R.id.text_view_daily_calorie_intake);
+            dailyNutritionTextView.setText(String.valueOf(dataPoints.isEmpty() ? 0 : dataPoints.get(0).getValue(Field.FIELD_CALORIES).asInt()));
+        });
     }
 
     public void stepCountTarget(View v) {

@@ -14,7 +14,6 @@ import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResponse;
-import com.google.android.gms.fitness.result.DataReadResult;
 import com.google.android.gms.tasks.Task;
 
 import java.util.concurrent.TimeUnit;
@@ -68,7 +67,7 @@ public class GoogleFitApi {
                 .build();
 
         DataPoint food = DataPoint.create(nutritionSource);
-        food.setTimestamp(Utils.INSTANCE.getTimeDateInMillis(), TimeUnit.MILLISECONDS);
+        food.setTimestamp(Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS);
         food.getValue(Field.FIELD_FOOD_ITEM).setString(product.getName());
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_FAT, product.getNutriments().getFat());
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SODIUM, product.getNutriments().getSodium());
@@ -83,7 +82,7 @@ public class GoogleFitApi {
     public static Task<DataReadResponse> getHeight(Activity activity, GoogleSignInAccount account) {
         DataReadRequest readHeightRequest = new DataReadRequest.Builder()
                 .read(DataType.TYPE_HEIGHT)
-                .setTimeRange(1, Utils.INSTANCE.getTimeDateInMillis(), TimeUnit.MILLISECONDS)
+                .setTimeRange(1, Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS)
                 .setLimit(1)
                 .enableServerQueries()
                 .build();
@@ -95,12 +94,25 @@ public class GoogleFitApi {
     public static Task<DataReadResponse> getWeight(Activity activity, GoogleSignInAccount account) {
         DataReadRequest readWeightRequest = new DataReadRequest.Builder()
                 .read(DataType.TYPE_WEIGHT)
-                .setTimeRange(1, Utils.INSTANCE.getTimeDateInMillis(), TimeUnit.MILLISECONDS)
+                .setTimeRange(1, Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS)
                 .setLimit(1)
                 .enableServerQueries()
                 .build();
 
         return Fitness.getHistoryClient(
                 activity, account).readData(readWeightRequest);
+    }
+
+    public static Task<DataReadResponse> getDailyNutrition(Activity activity, GoogleSignInAccount account) {
+        DataReadRequest readNutritionRequest = new DataReadRequest.Builder()
+                .aggregate(DataType.TYPE_NUTRITION, DataType.AGGREGATE_NUTRITION_SUMMARY)
+                .bucketByTime(1, TimeUnit.DAYS)
+                .setTimeRange(Utils.INSTANCE.getDateTimeFromMidnightInMillis(),
+                        Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS)
+                .enableServerQueries()
+                .build();
+
+        return Fitness.getHistoryClient(
+                activity, account).readData(readNutritionRequest);
     }
 }
