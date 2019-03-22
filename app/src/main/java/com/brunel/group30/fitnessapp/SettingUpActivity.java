@@ -336,7 +336,7 @@ public class SettingUpActivity extends AppCompatActivity {
                     }
                 });
 
-                Goals goals = new Goals(10000);
+                Goals goals = new Goals(10000,3*1000,100);
                 Task<Void> sendUserGoalsTask = CustomFirebaseFirestoreService.INSTANCE.sendDocument(
                         Goals.COLLECTION_NAME,
                         currentUser.getUid(),

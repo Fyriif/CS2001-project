@@ -27,13 +27,13 @@ class CustomNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(c
         }
     }
 
-    fun getArrayWithSteps(iStep: Int): Array<String?> {
+    fun getArrayWithSteps(iStep: Int, unit: String?): Array<String?> {
         val iStepsArray = (this.maxValue - this.minValue) / iStep + 1
 
         val arrayValues = arrayOfNulls<String>(iStepsArray)
         for (i in 0 until iStepsArray) {
             arrayValues[i] = NumberFormat.getNumberInstance(Locale.getDefault())
-                    .format(this.minValue + i * iStep).toString()
+                    .format(this.minValue + i * iStep).toString() + " " + unit
         }
 
         this.minValue = 0

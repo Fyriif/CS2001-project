@@ -9,6 +9,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
@@ -163,9 +164,49 @@ public class DashboardActivity extends AppCompatActivity {
             dialog.dismiss();
         });
 
-        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
+        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000, ""));
         numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
+        dialog.show();
+    }
+
+    public void waterCountTarget(View v) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_insert_water_target);
+        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_water_target);
+
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
+            userInfo.getGoals().setHydrationTarget((numberPicker.getValue() + 1) * 1000);
+            userInfo.getGoals().updateDB(mCurrentUser.getUid());
+            
+            // Re-save the object in device's SharedPreferences
+            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
+
+            dialog.dismiss();
+        });
+        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(250, "ml"));
+        numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
+
+        dialog.show();
+    }
+    public void calorieCountTarget(View v) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_insert_calories_target);
+        EditText caloriesTargetEditText = dialog.findViewById(R.id.edit_calories);
+
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
+            userInfo.getGoals().setCalorieTarget((Integer.parseInt(caloriesTargetEditText.getText().toString())));
+            userInfo.getGoals().updateDB(mCurrentUser.getUid());
+
+            // Re-save the object in device's SharedPreferences
+            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
+
+            dialog.dismiss();
+        });
+
+        caloriesTargetEditText.setText(String.valueOf(userInfo.getGoals().getCalorieTarget()));
         dialog.show();
     }
 }
