@@ -55,7 +55,7 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZBarSca
 
                     @Override
                     public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                        // TODO: show Toast as well
+                        Toast.makeText(getApplicationContext(), "Permission denied, please enable this in your phone settings or via the app prompt request", Toast.LENGTH_LONG).show();
                         finish();
                     }
                 });
