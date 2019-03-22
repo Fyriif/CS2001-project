@@ -224,11 +224,11 @@
                     android:layout_marginBottom="24dp"
                     android:background="@drawable/btn_rounded_primary"
                     android:backgroundTint="@color/colorPrimary"
-                    android:textColor="@color/textColorPrimary"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="sendToDB"
                     android:text="@string/btn_submit"
                     android:textAllCaps="true"
+                    android:textColor="@color/textColorPrimary"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     tools:ignore="UnusedAttribute" />

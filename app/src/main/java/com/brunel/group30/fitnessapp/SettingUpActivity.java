@@ -177,9 +177,9 @@ public class SettingUpActivity extends AppCompatActivity {
                 break;
 
             case 4:
-                preferNotToSayRadioButton = findViewById(R.id.button_weight_prefer_not_to_say);
+                CheckBox preferNotToSayCheckBox = findViewById(R.id.button_weight_prefer_not_to_say);
 
-                this.userInfo.setWeight(preferNotToSayRadioButton.isChecked() ?
+                this.userInfo.setWeight(preferNotToSayCheckBox.isChecked() ?
                         0 : weightNumberPicker.getValue());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
