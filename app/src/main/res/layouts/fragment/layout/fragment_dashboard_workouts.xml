@@ -26,11 +26,194 @@
                 android:textSize="13sp"
                 android:textColor="@color/textColorSecondary"
                 android:layout_marginBottom="4dp"/>
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:paddingBottom="8dp">
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="Location"
+                    android:textSize="13sp"
+                    android:textColor="@color/textColorSecondary"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="Difficulty"
+                    android:textSize="13sp"
+                    android:textColor="@color/textColorSecondary"/>
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_columnWeight="1"
+                    android:text="Body Group"
+                    android:textSize="13sp"
+                    android:textColor="@color/textColorSecondary"/>
+
+
+            </GridLayout>
+
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="3">
+                android:columnCount="3"
+                android:paddingBottom="8dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="Home"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="Easy"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="Whole"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:paddingBottom="8dp">
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="Gym"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="Medium"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="8dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="left"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="2dp"
+                            android:paddingRight="2dp"
+                            android:paddingBottom="2dp"
+                            android:text="Upper"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </android.support.v7.widget.CardView>
+            </GridLayout>
+
+            <GridLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="3"
+                android:paddingBottom="8dp">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/difficulty_card"
@@ -47,19 +230,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Difficulty: "
-                            android:textSize="13sp"
                             android:paddingTop="2dp"
+                            android:paddingRight="2dp"
                             android:paddingBottom="2dp"
-                            android:paddingLeft="2dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Easy"
-                            android:textSize="13sp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingRight="2dp"/>
+                            android:text="Park"
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -79,54 +254,36 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Body Group: "
-                            android:textSize="13sp"
                             android:paddingTop="2dp"
+                            android:paddingRight="2dp"
                             android:paddingBottom="2dp"
-                            android:paddingLeft="2dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Core"
-                            android:textSize="13sp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingRight="2dp"/>
+                            android:text="Hard"
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/home_gym_card"
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="8dp">
 
                     <LinearLayout
-                        android:layout_gravity="left"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Location: "
-                            android:textSize="13sp"
                             android:paddingTop="2dp"
+                            android:paddingRight="2dp"
                             android:paddingBottom="2dp"
-                            android:paddingLeft="2dp"/>
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Home"
-                            android:textSize="13sp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
-                            android:paddingRight="2dp"/>
+                            android:text="Lower"
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
-
             </GridLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
