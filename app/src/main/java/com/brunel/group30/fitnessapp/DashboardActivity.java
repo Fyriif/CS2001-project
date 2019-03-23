@@ -11,7 +11,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -210,6 +209,7 @@ public class DashboardActivity extends AppCompatActivity {
 
         dialog.show();
     }
+
     public void calorieCountTarget(View v) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_insert_calories_target);
