@@ -30,7 +30,8 @@
                     android:text="Location"
                     android:textSize="13sp"
                     android:textAlignment="center"
-                    android:textColor="@color/textColorSecondary"/>
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginEnd="6dp"/>
 
                 <TextView
                     android:layout_height="wrap_content"
@@ -39,7 +40,9 @@
                     android:text="Difficulty"
                     android:textAlignment="center"
                     android:textSize="13sp"
-                    android:textColor="@color/textColorSecondary"/>
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"/>
 
                 <TextView
                     android:layout_height="wrap_content"
@@ -48,7 +51,8 @@
                     android:text="Body Group"
                     android:textAlignment="center"
                     android:textSize="13sp"
-                    android:textColor="@color/textColorSecondary"/>
+                    android:textColor="@color/textColorSecondary"
+                    android:layout_marginStart="6dp"/>
 
 
             </GridLayout>
@@ -63,7 +67,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1">
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -87,7 +92,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -111,7 +117,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -141,7 +147,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1">
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -165,7 +172,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -189,7 +197,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -213,14 +221,14 @@
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="3"
-                android:paddingBottom="8dp">
+                android:columnCount="3">
 
                 <android.support.v7.widget.CardView
                     android:id="@+id/difficulty_card"
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
-                    android:layout_columnWeight="1">
+                    android:layout_columnWeight="1"
+                    android:layout_marginEnd="6dp">
 
                     <LinearLayout
                         android:layout_gravity="left"
@@ -245,7 +253,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="0dp"
                     android:layout_columnWeight="1"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp">
 
                     <LinearLayout
                         android:layout_gravity="left"
@@ -269,7 +278,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
-                    android:layout_marginStart="8dp">
+                    android:layout_marginStart="6dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
