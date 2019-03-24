@@ -156,9 +156,9 @@ public class DashboardActivity extends AppCompatActivity {
     void getDailyNutrition() {
         GoogleFitApi.getDailyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
             List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
-
-            TextView dailyNutritionTextView = findViewById(R.id.text_view_daily_calorie_intake);
-            dailyNutritionTextView.setText(String.valueOf(dataPoints.isEmpty() ? 0 : dataPoints.get(0).getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").intValue()));
+          
+            CircularProgressIndicator dailyNutritionCircularProgress = findViewById(R.id.circular_progress_daily_calorie_intake);
+            dailyNutritionCircularProgress.setCurrentProgress(dataPoints.isEmpty() ? 0 : dataPoints.get(0).getValue(Field.FIELD_CALORIES).asInt());
         });
     }
 
