@@ -1,6 +1,8 @@
 package com.brunel.group30.fitnessapp.Services;
 
 import android.app.Activity;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import com.brunel.group30.fitnessapp.Models.Product;
 import com.brunel.group30.fitnessapp.Utils.Utils;
@@ -9,11 +11,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.FitnessOptions;
 import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.DataSource;
 import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResponse;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.concurrent.TimeUnit;
@@ -22,13 +27,13 @@ public class GoogleFitApi {
     private static final String TAG = "GoogleFitApi";
     public static final int REQUEST_OAUTH_REQUEST_CODE = 0x1001;
 
-    Activity activity;
-    GoogleSignInAccount mGoogleSignInAccount;
+    static Activity activity;
+    static GoogleSignInAccount mGoogleSignInAccount;
 
     GoogleFitApi(Activity activity) throws Exception {
-        this.activity = activity;
+        GoogleFitApi.activity = activity;
 
-        mGoogleSignInAccount = GoogleSignIn.getLastSignedInAccount(this.activity);
+        mGoogleSignInAccount = GoogleSignIn.getLastSignedInAccount(GoogleFitApi.activity);
         if (mGoogleSignInAccount == null) {
             throw new Exception("Unable to retrieve last signed in account");
         }
@@ -43,11 +48,11 @@ public class GoogleFitApi {
                         .addDataType(DataType.TYPE_NUTRITION, FitnessOptions.ACCESS_WRITE)
                         .build();
 
-        if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(this.activity), fitnessOptions)) {
+        if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(GoogleFitApi.activity), fitnessOptions)) {
         GoogleSignIn.requestPermissions(
-                this.activity,
+                GoogleFitApi.activity,
                 REQUEST_OAUTH_REQUEST_CODE,
-                GoogleSignIn.getLastSignedInAccount(this.activity),
+                GoogleSignIn.getLastSignedInAccount(GoogleFitApi.activity),
                 fitnessOptions);
         } else {
             subscribe();
@@ -60,8 +65,35 @@ public class GoogleFitApi {
         }
     }
 
+    private static void sendData(DataType dataType, DataPoint dataPoint) {
+        DataSource dataSource = new DataSource.Builder()
+                .setAppPackageName(activity.getPackageName())
+                .setDataType(dataType)
+                .setType(DataSource.TYPE_RAW)
+                .build();
+
+        DataSet dataSet = DataSet.create(dataSource);
+        dataSet.add(dataPoint);
+
+        Fitness.getHistoryClient(GoogleFitApi.activity, GoogleFitApi.mGoogleSignInAccount)
+                .insertData(dataSet)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("TEST", "It sent!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("TEST", "Failed!");
+                    }
+                });
+    }
+
     public static void sendNutritionalData(Product product) {
         DataSource nutritionSource = new DataSource.Builder()
+                .setAppPackageName(activity.getPackageName())
                 .setType(DataSource.TYPE_RAW)
                 .setDataType(DataType.TYPE_NUTRITION)
                 .build();
@@ -77,6 +109,8 @@ public class GoogleFitApi {
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, product.getNutriments().getCalories());
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, product.getNutriments().getSugar());
         food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, product.getNutriments().getFiber());
+
+        sendData(DataType.TYPE_NUTRITION, food);
     }
 
     public static Task<DataReadResponse> getHeight(Activity activity, GoogleSignInAccount account) {

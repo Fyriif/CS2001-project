@@ -158,7 +158,7 @@ public class DashboardActivity extends AppCompatActivity {
             List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
 
             TextView dailyNutritionTextView = findViewById(R.id.text_view_daily_calorie_intake);
-            dailyNutritionTextView.setText(String.valueOf(dataPoints.isEmpty() ? 0 : dataPoints.get(0).getValue(Field.FIELD_CALORIES).asInt()));
+            dailyNutritionTextView.setText(String.valueOf(dataPoints.isEmpty() ? 0 : dataPoints.get(0).getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").intValue()));
         });
     }
 
