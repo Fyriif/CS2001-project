@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -24,12 +23,8 @@ import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.fitness.data.Bucket;
 import com.google.android.gms.fitness.data.DataPoint;
 import com.google.android.gms.fitness.data.Field;
-import com.google.android.gms.fitness.result.DataReadResponse;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
@@ -123,8 +118,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     void updateStats() {
-        TextView weightInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_weight_kg);
-        weightInsightTextView.setText(String.valueOf(this.userInfo.getWeight()));
+        CircularProgressIndicator weightInsightCircularProgressIndicator = dashboardInsightsViewFlipper.findViewById(R.id.circular_progress_insights_weight);
+        weightInsightCircularProgressIndicator.setCurrentProgress(this.userInfo.getWeight());
 
         TextView bmiValInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi_val);
         bmiValInsightTextView.setText(String.valueOf(this.userInfo.calculateBMI()));
