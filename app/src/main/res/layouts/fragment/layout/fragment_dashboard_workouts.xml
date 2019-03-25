@@ -351,7 +351,7 @@
                     android:id="@+id/profile_image"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:src="@drawable/profile"
+                    android:src=""
                     app:civ_border_color="@color/colorPrimaryDark"
                     app:civ_border_width="2dp"
                     app:layout_constraintDimensionRatio="1:1" />
@@ -383,7 +383,7 @@
                     android:layout_marginTop="0dp"
                     android:layout_toRightOf="@+id/profile_image_layout"
                     android:text="Home - Gym - Park"
-                    android:textSize="13sp" />
+                    android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -402,7 +402,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/profile_image_layout"
                     android:text="Medium"
-                    android:textSize="13sp" />
+                    android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
@@ -419,10 +419,44 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Medium"
+                    android:text="Whole Body"
+                    android:textSize="8sp" />
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/weight_tag_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_title"
+                android:layout_marginLeft="16dp"
+                android:layout_toRightOf="@+id/body_tag_card"
+                card_view:cardCornerRadius="4dp"
+                card_view:contentPadding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10kg"
                     android:textSize="13sp" />
             </android.support.v7.widget.CardView>
 
+
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/rep_tag_card"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_title"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@+id/weight_tag_card"
+                card_view:cardCornerRadius="4dp"
+                card_view:contentPadding="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="10 reps"
+                    android:textSize="13sp" />
+            </android.support.v7.widget.CardView>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
