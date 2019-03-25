@@ -5,60 +5,61 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:padding="8dp"
-        android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark">
+        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardCornerRadius="0dp">
 
         <LinearLayout
-            android:layout_gravity="left"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="8dp">
+            android:layout_gravity="left"
+            android:layout_margin="8dp"
+            android:orientation="vertical">
 
             <GridLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:columnCount="3"
                 android:paddingBottom="8dp">
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="0dp"
-                    android:layout_columnWeight="1"
-                    android:text="Location"
-                    android:textSize="13sp"
-                    android:textAlignment="center"
-                    android:textColor="@color/textColorSecondary"
-                    android:fontFamily="@font/questrial_regular"
-                    android:layout_marginEnd="6dp"/>
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
+                    android:layout_marginEnd="6dp"
+                    android:fontFamily="@font/questrial_regular"
+                    android:text="Location"
+                    android:textAlignment="center"
+                    android:textColor="@color/textColorSecondary"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="6dp"
+                    android:layout_marginEnd="6dp"
+                    android:fontFamily="@font/questrial_regular"
                     android:text="Difficulty"
                     android:textAlignment="center"
-                    android:textSize="13sp"
                     android:textColor="@color/textColorSecondary"
-                    android:fontFamily="@font/questrial_regular"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginEnd="6dp"/>
+                    android:textSize="13sp" />
 
                 <TextView
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
+                    android:layout_marginStart="6dp"
+                    android:fontFamily="@font/questrial_regular"
                     android:text="Body Group"
                     android:textAlignment="center"
-                    android:textSize="13sp"
                     android:textColor="@color/textColorSecondary"
-                    android:fontFamily="@font/questrial_regular"
-                    android:layout_marginStart="6dp"/>
+                    android:textSize="13sp" />
 
 
             </GridLayout>
@@ -70,8 +71,7 @@
                 android:columnCount="3"
                 android:paddingBottom="8dp">
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -87,18 +87,17 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Home"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -115,18 +114,17 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Easy"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -142,13 +140,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Whole"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </GridLayout>
@@ -159,8 +157,7 @@
                 android:columnCount="3"
                 android:paddingBottom="8dp">
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -176,18 +173,17 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Gym"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -204,18 +200,17 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Medium"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -231,13 +226,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Upper"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </GridLayout>
@@ -247,65 +242,62 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3">
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/difficulty_card"
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginEnd="6dp"
                     card_view:cardCornerRadius="12dp">
 
                     <LinearLayout
-                        android:layout_gravity="left"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Park"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/body_group_card"
-                    android:layout_height="wrap_content"
                     android:layout_width="0dp"
+                    android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="6dp"
                     card_view:cardCornerRadius="12dp">
 
                     <LinearLayout
-                        android:layout_gravity="left"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_gravity="left"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Hard"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -321,13 +313,13 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
                             android:text="Lower"
                             android:textAlignment="center"
-                            android:textSize="13sp"
-                            android:fontFamily="@font/questrial_regular"/>
+                            android:textSize="13sp" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </GridLayout>
