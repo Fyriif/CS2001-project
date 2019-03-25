@@ -5,8 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.CardView xmlns:app="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -71,12 +73,14 @@
                 android:columnCount="3"
                 android:paddingBottom="8dp">
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_home"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginEnd="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -97,13 +101,15 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_easy"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -124,12 +130,14 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_whole"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -157,12 +165,14 @@
                 android:columnCount="3"
                 android:paddingBottom="8dp">
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_gym"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginEnd="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -183,13 +193,15 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_medium"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -210,12 +222,14 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_upper"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -242,13 +256,14 @@
                 android:layout_height="wrap_content"
                 android:columnCount="3">
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/difficulty_card"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_Park"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginEnd="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -269,14 +284,15 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/body_group_card"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_hard"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -297,12 +313,14 @@
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
-                <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                <android.support.v7.widget.CardView
+                    android:id="@+id/card_filter_lower"
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
-                    card_view:cardCornerRadius="12dp">
+                    card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -326,7 +344,8 @@
         </LinearLayout>
     </android.support.v7.widget.CardView>
 
-    <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/graph_card"
         android:layout_width="match_parent"
         android:layout_height="68dp"
@@ -341,13 +360,14 @@
             android:layout_height="match_parent">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/profile_image_layout"
+                android:id="@+id/layout_workout_image"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="8dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/profile_image"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/image_workout_type"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:src=""
@@ -360,14 +380,15 @@
                 android:id="@+id/card_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/profile_image_layout"
+                android:layout_alignTop="@+id/layout_workout_image"
                 android:layout_marginBottom="4dp"
-                android:layout_toRightOf="@+id/profile_image_layout"
+                android:layout_toRightOf="@+id/layout_workout_image"
                 android:text="Close Grip Bench Press"
                 android:textSize="18sp"
                 android:fontFamily="@font/questrial_regular"/>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/location_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -385,7 +406,8 @@
                     android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/difficulty_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -399,12 +421,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/profile_image_layout"
+                    android:layout_alignTop="@+id/layout_workout_image"
                     android:text="Medium"
                     android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/body_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -422,13 +445,14 @@
                     android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/weight_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@+id/profile_image_layout"
+                android:layout_toEndOf="@+id/layout_workout_image"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp"
                 app:cardBackgroundColor="@color/colorPrimaryDark">
@@ -443,7 +467,8 @@
             </android.support.v7.widget.CardView>
 
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/rep_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
