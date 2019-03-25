@@ -135,6 +135,22 @@ public class SettingUpActivity extends AppCompatActivity {
                 break;
 
             case 2:
+                RadioButton imperialRadioButton = findViewById(R.id.button_imperial);
+                RadioButton metricRadioButton = findViewById(R.id.button_metric);
+
+                if (!imperialRadioButton.isChecked()
+                        && !metricRadioButton.isChecked()) {
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.error_option_is_required),
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    this.userInfo.setPrefersMetric(metricRadioButton.isChecked());
+                    mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
+                }
+
+                break;
+
+            case 3:
                 RadioButton maleRadioButton = findViewById(R.id.button_sex_male);
                 RadioButton femaleRadioButton = findViewById(R.id.button_sex_female);
                 RadioButton preferNotToSayRadioButton = findViewById(R.id.button_sex_prefer_not_to_say);
@@ -161,13 +177,14 @@ public class SettingUpActivity extends AppCompatActivity {
 
                 break;
 
-            case 3:
+            case 4:
                 this.userInfo.setHeight(heightNumberPicker.getValue());
 
                 GoogleFitApi.getWeight(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
                     List<DataPoint> dataPoints = dataReadResponse.getDataSets().get(0).getDataPoints();
                     userInfo.setWeight(dataPoints.isEmpty() ? 75 : dataPoints.get(0).getValue(Field.FIELD_WEIGHT).asInt());
 
+                    // TODO: Number picker should display the unit of measure
                     weightNumberPicker = findViewById(R.id.number_picker_weight);
                     weightNumberPicker.setValue(userInfo.getWeight());
 
@@ -176,7 +193,7 @@ public class SettingUpActivity extends AppCompatActivity {
 
                 break;
 
-            case 4:
+            case 5:
                 CheckBox preferNotToSayCheckBox = findViewById(R.id.button_weight_prefer_not_to_say);
 
                 this.userInfo.setWeight(preferNotToSayCheckBox.isChecked() ?
@@ -185,7 +202,7 @@ public class SettingUpActivity extends AppCompatActivity {
 
                 break;
 
-            case 5:
+            case 6:
                 RadioButton yesDisabilityRadioButton = findViewById(R.id.button_disability_yes);
                 RadioButton noDisabilityRadioButton = findViewById(R.id.button_disability_no);
                 preferNotToSayRadioButton = findViewById(R.id.button_disability_prefer_not_to_say);
@@ -203,7 +220,7 @@ public class SettingUpActivity extends AppCompatActivity {
 
                 break;
 
-            case 6:
+            case 7:
                 CheckBox gymLocationCheckBox = findViewById(R.id.button_gym);
                 CheckBox homeLocationCheckBox = findViewById(R.id.button_home);
                 CheckBox parkLocationCheckBox = findViewById(R.id.button_park);
@@ -414,6 +431,10 @@ public class SettingUpActivity extends AppCompatActivity {
                     args.putInt(ARG_SECTION_LAYOUT_RESOURCE_ID, R.layout.fragment_sign_up7);
                     args.putInt("SECTION_NUMBER", sectionNumber);
                     break;
+                case 8:
+                    args.putInt(ARG_SECTION_LAYOUT_RESOURCE_ID, R.layout.fragment_sign_up8);
+                    args.putInt("SECTION_NUMBER", sectionNumber);
+                    break;
                 default:
                     // If all fails, default to the first sign up layout
                     args.putInt(ARG_SECTION_LAYOUT_RESOURCE_ID, R.layout.fragment_sign_up);
@@ -463,7 +484,7 @@ public class SettingUpActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 7;
+            return 8;
         }
     }
 }

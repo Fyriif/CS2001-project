@@ -38,7 +38,7 @@
             android:layout_marginBottom="25dp"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/title_sex"
+            android:text="@string/title_units_of_measure"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
 
@@ -50,45 +50,32 @@
             android:orientation="vertical">
 
             <RadioButton
-                android:id="@+id/button_sex_male"
+                android:id="@+id/button_imperial"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/msg_sex_male"
+                android:text="@string/title_imperial"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
             <RadioButton
-                android:id="@+id/button_sex_female"
+                android:id="@+id/button_metric"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/msg_sex_female"
+                android:text="@string/title_metric"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp"
                 android:textStyle="bold" />
-
-            <RadioButton
-                android:id="@+id/button_sex_prefer_not_to_say"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/btn_rounded_secondary"
-                android:button="@null"
-                android:fontFamily="@font/questrial_regular"
-                android:text="@string/msg_prefer_not_to_say"
-                android:textAllCaps="true"
-                android:textColor="@drawable/radio_text_selected"
-                android:textSize="20sp" />
 
         </RadioGroup>
 

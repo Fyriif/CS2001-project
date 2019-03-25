@@ -39,40 +39,18 @@
             android:layout_marginBottom="25dp"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/title_weight"
+            android:text="@string/title_height"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
 
         <com.brunel.group30.fitnessapp.Custom.CustomNumberPicker
-            android:id="@+id/number_picker_weight"
+            android:id="@+id/number_picker_height"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:theme="@style/NumberPickerStyle"
             custom:minValue="40"
             custom:maxValue="200" />
-
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginRight="80dp"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-
-            <CheckBox
-                android:id="@+id/button_weight_prefer_not_to_say"
-                style="@style/Widget.AppCompat.Button.Colored"
-                android:layout_width="match_parent"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/btn_rounded_secondary"
-                android:fontFamily="@font/questrial_regular"
-                android:button="@null"
-                android:text="@string/msg_prefer_not_to_say"
-                android:textColor="@drawable/radio_text_selected"
-                android:textSize="18sp" />
-
-        </RadioGroup>
 
     </LinearLayout>
 
