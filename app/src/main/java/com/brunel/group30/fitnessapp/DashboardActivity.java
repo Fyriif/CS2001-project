@@ -24,7 +24,9 @@ import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.fitness.data.Bucket;
 import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.Field;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -88,6 +90,7 @@ public class DashboardActivity extends AppCompatActivity {
                         barcodeFab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), BarcodeScannerActivity.class)));
 
                         getDailyNutrition();
+                        getWeeklyNutrition();
                     }
                     return true;
                 case R.id.navigation_dashboard_workouts:
@@ -167,9 +170,56 @@ public class DashboardActivity extends AppCompatActivity {
     void getDailyNutrition() {
         GoogleFitApi.getDailyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
             List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
+
+            int calories = 0;
+            for (DataPoint dataPoint : dataPoints) {
+                calories += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue();
+            }
           
             CircularProgressIndicator dailyNutritionCircularProgress = findViewById(R.id.circular_progress_daily_calorie_intake);
-            dailyNutritionCircularProgress.setCurrentProgress(dataPoints.isEmpty() ? 0 : dataPoints.get(0).getValue(Field.FIELD_CALORIES).asInt());
+            dailyNutritionCircularProgress.setCurrentProgress(calories);
+        });
+    }
+
+    void getWeeklyNutrition() {
+        GoogleFitApi.getWeeklyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
+            List<Bucket> buckets = dataReadResponse.getBuckets();
+
+            double fat = 0, sodium = 0, fibre = 0, protein = 0, satFat = 0, sugar = 0, carbsTotal = 0;
+
+            for (Bucket bucket : buckets) {
+                for (DataPoint dataPoint : bucket.getDataSets().get(0).getDataPoints()) {
+                    fat += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue();
+                    sodium += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue();
+                    fibre += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue();
+                    protein += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue();
+                    satFat += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue();
+                    sugar += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue();
+                    carbsTotal += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue();
+                }
+            }
+
+            TextView weeklyFatTextView = findViewById(R.id.text_view_weekly_fat);
+            weeklyFatTextView.setText(String.valueOf(fat));
+
+            TextView weeklyFibreTextView = findViewById(R.id.text_view_weekly_fibre);
+            weeklyFibreTextView.setText(String.valueOf(fibre));
+
+            TextView weeklyProteinTextView = findViewById(R.id.text_view_weekly_protein);
+            weeklyProteinTextView.setText(String.valueOf(protein));
+
+            TextView weeklySaturatedFatTextView = findViewById(R.id.text_view_weekly_saturated_fat);
+            weeklySaturatedFatTextView.setText(String.valueOf(satFat));
+
+            TextView weeklySodiumTextView = findViewById(R.id.text_view_weekly_sodium);
+            weeklySodiumTextView.setText(String.valueOf(sodium));
+
+            TextView weeklySugarTextView = findViewById(R.id.text_view_weekly_sugar);
+            weeklySugarTextView.setText(String.valueOf(sugar));
+
+            TextView weeklyCarbohydratesTextView = findViewById(R.id.text_view_weekly_total_carbs);
+            weeklyCarbohydratesTextView.setText(String.valueOf(carbsTotal));
+
         });
     }
 

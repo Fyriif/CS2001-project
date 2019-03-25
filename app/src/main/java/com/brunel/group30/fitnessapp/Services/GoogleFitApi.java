@@ -49,11 +49,11 @@ public class GoogleFitApi {
                         .build();
 
         if (!GoogleSignIn.hasPermissions(GoogleSignIn.getLastSignedInAccount(GoogleFitApi.activity), fitnessOptions)) {
-        GoogleSignIn.requestPermissions(
-                GoogleFitApi.activity,
-                REQUEST_OAUTH_REQUEST_CODE,
-                GoogleSignIn.getLastSignedInAccount(GoogleFitApi.activity),
-                fitnessOptions);
+            GoogleSignIn.requestPermissions(
+                    GoogleFitApi.activity,
+                    REQUEST_OAUTH_REQUEST_CODE,
+                    GoogleSignIn.getLastSignedInAccount(GoogleFitApi.activity),
+                    fitnessOptions);
         } else {
             subscribe();
         }
@@ -142,6 +142,19 @@ public class GoogleFitApi {
                 .aggregate(DataType.TYPE_NUTRITION, DataType.AGGREGATE_NUTRITION_SUMMARY)
                 .bucketByTime(1, TimeUnit.DAYS)
                 .setTimeRange(Utils.INSTANCE.getDateTimeFromMidnightInMillis(),
+                        Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS)
+                .enableServerQueries()
+                .build();
+
+        return Fitness.getHistoryClient(
+                activity, account).readData(readNutritionRequest);
+    }
+
+    public static Task<DataReadResponse> getWeeklyNutrition(Activity activity, GoogleSignInAccount account) {
+        DataReadRequest readNutritionRequest = new DataReadRequest.Builder()
+                .aggregate(DataType.TYPE_NUTRITION, DataType.AGGREGATE_NUTRITION_SUMMARY)
+                .bucketByTime(1, TimeUnit.DAYS)
+                .setTimeRange(Utils.INSTANCE.getDateTimeLastWeekInMillis(),
                         Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS)
                 .enableServerQueries()
                 .build();
