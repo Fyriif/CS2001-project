@@ -219,8 +219,8 @@ public class DashboardActivity extends AppCompatActivity {
 
             TextView weeklyCarbohydratesTextView = findViewById(R.id.text_view_weekly_total_carbs);
             weeklyCarbohydratesTextView.setText(String.valueOf(carbsTotal));
-
         });
+
     }
 
     public void stepCountTarget(View v) {

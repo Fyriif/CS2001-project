@@ -92,25 +92,29 @@ public class GoogleFitApi {
     }
 
     public static void sendNutritionalData(Product product) {
-        DataSource nutritionSource = new DataSource.Builder()
-                .setAppPackageName(activity.getPackageName())
-                .setType(DataSource.TYPE_RAW)
-                .setDataType(DataType.TYPE_NUTRITION)
-                .build();
+        if (product != null) {
+            DataSource nutritionSource = new DataSource.Builder()
+                    .setAppPackageName(activity.getPackageName())
+                    .setType(DataSource.TYPE_RAW)
+                    .setDataType(DataType.TYPE_NUTRITION)
+                    .build();
 
-        DataPoint food = DataPoint.create(nutritionSource);
-        food.setTimestamp(Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS);
-        food.getValue(Field.FIELD_FOOD_ITEM).setString(product.getName());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_FAT, product.getNutriments().getFat());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SODIUM, product.getNutriments().getSodium());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SATURATED_FAT, product.getNutriments().getSaturatedFat());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_PROTEIN, product.getNutriments().getProtein());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_CARBS, product.getNutriments().getCarbohydrates());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, product.getNutriments().getCalories());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, product.getNutriments().getSugar());
-        food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, product.getNutriments().getFiber());
+            DataPoint food = DataPoint.create(nutritionSource);
+            food.setTimestamp(Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS);
+            food.getValue(Field.FIELD_FOOD_ITEM).setString(product.getName());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_FAT, product.getNutriments().getFat());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SODIUM, product.getNutriments().getSodium());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SATURATED_FAT, product.getNutriments().getSaturatedFat());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_PROTEIN, product.getNutriments().getProtein());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_CARBS, product.getNutriments().getCarbohydrates());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, product.getNutriments().getCalories());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, product.getNutriments().getSugar());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, product.getNutriments().getFiber());
 
-        sendData(DataType.TYPE_NUTRITION, food);
+            sendData(DataType.TYPE_NUTRITION, food);
+        }
+
+        // TODO: add else statement, check if user wants to try scanning the barcode again for instance.
     }
 
     public static Task<DataReadResponse> getHeight(Activity activity, GoogleSignInAccount account) {
