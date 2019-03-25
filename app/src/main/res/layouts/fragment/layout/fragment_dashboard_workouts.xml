@@ -35,7 +35,7 @@
                     android:layout_columnWeight="1"
                     android:layout_marginEnd="6dp"
                     android:fontFamily="@font/questrial_regular"
-                    android:text="Location"
+                    android:text="@string/title_filter_location"
                     android:textAlignment="center"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="13sp" />
@@ -47,7 +47,7 @@
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="6dp"
                     android:fontFamily="@font/questrial_regular"
-                    android:text="Difficulty"
+                    android:text="@string/title_filter_difficulty"
                     android:textAlignment="center"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="13sp" />
@@ -58,7 +58,7 @@
                     android:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     android:fontFamily="@font/questrial_regular"
-                    android:text="Body Group"
+                    android:text="@string/title_filter_bodygroup"
                     android:textAlignment="center"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="13sp" />
@@ -95,7 +95,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Home"
+                            android:text="@string/filter_home"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -124,7 +124,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Easy"
+                            android:text="@string/filter_easy"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -152,7 +152,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Whole"
+                            android:text="@string/filter_whole"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -187,7 +187,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Gym"
+                            android:text="@string/filter_gym"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -216,7 +216,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Medium"
+                            android:text="@string/filter_medium"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -244,7 +244,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Upper"
+                            android:text="@string/filter_upper"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -278,7 +278,7 @@
                             android:paddingTop="4dp"
                             android:paddingRight="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Park"
+                            android:text="@string/filter_park"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -307,7 +307,7 @@
                             android:paddingTop="4dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Hard"
+                            android:text="@string/filter_hard"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
@@ -335,7 +335,7 @@
                             android:paddingTop="4dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
-                            android:text="Lower"
+                            android:text="@string/filter_lower"
                             android:textAlignment="center"
                             android:textSize="13sp" />
                     </LinearLayout>
