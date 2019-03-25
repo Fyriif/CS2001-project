@@ -1,6 +1,7 @@
 package com.brunel.group30.fitnessapp.Utils
 
 import android.os.Build
+import org.joda.time.LocalDateTime
 import java.util.*
 
 
@@ -31,8 +32,19 @@ object Utils {
         return getDate > startDate
     }
 
-    fun getTimeDateInMillis(): Long {
+    fun getCurrentDateTimeInMillis(): Long {
         val calendar = Calendar.getInstance()
+
+        return calendar.timeInMillis
+    }
+
+    fun getDateTimeFromMidnightInMillis(): Long {
+        return LocalDateTime.now().toLocalDate().toDateTimeAtStartOfDay().millis
+    }
+
+    fun getDateTimeLastWeekInMillis(): Long {
+        val calendar = Calendar.getInstance()
+        calendar.add(Calendar.DAY_OF_MONTH, -7)
 
         return calendar.timeInMillis
     }

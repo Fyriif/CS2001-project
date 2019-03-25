@@ -4,7 +4,7 @@ const admin = require('firebase-admin');
 admin.initializeApp();
 
 function dayOfWeekAsString(dayIndex) {
-    return ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"][dayIndex];
+    return ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"][dayIndex];
 }
 
 exports.sendWorkOutNotification = functions
@@ -31,7 +31,7 @@ exports.sendWorkOutNotification = functions
                         const userTime = new Date(Date.parse(new Date().toLocaleString("en-US", {timeZone: entry.timeZone})));
                         const times = workOutDays[dayOfWeekAsString(userTime.getDay()).toLowerCase()];
 
-                        if (times.length > 0) {
+                        if (times != null && times.length > 0) {
                             var startTimeHour = times[0].split(":")[0].trim();
                             var startTimeMin = times[0].split(":")[1].trim();
 
@@ -51,7 +51,7 @@ exports.sendWorkOutNotification = functions
                             }
                         }
                     } else {
-                        console.log("No such document!");
+                        console.log("User (" + entry.uid + ") has no user-info document!");
                     }
                 }).catch(function(error) {
                     console.log("Error getting document:", error);
@@ -59,7 +59,7 @@ exports.sendWorkOutNotification = functions
             });
 
             res.send(users)
-            return "";
+            return "Sent notification!";
         }).catch(reason => {
             res.send(reason)
         })

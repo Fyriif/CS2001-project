@@ -25,7 +25,9 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZBarSca
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestPermissions();
+    }
 
+    void startBarcodeScanning()  {
         mScannerView = new ZBarScannerView(this);
         mScannerView.setResultHandler(this);
         setContentView(mScannerView);
@@ -51,11 +53,11 @@ public class BarcodeScannerActivity extends AppCompatActivity implements ZBarSca
         Permissions.check(this, Manifest.permission.CAMERA,
                 null, new PermissionHandler() {
                     @Override
-                    public void onGranted() { }
+                    public void onGranted() { startBarcodeScanning(); }
 
                     @Override
                     public void onDenied(Context context, ArrayList<String> deniedPermissions) {
-                        // TODO: show Toast as well
+                        Toast.makeText(getApplicationContext(), "Permission denied, please enable this in your phone settings or via the app prompt request", Toast.LENGTH_LONG).show();
                         finish();
                     }
                 });

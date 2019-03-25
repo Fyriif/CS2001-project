@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="6dp"
     android:orientation="vertical">
 
     <TextView
@@ -15,7 +13,7 @@
         android:ems="10"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
-        android:text="@string/title_weight"
+        android:text="@string/title_water_intake"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -28,14 +26,14 @@
             android:layout_height="90dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/ic_weight_kg_black_24dp" />
+            app:srcCompat="@drawable/ic_water_black_24dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
-                android:id="@+id/circular_progress_insights_weight"
+                android:id="@+id/circular_progress_daily_hydration_intake"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"

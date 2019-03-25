@@ -13,6 +13,7 @@ public class UserInfo {
     public static final String COLLECTION_NAME = "user-info";
 
     private String dob;
+    private boolean prefersMetric;
     private boolean isMale;
     public int height;
     private int weight;
@@ -39,6 +40,16 @@ public class UserInfo {
     @PropertyName("dob")
     public void setDob(String dob) {
         this.dob = dob;
+    }
+
+    @PropertyName("prefers_metric")
+    public boolean isPrefersMetric() {
+        return prefersMetric;
+    }
+
+    @PropertyName("prefers_metric")
+    public void setPrefersMetric(boolean prefersMetric) {
+        this.prefersMetric = prefersMetric;
     }
 
     @PropertyName("is_male")

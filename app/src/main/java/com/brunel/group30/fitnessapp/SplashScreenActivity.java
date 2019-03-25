@@ -64,18 +64,6 @@ public class SplashScreenActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        this.user = this.mAuth.getCurrentUser();
-        if (this.user == null) {
-            startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
-        } else {
-            isUserSetUp();
-        }
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         requestPermissions();
@@ -104,6 +92,8 @@ public class SplashScreenActivity extends AppCompatActivity {
                         mAuth.getUid()
                 );
             });
+        } else {
+            nextActivity(DashboardActivity.class);
         }
     }
 
@@ -179,7 +169,14 @@ public class SplashScreenActivity extends AppCompatActivity {
         Permissions.check(this, Manifest.permission.ACCESS_FINE_LOCATION,
                 null, new PermissionHandler() {
                     @Override
-                    public void onGranted() { }
+                    public void onGranted() {
+                        user = mAuth.getCurrentUser();
+                        if (user == null) {
+                            startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
+                        } else {
+                            isUserSetUp();
+                        }
+                    }
 
                     @Override
                     public void onDenied(Context context, ArrayList<String> deniedPermissions) {

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DashboardActivity">
 
     <ScrollView
@@ -23,16 +22,16 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp">
 
                     <ViewFlipper
                         android:id="@+id/view_flipper_daily_intake"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:flipInterval="7000"
-                        android:autoStart="true">
+                        android:autoStart="true"
+                        android:flipInterval="7000">
 
                         <include layout="@layout/view_fat_stat" />
                         <include layout="@layout/view_saturated_fat_stat" />
@@ -56,47 +55,12 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:onClick="calorieCountTarget">
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="90dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="16dp"
-                            app:srcCompat="@drawable/ic_restaurant_black_24dp" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/questrial_regular"
-                                android:gravity="center"
-                                android:text="0kcal"
-                                android:textSize="28sp" />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|center"
-                        android:layout_marginTop="6dp"
-                        android:ems="10"
-                        android:fontFamily="@font/rubik_regular"
-                        android:gravity="center"
-                        android:text="@string/nutrients_calories_title"
-                        android:textSize="20sp" />
+                    <include layout="@layout/view_calorie_intake_stat" />
 
                 </android.support.v7.widget.CardView>
 
@@ -110,84 +74,17 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="160dp"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp">
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:onClick="waterCountTarget">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="80dp"
-                            android:layout_height="90dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="16dp"
-                            app:srcCompat="@drawable/ic_water_black_24dp" />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:fontFamily="@font/questrial_regular"
-                                android:gravity="center"
-                                android:text="0 Litres"
-                                android:textSize="28sp" />
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="top|center"
-                        android:layout_marginTop="6dp"
-                        android:ems="10"
-                        android:fontFamily="@font/rubik_regular"
-                        android:gravity="center"
-                        android:text="@string/hydration_data_title"
-                        android:textSize="20sp" />
+                    <include layout="@layout/view_hydration_intake_stat" />
 
                 </android.support.v7.widget.CardView>
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom|center_horizontal"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/button_barcode_scanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/ic_barcode_black_24dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:ems="10"
-                        android:fontFamily="@font/rubik_regular"
-                        android:gravity="center_horizontal"
-                        android:text="@string/nutrients_add_barcode_title"
-                        android:textSize="20sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
         </LinearLayout>
     </ScrollView>
-
 </FrameLayout>

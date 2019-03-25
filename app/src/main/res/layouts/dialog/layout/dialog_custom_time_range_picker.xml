@@ -19,12 +19,12 @@
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_start_time" />
+            android:text="@string/action_time_start" />
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/text_end_time" />
+            android:text="@string/action_time_end" />
 
     </android.support.design.widget.TabLayout>
 
@@ -65,7 +65,7 @@
                     android:layout_margin="16dp"
                     android:background="@drawable/btn_rounded_primary"
                     android:fontFamily="@font/questrial_regular"
-                    android:text="@string/option_cancel"
+                    android:text="@string/action_cancel"
                     android:textAllCaps="true"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="20sp" />
@@ -80,7 +80,7 @@
                     android:background="@drawable/btn_rounded_primary"
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/questrial_regular"
-                    android:text="@string/btn_submit"
+                    android:text="@string/action_submit"
                     android:textAllCaps="true"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="20sp"

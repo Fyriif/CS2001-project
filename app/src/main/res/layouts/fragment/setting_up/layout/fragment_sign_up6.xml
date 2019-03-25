@@ -7,14 +7,14 @@
     tools:context=".SettingUpActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/text_view_progress_num"
+        android:id="@+id/text_view_setting_up_progress_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
-        android:text="@string/progress_number"
+        android:text="@string/setting_up_progress_number_count"
         android:textColor="#808080"
         android:textSize="15sp" />
 
@@ -35,21 +35,12 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/sign_up_title_location"
+            android:text="@string/sign_up_title_disabilities"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:layout_gravity="center"
-            android:text="@string/secondary_title"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"
-            android:fontFamily="@font/questrial_regular"/>
 
         <RadioGroup
             android:layout_width="match_parent"
@@ -58,41 +49,43 @@
             android:layout_marginRight="80dp"
             android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/button_gym"
+            <RadioButton
+                android:id="@+id/button_disability_yes"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_gym"
+                android:text="@string/action_yes"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/button_home"
+            <RadioButton
+                android:id="@+id/button_disability_no"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_home"
+                android:text="@string/action_no"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/button_park"
+            <RadioButton
+                android:id="@+id/button_disability_prefer_not_to_say"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="match_parent"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_park"
+                android:text="@string/msg_prefer_not_to_say"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp" />

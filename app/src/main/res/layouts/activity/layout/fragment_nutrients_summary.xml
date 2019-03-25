@@ -12,7 +12,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <LinearLayout
@@ -20,12 +20,13 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/weekly_nutrients"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="14dp"
-                    android:gravity="center_horizontal"
                     android:fontFamily="@font/questrial_regular"
-                    android:text="@string/weekly_nutrients_intake_title"
+                    android:gravity="center_horizontal"
+                    android:text="@string/title_weekly_nutrients_intake"
                     android:textSize="36sp" />
 
             </LinearLayout>
@@ -38,8 +39,8 @@
                 <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:stretchColumns="0,1"
-                    android:layout_margin="10dp">
+                    android:layout_margin="10dp"
+                    android:stretchColumns="0,1">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -50,7 +51,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_fat_intake"
+                            android:text="@string/msg_fat"
                             android:textSize="30sp" />
 
                         <TextView
@@ -73,7 +74,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_fibre_intake"
+                            android:text="@string/msg_fibre"
                             android:textSize="30sp" />
 
                         <TextView
@@ -96,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_protein_intake"
+                            android:text="@string/msg_protein"
                             android:textSize="30sp" />
 
                         <TextView
@@ -119,7 +120,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_saturated_fat_intake"
+                            android:text="@string/msg_saturated_fat"
                             android:textSize="30sp" />
 
                         <TextView
@@ -142,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_sodium_intake"
+                            android:text="@string/msg_sodium"
                             android:textSize="30sp" />
 
                         <TextView
@@ -165,7 +166,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_sugar_intake"
+                            android:text="@string/msg_sugar"
                             android:textSize="30sp" />
 
                         <TextView
@@ -188,8 +189,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/weekly_carbs_intake"
+                            android:text="@string/msg_carbs"
                             android:textSize="30sp" />
+
                         <TextView
                             android:id="@+id/text_view_weekly_total_carbs"
                             android:layout_width="match_parent"
@@ -202,41 +204,11 @@
                     </TableRow>
 
                 </TableLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="bottom|center_horizontal"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/button_barcode_scanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:layout_gravity="center"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/ic_barcode_black_24dp" />
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:ems="10"
-                        android:fontFamily="@font/rubik_regular"
-                        android:gravity="center_horizontal"
-                        android:text="@string/nutrients_add_barcode_title"
-                        android:textSize="20sp" />
-                </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
+
     </ScrollView>
 
 </FrameLayout>

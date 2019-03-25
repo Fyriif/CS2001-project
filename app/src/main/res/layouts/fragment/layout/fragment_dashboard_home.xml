@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="@string/homepage_title"
+            android:text="@string/title_welcome_dashboard_message"
             android:textColor="@color/colorAccent"
             android:textSize="28sp"
             android:fontFamily="@font/questrial_regular"
@@ -65,7 +65,7 @@
                         android:layout_marginBottom="8dp"
                         app:direction="clockwise"
                         app:enableProgressAnimation="true"
-                        app:formattingPattern="@string/progress_steps_pattern"
+                        app:formattingPattern="@string/msg_progress_steps_pattern"
                         app:progressBackgroundColor="@color/colorAccent"
                         app:progressColor="@color/colorPrimary"
                         app:textColor="@color/colorAccent" />
@@ -124,7 +124,7 @@
                         android:ems="10"
                         android:fontFamily="@font/rubik_regular"
                         android:gravity="center"
-                        android:text="@string/num_of_hours_worked_desc" />
+                        android:text="@string/title_num_hrs_worked_weekly" />
 
 
                 </android.support.v7.widget.CardView>
@@ -169,7 +169,7 @@
                         android:ems="10"
                         android:fontFamily="@font/rubik_regular"
                         android:gravity="center"
-                        android:text="@string/workouts_completed_desc" />
+                        android:text="@string/title_num_workouts_completed_weekly" />
 
                 </android.support.v7.widget.CardView>
 
