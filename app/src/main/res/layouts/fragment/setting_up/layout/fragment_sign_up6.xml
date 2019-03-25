@@ -7,14 +7,14 @@
     tools:context=".SettingUpActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/text_view_progress_num"
+        android:id="@+id/text_view_setting_up_progress_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
-        android:text="@string/progress_number"
+        android:text="@string/setting_up_progress_number_count"
         android:textColor="#808080"
         android:textSize="15sp" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/sign_up_title_location"
+            android:text="@string/title_training_location"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
 
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="25dp"
             android:layout_gravity="center"
-            android:text="@string/secondary_title"
+            android:text="@string/title_select_all_that_apply"
             android:textSize="15sp"
             android:textColor="@color/textColorPrimary"
             android:fontFamily="@font/questrial_regular"/>
@@ -66,7 +66,7 @@
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_gym"
+                android:text="@string/msg_location_gym"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp" />
@@ -79,7 +79,7 @@
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_home"
+                android:text="@string/msg_location_home"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp" />
@@ -92,7 +92,7 @@
                 android:background="@drawable/btn_rounded_secondary"
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
-                android:text="@string/btn_park"
+                android:text="@string/msg_location_park"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp" />

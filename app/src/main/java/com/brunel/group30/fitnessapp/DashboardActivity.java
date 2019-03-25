@@ -1,6 +1,7 @@
 package com.brunel.group30.fitnessapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -105,7 +106,7 @@ public class DashboardActivity extends AppCompatActivity {
         };
 
         this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation_view_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Bundle bundle = getIntent().getExtras();
@@ -122,10 +123,20 @@ public class DashboardActivity extends AppCompatActivity {
         weightInsightCircularProgressIndicator.setCurrentProgress(this.userInfo.getWeight());
 
         TextView bmiValInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi_val);
-        bmiValInsightTextView.setText(String.valueOf(this.userInfo.calculateBMI()));
+        bmiValInsightTextView.setText(
+                String.format(
+                        getString(R.string.val),
+                        BMI.Companion.getString(this.userInfo.calculateBMI())
+                )
+        );
 
         TextView bmiInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi);
-        bmiInsightTextView.setText(String.valueOf(BMI.Companion.getString(this.userInfo.calculateBMI())));
+        bmiInsightTextView.setText(
+                String.format(
+                        getString(R.string.val),
+                        BMI.Companion.getString(this.userInfo.calculateBMI())
+                )
+        );
 
         this.stepCountCircularProgressIndicator.setProgress(
                 this.stepCountCircularProgressIndicator.getProgress(),
@@ -199,6 +210,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             dialog.dismiss();
         });
+        
         numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(250, "ml"));
         numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
@@ -223,5 +235,17 @@ public class DashboardActivity extends AppCompatActivity {
 
         caloriesTargetEditText.setText(String.valueOf(userInfo.getGoals().getCalorieTarget()));
         dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.title_sign_out))
+                .setMessage(getString(R.string.msg_confirm_sign_out))
+                .setNegativeButton(getString(R.string.action_cancel), null)
+                .setPositiveButton(getString(R.string.action_confirm_sign_out), (arg0, arg1) -> {
+                    mAuth.signOut();
+                    startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
+                }).create().show();
     }
 }

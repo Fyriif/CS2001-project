@@ -14,7 +14,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
         android:gravity="center"
-        android:text="@string/title_hydration_data_dialog"
+        android:text="@string/title_daily_water_intake"
         android:textColor="@color/textColorPrimary"
         android:textSize="30sp" />
 
@@ -43,7 +43,7 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/btn_rounded_primary"
             android:fontFamily="@font/rubik_regular"
-            android:text="@string/btn_confirm"
+            android:text="@string/action_confirm"
             android:textAllCaps="true"
             android:textColor="@color/textColorSecondary"
             android:textSize="20sp" />

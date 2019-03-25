@@ -14,7 +14,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
         android:gravity="center"
-        android:text="@string/title_calories_target_dialog"
+        android:text="@string/title_calories_target"
         android:textColor="@color/textColorPrimary"
         android:textSize="30sp" />
 
@@ -28,7 +28,7 @@
         android:drawablePadding="25dp"
         android:ems="15"
         android:fontFamily="@font/rubik_regular"
-        android:hint="@string/nutrients_calories_title"
+        android:hint="@string/title_calories_intake"
         android:inputType="number"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -51,7 +51,7 @@
             android:layout_marginBottom="12dp"
             android:background="@drawable/btn_rounded_primary"
             android:fontFamily="@font/rubik_regular"
-            android:text="@string/btn_confirm"
+            android:text="@string/action_confirm"
             android:textAllCaps="true"
             android:textColor="@color/textColorSecondary"
             android:textSize="20sp" />

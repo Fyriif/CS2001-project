@@ -87,7 +87,7 @@ public class SettingUpActivity extends AppCompatActivity {
         this.mAuth = FirebaseAuth.getInstance();
         this.currentUser = this.mAuth.getCurrentUser();
 
-        Toast.makeText(getApplicationContext(),getString(R.string.info_user_logged_in) + ": "
+        Toast.makeText(getApplicationContext(),getString(R.string.msg_user_already_logged_in) + ": "
                 + this.currentUser.getEmail(), Toast.LENGTH_LONG).show();
 
         this.userInfo = new UserInfo();
@@ -109,9 +109,9 @@ public class SettingUpActivity extends AppCompatActivity {
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.title_sign_out))
-                .setMessage(getString(R.string.confirm_sign_out))
-                .setNegativeButton(getString(R.string.option_cancel), null)
-                .setPositiveButton(getString(R.string.option_sign_out), (arg0, arg1) -> {
+                .setMessage(getString(R.string.msg_confirm_sign_out))
+                .setNegativeButton(getString(R.string.action_cancel), null)
+                .setPositiveButton(getString(R.string.action_confirm_sign_out), (arg0, arg1) -> {
                     mAuth.signOut();
                     startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
                 }).create().show();
@@ -434,13 +434,11 @@ public class SettingUpActivity extends AppCompatActivity {
                             getArguments().getInt(ARG_SECTION_LAYOUT_RESOURCE_ID) : 0,
                     container, false);
 
-            TextView progressNumTextView = rootView.findViewById(R.id.text_view_progress_num);
-            String progressText = progressNumTextView.getText().toString();
-            progressText = progressText.replaceFirst("X",
-                    String.valueOf(getArguments().getInt("SECTION_NUMBER")))
-                    .replaceFirst("X", String.valueOf(
-                            getArguments().getInt("TOTAL_FRAGMENTS")));
-            progressNumTextView.setText(progressText);
+            TextView progressNumTextView = rootView.findViewById(R.id.text_view_setting_up_progress_num);
+            progressNumTextView.setText(String.format(getString(R.string.setting_up_progress_number_count),
+                    getArguments().getInt("SECTION_NUMBER"),
+                    getArguments().getInt("TOTAL_FRAGMENTS"))
+            );
 
             return rootView;
         }

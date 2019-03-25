@@ -34,17 +34,11 @@
                         android:flipInterval="7000">
 
                         <include layout="@layout/view_fat_stat" />
-
                         <include layout="@layout/view_saturated_fat_stat" />
-
                         <include layout="@layout/view_sodium_stat" />
-
                         <include layout="@layout/view_protein_stat" />
-
                         <include layout="@layout/view_total_carbs_stat" />
-
                         <include layout="@layout/view_sugar_stat" />
-
                         <include layout="@layout/view_fibre_stat" />
 
                     </ViewFlipper>

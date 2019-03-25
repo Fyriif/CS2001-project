@@ -7,14 +7,14 @@
     tools:context=".SettingUpActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/text_view_progress_num"
+        android:id="@+id/text_view_setting_up_progress_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
-        android:text="@string/progress_number"
+        android:text="@string/setting_up_progress_number_count"
         android:textColor="#808080"
         android:textSize="15sp" />
 
@@ -38,7 +38,7 @@
             android:layout_marginBottom="20dp"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/sign_up_title_times"
+            android:text="@string/title_work_out_schedule"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
 
@@ -62,7 +62,7 @@
                     android:button="@null"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="createTimePickerFragment"
-                    android:text="@string/text_monday"
+                    android:text="@string/msg_day_monday"
                     android:textAllCaps="true"
                     android:textColor="@drawable/radio_text_selected"
                     android:textSize="20sp" />
@@ -78,7 +78,7 @@
                     android:button="@null"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="createTimePickerFragment"
-                    android:text="@string/text_thursday"
+                    android:text="@string/msg_day_thursday"
                     android:textAllCaps="true"
                     android:textColor="@drawable/radio_text_selected"
                     android:textSize="20sp" />
@@ -100,7 +100,7 @@
                     android:button="@null"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="createTimePickerFragment"
-                    android:text="@string/text_tuesday"
+                    android:text="@string/msg_day_tuesday"
                     android:textAllCaps="true"
                     android:textColor="@drawable/radio_text_selected"
                     android:textSize="20sp" />
@@ -116,7 +116,7 @@
                     android:button="@null"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="createTimePickerFragment"
-                    android:text="@string/text_friday"
+                    android:text="@string/msg_day_friday"
                     android:textAllCaps="true"
                     android:textColor="@drawable/radio_text_selected"
                     android:textSize="20sp" />
@@ -138,7 +138,7 @@
                     android:button="@null"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="createTimePickerFragment"
-                    android:text="@string/text_wednesday"
+                    android:text="@string/msg_day_wednesday"
                     android:textAllCaps="true"
                     android:textColor="@drawable/radio_text_selected"
                     android:textSize="20sp" />
@@ -154,7 +154,7 @@
                     android:button="@null"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="createTimePickerFragment"
-                    android:text="@string/text_saturday"
+                    android:text="@string/msg_day_saturday"
                     android:textAllCaps="true"
                     android:textColor="@drawable/radio_text_selected"
                     android:textSize="20sp" />
@@ -171,7 +171,7 @@
                 android:button="@null"
                 android:fontFamily="@font/questrial_regular"
                 android:onClick="createTimePickerFragment"
-                android:text="@string/text_sunday"
+                android:text="@string/msg_day_sunday"
                 android:textAllCaps="true"
                 android:textColor="@drawable/radio_text_selected"
                 android:textSize="20sp" />
@@ -207,7 +207,7 @@
                     android:background="@drawable/btn_rounded_primary"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="previousFragment"
-                    android:text="@string/btn_back"
+                    android:text="@string/action_back"
                     android:textAllCaps="true"
                     android:textColor="@color/textColorSecondary"
                     android:textSize="20sp"
@@ -226,7 +226,7 @@
                     android:backgroundTint="@color/colorPrimary"
                     android:fontFamily="@font/questrial_regular"
                     android:onClick="sendToDB"
-                    android:text="@string/btn_submit"
+                    android:text="@string/action_submit"
                     android:textAllCaps="true"
                     android:textColor="@color/textColorPrimary"
                     android:textSize="20sp"

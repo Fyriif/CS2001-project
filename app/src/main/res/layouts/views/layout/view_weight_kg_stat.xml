@@ -15,7 +15,7 @@
         android:ems="10"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
-        android:text="@string/weight"
+        android:text="@string/title_weight"
         android:textSize="20sp" />
 
     <LinearLayout

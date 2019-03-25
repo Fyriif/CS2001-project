@@ -7,14 +7,14 @@
     tools:context=".SettingUpActivity$PlaceholderFragment">
 
     <TextView
-        android:id="@+id/text_view_progress_num"
+        android:id="@+id/text_view_setting_up_progress_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
-        android:text="@string/progress_number"
+        android:text="@string/setting_up_progress_number_count"
         android:textColor="#808080"
         android:textSize="15sp" />
 
@@ -38,7 +38,7 @@
             android:layout_marginBottom="25dp"
             android:fontFamily="@font/rubik_regular"
             android:gravity="center"
-            android:text="@string/dob"
+            android:text="@string/title_dob"
             android:textColor="@color/textColorPrimary"
             android:textSize="30sp" />
 
@@ -52,7 +52,7 @@
             android:ems="15"
             android:focusable="false"
             android:fontFamily="@font/questrial_regular"
-            android:hint="@string/dob"
+            android:hint="@string/title_dob"
             android:inputType="none"
             android:onClick="enterDateOfBirth"
             android:layout_gravity="center"
@@ -85,7 +85,7 @@
             android:background="@drawable/btn_rounded_primary"
             android:fontFamily="@font/rubik_regular"
             android:onClick="nextFragment"
-            android:text="@string/btn_next"
+            android:text="@string/action_next"
             android:textAllCaps="true"
             android:textColor="@color/textColorSecondary"
             android:textSize="20sp" />

@@ -26,7 +26,7 @@
                     android:layout_margin="14dp"
                     android:fontFamily="@font/questrial_regular"
                     android:gravity="center_horizontal"
-                    android:text="@string/weekly_nutrients_intake_title"
+                    android:text="@string/title_weekly_nutrients_intake"
                     android:textSize="36sp" />
 
             </LinearLayout>
@@ -51,7 +51,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/fat"
+                            android:text="@string/msg_fat"
                             android:textSize="30sp" />
 
                         <TextView
@@ -74,7 +74,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/fibre"
+                            android:text="@string/msg_fibre"
                             android:textSize="30sp" />
 
                         <TextView
@@ -97,7 +97,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/protein"
+                            android:text="@string/msg_protein"
                             android:textSize="30sp" />
 
                         <TextView
@@ -120,7 +120,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/saturated_fat"
+                            android:text="@string/msg_saturated_fat"
                             android:textSize="30sp" />
 
                         <TextView
@@ -143,7 +143,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/sodium"
+                            android:text="@string/msg_sodium"
                             android:textSize="30sp" />
 
                         <TextView
@@ -166,7 +166,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/sugar"
+                            android:text="@string/msg_sugar"
                             android:textSize="30sp" />
 
                         <TextView
@@ -189,7 +189,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:fontFamily="@font/rubik_regular"
-                            android:text="@string/carbs"
+                            android:text="@string/msg_carbs"
                             android:textSize="30sp" />
 
                         <TextView

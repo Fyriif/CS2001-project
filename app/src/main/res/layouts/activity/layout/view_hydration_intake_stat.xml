@@ -13,7 +13,7 @@
         android:ems="10"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
-        android:text="@string/hydration_data_title"
+        android:text="@string/title_water_intake"
         android:textSize="20sp" />
 
     <LinearLayout
