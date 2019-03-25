@@ -289,7 +289,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="Hard"
                             android:textAlignment="center"
@@ -315,7 +315,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="Lower"
                             android:textAlignment="center"
@@ -344,7 +344,7 @@
                 android:id="@+id/profile_image_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginRight="8dp">
+                android:layout_marginEnd="8dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
@@ -364,16 +364,17 @@
                 android:layout_marginBottom="4dp"
                 android:layout_toRightOf="@+id/profile_image_layout"
                 android:text="Close Grip Bench Press"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:fontFamily="@font/questrial_regular"/>
 
             <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/location_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toRightOf="@+id/rep_tag_card"
+                android:layout_toEndOf="@+id/rep_tag_card"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
@@ -389,9 +390,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toRightOf="@+id/location_tag_card"
+                android:layout_toEndOf="@+id/location_tag_card"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
@@ -408,9 +409,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toRightOf="@+id/difficulty_tag_card"
+                android:layout_toEndOf="@+id/difficulty_tag_card"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
@@ -427,15 +428,18 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="2dp"
-                android:layout_toRightOf="@+id/profile_image_layout"
+                android:layout_toEndOf="@+id/profile_image_layout"
                 card_view:cardCornerRadius="8dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="4dp"
+                app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10kg"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    android:fontFamily="@font/questrial_regular"
+                    android:textColor="@color/textColorSecondary"/>
             </android.support.v7.widget.CardView>
 
 
@@ -444,17 +448,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toRightOf="@+id/weight_tag_card"
+                android:layout_toEndOf="@+id/weight_tag_card"
                 card_view:cardCornerRadius="8dp"
-                card_view:contentPadding="4dp">
+                card_view:contentPadding="4dp"
+                app:cardBackgroundColor="@color/colorPrimaryDark">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 reps"
-                    android:textSize="8sp" />
+                    android:textSize="8sp"
+                    android:fontFamily="@font/questrial_regular"
+                    android:textColor="@color/textColorSecondary"/>
             </android.support.v7.widget.CardView>
 
         </RelativeLayout>
