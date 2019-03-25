@@ -329,7 +329,7 @@
     <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/graph_card"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="68dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
@@ -346,8 +346,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginRight="8dp">
 
-                <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/profile_image"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
@@ -371,31 +370,30 @@
                 android:id="@+id/location_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/card_title"
-                android:layout_toRightOf="@+id/profile_image_layout"
-                card_view:cardCornerRadius="12dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="2dp"
+                android:layout_toRightOf="@+id/rep_tag_card"
+                card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/profile_image_layout"
-                    android:layout_marginTop="0dp"
-                    android:layout_toRightOf="@+id/profile_image_layout"
                     android:text="Home - Gym - Park"
                     android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/difficulty_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/card_title"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/location_tag_card"
-                card_view:cardCornerRadius="12dp"
-                card_view:contentPadding="4dp"
-                android:layout_marginLeft="8dp">
+                card_view:cardCornerRadius="8dp"
+                card_view:contentPadding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -405,16 +403,16 @@
                     android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
-            <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/body_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/card_title"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/difficulty_tag_card"
-                card_view:cardCornerRadius="12dp"
-                card_view:contentPadding="4dp"
-                android:layout_marginLeft="8dp">
+                card_view:cardCornerRadius="8dp"
+                card_view:contentPadding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -427,17 +425,17 @@
                 android:id="@+id/weight_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/card_title"
-                android:layout_marginLeft="16dp"
-                android:layout_toRightOf="@+id/body_tag_card"
-                card_view:cardCornerRadius="4dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="2dp"
+                android:layout_toRightOf="@+id/profile_image_layout"
+                card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10kg"
-                    android:textSize="13sp" />
+                    android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
 
@@ -445,17 +443,18 @@
                 android:id="@+id/rep_tag_card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/card_title"
+                android:layout_alignParentBottom="true"
                 android:layout_marginLeft="8dp"
+                android:layout_marginBottom="2dp"
                 android:layout_toRightOf="@+id/weight_tag_card"
-                card_view:cardCornerRadius="4dp"
+                card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="10 reps"
-                    android:textSize="13sp" />
+                    android:textSize="8sp" />
             </android.support.v7.widget.CardView>
 
         </RelativeLayout>
