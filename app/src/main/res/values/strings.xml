@@ -85,4 +85,5 @@
     <string name="btn_radio_imperial">Imperial (ft/lbs)</string>
     <string name="btn_delete_acc">Delete Account</string>
     <string name="val">%s</string>
+    <string name="val_with_unit">%1$s %2$s</string>
 </resources>
