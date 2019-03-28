@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <ViewFlipper
+        android:id="@+id/view_dashboard"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:inAnimation="@anim/slide_in_right"
+        android:outAnimation="@anim/slide_out_left">
 
-        <ViewFlipper
-            android:id="@+id/view_dashboard"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:inAnimation="@anim/slide_in_right"
-            android:outAnimation="@anim/slide_out_left">
-
-            <include layout="@layout/fragment_dashboard_home" />
-            <include layout="@layout/fragment_dashboard_nutrients" />
-            <include layout="@layout/fragment_dashboard_workouts" />
-            <include layout="@layout/fragment_dashboard_account" />
-        </ViewFlipper>
-
-    </ScrollView>
+        <include layout="@layout/fragment_dashboard_home" />
+        <include layout="@layout/fragment_dashboard_nutrients" />
+        <include layout="@layout/fragment_dashboard_workouts" />
+        <include layout="@layout/fragment_dashboard_account" />
+    </ViewFlipper>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
+        android:id="@+id/bottom_navigation_view_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="0dp"
-        android:layout_marginEnd="0dp"
-        android:background="@color/colorPrimaryDark"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_gravity="bottom"
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
         app:menu="@menu/navigation" />
-
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

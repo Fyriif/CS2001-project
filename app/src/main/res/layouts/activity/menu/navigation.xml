@@ -9,7 +9,7 @@
     <item
         android:id="@+id/navigation_dashboard_nutrients"
         android:icon="@drawable/ic_baseline_calendar_today_24px"
-        android:title="@string/title_calendar" />
+        android:title="@string/title_nutriments" />
 
     <item
         android:id="@+id/navigation_dashboard_workouts"

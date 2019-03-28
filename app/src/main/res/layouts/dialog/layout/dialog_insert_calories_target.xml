@@ -14,21 +14,29 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
         android:gravity="center"
-        android:text="@string/title_step_target"
+        android:text="@string/title_calories_target"
         android:textColor="@color/textColorPrimary"
         android:textSize="30sp" />
 
-    <com.brunel.group30.fitnessapp.Custom.CustomNumberPicker
-        android:id="@+id/number_picker_step_target"
+    <EditText
+        android:id="@+id/edit_calories"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="12dp"
-        android:descendantFocusability="blocksDescendants"
-        android:theme="@style/NumberPickerStyle"
-        custom:maxValue="50000"
-        custom:minValue="1000" />
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btn_rounded_edit_text"
+        android:drawablePadding="25dp"
+        android:ems="15"
+        android:fontFamily="@font/rubik_regular"
+        android:hint="@string/title_calories_intake"
+        android:inputType="number"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:singleLine="true"
+        android:textColor="#333333"
+        android:textColorHint="#d8d8d8"
+        android:textCursorDrawable="@null"
+        android:textSize="20sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

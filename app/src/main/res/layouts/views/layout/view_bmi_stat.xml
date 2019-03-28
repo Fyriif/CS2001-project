@@ -15,7 +15,7 @@
         android:ems="10"
         android:fontFamily="@font/rubik_regular"
         android:gravity="center"
-        android:text="@string/bmi"
+        android:text="@string/title_bmi"
         android:textSize="20sp" />
 
     <LinearLayout
@@ -44,7 +44,7 @@
                 android:layout_marginBottom="6dp"
                 android:fontFamily="@font/questrial_regular"
                 android:gravity="center"
-                android:text="0"
+                android:text="@string/val"
                 android:textSize="28sp"
                 tools:ignore="HardcodedText" />
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/questrial_regular"
                 android:gravity="center"
-                android:text="NORMAL"
+                android:text="@string/val"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
         </LinearLayout>

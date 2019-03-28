@@ -1,14 +1,16 @@
 package com.brunel.group30.fitnessapp;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -21,9 +23,16 @@ import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.fitness.data.Bucket;
+import com.google.android.gms.fitness.data.DataPoint;
+import com.google.android.gms.fitness.data.DataSet;
+import com.google.android.gms.fitness.data.Field;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+
+import java.util.List;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
@@ -76,6 +85,12 @@ public class DashboardActivity extends AppCompatActivity {
 
                         customViewPager.setAdapter(nutrientsPageAdapter);
                         nutrientsTabLayout.setupWithViewPager(customViewPager);
+
+                        FloatingActionButton barcodeFab = findViewById(R.id.button_barcode_scanner);
+                        barcodeFab.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(), BarcodeScannerActivity.class)));
+
+                        getDailyNutrition();
+                        getWeeklyNutrition();
                     }
                     return true;
                 case R.id.navigation_dashboard_workouts:
@@ -94,7 +109,7 @@ public class DashboardActivity extends AppCompatActivity {
         };
 
         this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.bottom_navigation_view_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         Bundle bundle = getIntent().getExtras();
@@ -103,21 +118,33 @@ public class DashboardActivity extends AppCompatActivity {
 
         CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
 
-        this.stepCountCircularProgressIndicator.setMaxProgress(userInfo.getGoals().getStepsTarget());
-
         updateStats();
     }
 
     void updateStats() {
-        TextView weightInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_weight_kg);
-        weightInsightTextView.setText(String.valueOf(this.userInfo.getWeight()));
+        CircularProgressIndicator weightInsightCircularProgressIndicator = dashboardInsightsViewFlipper.findViewById(R.id.circular_progress_insights_weight);
+        weightInsightCircularProgressIndicator.setCurrentProgress(this.userInfo.getWeight());
 
         TextView bmiValInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi_val);
-        bmiValInsightTextView.setText(String.valueOf(this.userInfo.calculateBMI()));
+        bmiValInsightTextView.setText(
+                String.format(
+                        getString(R.string.val),
+                        BMI.Companion.getString(this.userInfo.calculateBMI())
+                )
+        );
 
         TextView bmiInsightTextView = dashboardInsightsViewFlipper.findViewById(R.id.text_view_insights_bmi);
-        bmiInsightTextView.setText(String.valueOf(BMI.Companion.getString(this.userInfo.calculateBMI())));
-    }
+        bmiInsightTextView.setText(
+                String.format(
+                        getString(R.string.val),
+                        BMI.Companion.getString(this.userInfo.calculateBMI())
+                )
+        );
+
+        this.stepCountCircularProgressIndicator.setProgress(
+                this.stepCountCircularProgressIndicator.getProgress(),
+                userInfo.getGoals().getStepsTarget());
+        }
 
     void invokeApi() {
         try {
@@ -140,6 +167,62 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
+    void getDailyNutrition() {
+        GoogleFitApi.getDailyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
+            List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
+
+            int calories = 0;
+            for (DataPoint dataPoint : dataPoints) {
+                calories += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue();
+            }
+          
+            CircularProgressIndicator dailyNutritionCircularProgress = findViewById(R.id.circular_progress_daily_calorie_intake);
+            dailyNutritionCircularProgress.setCurrentProgress(calories);
+        });
+    }
+
+    void getWeeklyNutrition() {
+        GoogleFitApi.getWeeklyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
+            List<Bucket> buckets = dataReadResponse.getBuckets();
+
+            double fat = 0, sodium = 0, fibre = 0, protein = 0, satFat = 0, sugar = 0, carbsTotal = 0;
+
+            for (Bucket bucket : buckets) {
+                for (DataPoint dataPoint : bucket.getDataSets().get(0).getDataPoints()) {
+                    fat += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue();
+                    sodium += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue();
+                    fibre += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue();
+                    protein += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue();
+                    satFat += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue();
+                    sugar += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue();
+                    carbsTotal += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue();
+                }
+            }
+
+            TextView weeklyFatTextView = findViewById(R.id.text_view_weekly_fat);
+            weeklyFatTextView.setText(String.valueOf(fat));
+
+            TextView weeklyFibreTextView = findViewById(R.id.text_view_weekly_fibre);
+            weeklyFibreTextView.setText(String.valueOf(fibre));
+
+            TextView weeklyProteinTextView = findViewById(R.id.text_view_weekly_protein);
+            weeklyProteinTextView.setText(String.valueOf(protein));
+
+            TextView weeklySaturatedFatTextView = findViewById(R.id.text_view_weekly_saturated_fat);
+            weeklySaturatedFatTextView.setText(String.valueOf(satFat));
+
+            TextView weeklySodiumTextView = findViewById(R.id.text_view_weekly_sodium);
+            weeklySodiumTextView.setText(String.valueOf(sodium));
+
+            TextView weeklySugarTextView = findViewById(R.id.text_view_weekly_sugar);
+            weeklySugarTextView.setText(String.valueOf(sugar));
+
+            TextView weeklyCarbohydratesTextView = findViewById(R.id.text_view_weekly_total_carbs);
+            weeklyCarbohydratesTextView.setText(String.valueOf(carbsTotal));
+        });
+
+    }
+
     public void stepCountTarget(View v) {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_insert_step_target);
@@ -151,21 +234,68 @@ public class DashboardActivity extends AppCompatActivity {
 
             // Re-save the object in device's SharedPreferences
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
 
             dialog.dismiss();
         });
 
-        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000));
+        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000, ""));
         numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
         dialog.show();
     }
 
-    private void recordDataForDate() {
+    public void waterCountTarget(View v) {
         final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_insert_data_calendar);
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> dialog.dismiss());
+        dialog.setContentView(R.layout.dialog_insert_water_target);
+        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_water_target);
+
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
+            userInfo.getGoals().setHydrationTarget((numberPicker.getValue() + 1) * 1000);
+            userInfo.getGoals().updateDB(mCurrentUser.getUid());
+            
+            // Re-save the object in device's SharedPreferences
+            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
+
+            dialog.dismiss();
+        });
+        
+        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(250, "ml"));
+        numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
         dialog.show();
+    }
+
+    public void calorieCountTarget(View v) {
+        final Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_insert_calories_target);
+        EditText caloriesTargetEditText = dialog.findViewById(R.id.edit_calories);
+
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
+            userInfo.getGoals().setCalorieTarget((Integer.parseInt(caloriesTargetEditText.getText().toString())));
+            userInfo.getGoals().updateDB(mCurrentUser.getUid());
+
+            // Re-save the object in device's SharedPreferences
+            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
+
+            dialog.dismiss();
+        });
+
+        caloriesTargetEditText.setText(String.valueOf(userInfo.getGoals().getCalorieTarget()));
+        dialog.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.title_sign_out))
+                .setMessage(getString(R.string.msg_confirm_sign_out))
+                .setNegativeButton(getString(R.string.action_cancel), null)
+                .setPositiveButton(getString(R.string.action_confirm_sign_out), (arg0, arg1) -> {
+                    mAuth.signOut();
+                    startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
+                }).create().show();
     }
 }
