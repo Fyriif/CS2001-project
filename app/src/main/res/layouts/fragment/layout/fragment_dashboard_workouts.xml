@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/card_filters"
+        android:id="@+id/card_view_filters"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
@@ -74,8 +73,7 @@
                 android:paddingBottom="8dp">
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_home"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_home"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -93,7 +91,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_home"
                             android:textAlignment="center"
@@ -102,8 +100,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_easy"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_easy"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -122,7 +119,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_easy"
                             android:textAlignment="center"
@@ -131,7 +128,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_whole"
+                    android:id="@+id/card_view_filter_whole"
                     xmlns:card_view="http://schemas.android.com/apk/res-auto"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -150,7 +147,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_whole"
                             android:textAlignment="center"
@@ -166,8 +163,7 @@
                 android:paddingBottom="8dp">
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_gym"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_gym"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -185,7 +181,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_gym"
                             android:textAlignment="center"
@@ -194,8 +190,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_medium"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_medium"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -214,7 +209,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_medium"
                             android:textAlignment="center"
@@ -223,8 +218,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_upper"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_upper"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -242,7 +236,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_upper"
                             android:textAlignment="center"
@@ -257,8 +251,7 @@
                 android:columnCount="3">
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_Park"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_Park"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -276,7 +269,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
-                            android:paddingRight="2dp"
+                            android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/filter_park"
                             android:textAlignment="center"
@@ -285,8 +278,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_hard"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_hard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -314,8 +306,7 @@
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/card_filter_lower"
-                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/card_view_filter_lower"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_columnWeight="1"
@@ -345,8 +336,7 @@
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/graph_card"
+        android:id="@+id/card_view_workout"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:layout_marginStart="8dp"
@@ -355,7 +345,7 @@
         card_view:cardCornerRadius="12dp"
         card_view:contentPadding="8dp">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -366,8 +356,7 @@
                 android:layout_marginEnd="8dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
-                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/image_workout_type"
+                    android:id="@+id/image_view_workout_type"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:src=""
@@ -377,7 +366,7 @@
             </android.support.constraint.ConstraintLayout>
 
             <TextView
-                android:id="@+id/card_title"
+                android:id="@+id/card_view_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/layout_workout_image"
@@ -388,14 +377,13 @@
                 android:fontFamily="@font/questrial_regular"/>
 
             <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/location_tag_card"
+                android:id="@+id/card_view_location_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@+id/rep_tag_card"
+                android:layout_toEndOf="@+id/card_view_rep_tag"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
@@ -407,14 +395,13 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/difficulty_tag_card"
+                android:id="@+id/card_view_difficulty_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@+id/location_tag_card"
+                android:layout_toEndOf="@+id/card_view_location_tag"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
@@ -427,14 +414,13 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/body_tag_card"
+                android:id="@+id/card_view_body_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@+id/difficulty_tag_card"
+                android:layout_toEndOf="@+id/card_view_difficulty_tag"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp">
 
@@ -446,8 +432,7 @@
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/weight_tag_card"
+                android:id="@+id/card_view_weight_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
@@ -468,14 +453,13 @@
 
 
             <android.support.v7.widget.CardView
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/rep_tag_card"
+                android:id="@+id/card_view_rep_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginStart="8dp"
                 android:layout_marginBottom="2dp"
-                android:layout_toEndOf="@+id/weight_tag_card"
+                android:layout_toEndOf="@+id/card_view_weight_tag"
                 card_view:cardCornerRadius="8dp"
                 card_view:contentPadding="4dp"
                 app:cardBackgroundColor="@color/colorPrimaryDark">
