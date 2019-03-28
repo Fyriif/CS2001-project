@@ -4,26 +4,26 @@ import com.google.gson.annotations.SerializedName
 
 class Nutriments {
     @SerializedName("proteins")
-    var protein: Float = 0.toFloat()
+    var protein: Double = 0.toDouble()
 
     @SerializedName("fat")
-    var fat: Float = 0.toFloat()
+    var fat: Double = 0.toDouble()
 
     @SerializedName("sodium")
-    var sodium: Float = 0.toFloat()
+    var sodium: Double = 0.toDouble()
 
     @SerializedName("saturated-fat")
-    var saturatedFat: Float = 0.toFloat()
+    var saturatedFat: Double = 0.toDouble()
 
     @SerializedName("carbohydrates")
-    var carbohydrates: Float = 0.toFloat()
+    var carbohydrates: Double = 0.toDouble()
 
     @SerializedName("energy_value")
-    var calories: Float = 0.toFloat()
+    var calories: Double = 0.toDouble()
 
     @SerializedName("sugars")
-    var sugar: Float = 0.toFloat()
+    var sugar: Double = 0.toDouble()
 
     @SerializedName("fiber")
-    var fiber: Float = 0.toFloat()
+    var fiber: Double = 0.toDouble()
 }

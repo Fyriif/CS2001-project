@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="6dp"
@@ -28,7 +27,8 @@
             android:layout_height="90dp"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="10dp"
-            app:srcCompat="@drawable/ic_weight_kg_black_24dp" />
+            app:srcCompat="@drawable/ic_weight_kg_black_24dp"
+            android:contentDescription="@null" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.brunel.group30.fitnessapp.DashboardActivity;
 import com.brunel.group30.fitnessapp.Models.Product;
 import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -77,17 +78,11 @@ public class GoogleFitApi {
 
         Fitness.getHistoryClient(GoogleFitApi.activity, GoogleFitApi.mGoogleSignInAccount)
                 .insertData(dataSet)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.e("TEST", "It sent!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.e("TEST", "Failed!");
-                    }
+                .addOnSuccessListener(aVoid -> {
+                    // Reset daily and weekly nutriments to null
+                    // in order to re-trigger getting data from Google Fit
+                    DashboardActivity.userInfo.setDailyNutriments(null);
+                    DashboardActivity.userInfo.setWeeklyNutriments(null);
                 });
     }
 
@@ -102,14 +97,14 @@ public class GoogleFitApi {
             DataPoint food = DataPoint.create(nutritionSource);
             food.setTimestamp(Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS);
             food.getValue(Field.FIELD_FOOD_ITEM).setString(product.getName());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_FAT, product.getNutriments().getFat());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SODIUM, product.getNutriments().getSodium());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SATURATED_FAT, product.getNutriments().getSaturatedFat());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_PROTEIN, product.getNutriments().getProtein());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_CARBS, product.getNutriments().getCarbohydrates());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, product.getNutriments().getCalories());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, product.getNutriments().getSugar());
-            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, product.getNutriments().getFiber());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_FAT, (float) product.getNutriments().getFat());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SODIUM, (float) product.getNutriments().getSodium());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SATURATED_FAT, (float) product.getNutriments().getSaturatedFat());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_PROTEIN, (float) product.getNutriments().getProtein());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_TOTAL_CARBS, (float) product.getNutriments().getCarbohydrates());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_CALORIES, (float) product.getNutriments().getCalories());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_SUGAR, (float) product.getNutriments().getSugar());
+            food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, (float) product.getNutriments().getFiber());
 
             sendData(DataType.TYPE_NUTRITION, food);
         }
