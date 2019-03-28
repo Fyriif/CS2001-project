@@ -32,7 +32,7 @@
             tools:ignore="ContentDescription" />
 
         <TextView
-            android:id="@+id/text_view_insights_weight_kg"
+            android:id="@+id/text_view_sat_fat_daily"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fontFamily="@font/questrial_regular"

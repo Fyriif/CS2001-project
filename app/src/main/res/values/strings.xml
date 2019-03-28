@@ -97,4 +97,5 @@
     <string name="filter_whole">Whole</string>
     <string name="filter_upper">Upper</string>
     <string name="filter_lower">Lower</string>
+    <string name="val_with_unit">%1$s %2$s</string>
 </resources>
