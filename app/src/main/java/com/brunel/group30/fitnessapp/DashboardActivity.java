@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Custom.CustomHydrationDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
 import com.brunel.group30.fitnessapp.Enums.BMI;
@@ -26,7 +27,6 @@ import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.fitness.data.Bucket;
 import com.google.android.gms.fitness.data.DataPoint;
-import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.Field;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -144,7 +144,7 @@ public class DashboardActivity extends AppCompatActivity {
         this.stepCountCircularProgressIndicator.setProgress(
                 this.stepCountCircularProgressIndicator.getProgress(),
                 userInfo.getGoals().getStepsTarget());
-        }
+    }
 
     void invokeApi() {
         try {
@@ -182,7 +182,7 @@ public class DashboardActivity extends AppCompatActivity {
                 sugarDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue();
                 carbsDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue();
             }
-          
+
             CircularProgressIndicator dailyNutritionCircularProgress = findViewById(R.id.circular_progress_daily_calorie_intake);
             dailyNutritionCircularProgress.setCurrentProgress(caloriesDaily);
 
@@ -271,7 +271,7 @@ public class DashboardActivity extends AppCompatActivity {
         dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
             userInfo.getGoals().setHydrationTarget((numberPicker.getValue() + 1) * 1000);
             userInfo.getGoals().updateDB(mCurrentUser.getUid());
-            
+
             // Re-save the object in device's SharedPreferences
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
             updateStats();
@@ -303,6 +303,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         caloriesTargetEditText.setText(String.valueOf(userInfo.getGoals().getCalorieTarget()));
         dialog.show();
+    }
+
+    public void hydrationCountTarget(View v) {
+        CustomHydrationDialog dialogFragment = new CustomHydrationDialog();
+        dialogFragment.show(getSupportFragmentManager(), "HyrdationDialog");
     }
 
     @Override

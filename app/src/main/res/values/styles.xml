@@ -10,11 +10,17 @@
         <item name="android:textColorSecondary">@color/textColorSecondary</item>
     </style>
 
-    <style name="NumberPickerStyle">
+    <style name="NumberPickerStyle" parent="AppTheme">
         <item name="android:textSize">30sp</item>
         <item name="android:textColor">@color/textColorPrimary</item>
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="DialogStyle" parent="AppTheme">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowIsFloating">true</item>
     </style>
 
 </resources>
