@@ -83,7 +83,8 @@ public class GoogleFitApi {
                     // in order to re-trigger getting data from Google Fit
                     DashboardActivity.userInfo.setDailyNutriments(null);
                     DashboardActivity.userInfo.setWeeklyNutriments(null);
-                });
+                })
+                .addOnFailureListener(e -> Log.e("GoogleFitApi::sendData", e.getMessage()));
     }
 
     public static void sendNutritionalData(Product product) {
@@ -107,6 +108,24 @@ public class GoogleFitApi {
             food.getValue(Field.FIELD_NUTRIENTS).setKeyValue(Field.NUTRIENT_DIETARY_FIBER, (float) product.getNutriments().getFiber());
 
             sendData(DataType.TYPE_NUTRITION, food);
+        }
+
+        // TODO: add else statement, check if user wants to try scanning the barcode again for instance.
+    }
+
+    public static void sendHydrationData(int milliliters) {
+        if (milliliters > 0) {
+            DataSource hydrationSource = new DataSource.Builder()
+                    .setAppPackageName(activity.getPackageName())
+                    .setType(DataSource.TYPE_RAW)
+                    .setDataType(DataType.TYPE_HYDRATION)
+                    .build();
+
+            DataPoint water = DataPoint.create(hydrationSource);
+            water.setTimestamp(Utils.INSTANCE.getCurrentDateTimeInMillis(), TimeUnit.MILLISECONDS);
+            water.getValue(Field.FIELD_VOLUME).setFloat((float) milliliters / 1000);
+
+            sendData(DataType.TYPE_HYDRATION, water);
         }
 
         // TODO: add else statement, check if user wants to try scanning the barcode again for instance.

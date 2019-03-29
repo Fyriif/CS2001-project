@@ -322,7 +322,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     public void hydrationCountTarget(View v) {
         CustomHydrationDialog dialogFragment = new CustomHydrationDialog();
-        dialogFragment.show(getSupportFragmentManager(), "HyrdationDialog");
+        dialogFragment.show(getSupportFragmentManager(), "HydrationDialog");
     }
 
     @Override
