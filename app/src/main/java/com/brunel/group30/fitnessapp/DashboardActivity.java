@@ -68,6 +68,12 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
         }
 
+        Bundle bundle = getIntent().getExtras();
+        userInfo = new Gson().fromJson(bundle != null ?
+                bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
+
+        CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
+
         invokeApi();
         getDailyNutrition();
         getWeeklyNutrition();
@@ -142,12 +148,6 @@ public class DashboardActivity extends AppCompatActivity {
         this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation_view_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
-        Bundle bundle = getIntent().getExtras();
-        userInfo = new Gson().fromJson(bundle != null ?
-                bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
-
-        CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
 
         this.dashboardInsightsViewPager = findViewById(R.id.view_pager_insights);
 

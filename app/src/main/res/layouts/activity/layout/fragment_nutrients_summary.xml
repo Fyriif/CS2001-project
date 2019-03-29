@@ -1,214 +1,92 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DashboardActivity">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v7.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <include layout="@layout/view_carbohydrates_stat_weekly" />
 
-                <TextView
-                    android:id="@+id/weekly_nutrients"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="14dp"
-                    android:fontFamily="@font/questrial_regular"
-                    android:gravity="center_horizontal"
-                    android:text="@string/title_weekly_nutrients_intake"
-                    android:textSize="36sp" />
+        </android.support.v7.widget.CardView>
 
-            </LinearLayout>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+            <include layout="@layout/view_fat_stat_weekly" />
 
-                <TableLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="10dp"
-                    android:stretchColumns="0,1">
+        </android.support.v7.widget.CardView>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="4dp">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_fat"
-                            android:textSize="30sp" />
+            <include layout="@layout/view_fibre_stat_weekly" />
 
-                        <TextView
-                            android:id="@+id/text_view_weekly_fat"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
+        </android.support.v7.widget.CardView>
 
-                    </TableRow>
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="4dp">
+            <include layout="@layout/view_protein_stat_weekly" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_fibre"
-                            android:textSize="30sp" />
+        </android.support.v7.widget.CardView>
 
-                        <TextView
-                            android:id="@+id/text_view_weekly_fibre"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-                    </TableRow>
+            <include layout="@layout/view_saturated_fat_stat_weekly" />
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="4dp">
+        </android.support.v7.widget.CardView>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_protein"
-                            android:textSize="30sp" />
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-                        <TextView
-                            android:id="@+id/text_view_weekly_protein"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
+            <include layout="@layout/view_sodium_stat_weekly" />
 
-                    </TableRow>
+        </android.support.v7.widget.CardView>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="4dp">
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_saturated_fat"
-                            android:textSize="30sp" />
+            <include layout="@layout/view_sugar_stat_weekly" />
 
-                        <TextView
-                            android:id="@+id/text_view_weekly_saturated_fat"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
+        </android.support.v7.widget.CardView>
 
-                    </TableRow>
+    </LinearLayout>
 
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="4dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_sodium"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_weekly_sodium"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:paddingBottom="4dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_sugar"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_weekly_sugar"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
-
-                    </TableRow>
-
-                    <TableRow
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:text="@string/msg_carbs"
-                            android:textSize="30sp" />
-
-                        <TextView
-                            android:id="@+id/text_view_weekly_total_carbs"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:fontFamily="@font/rubik_regular"
-                            android:gravity="right"
-                            android:text="0g"
-                            android:textSize="30sp" />
-
-                    </TableRow>
-
-                </TableLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-    </ScrollView>
-
-</FrameLayout>
+</ScrollView>

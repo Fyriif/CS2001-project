@@ -87,7 +87,7 @@ class WeeklyNutrientsSummary : Fragment() {
                 "mg"
         )
 
-        view.findViewById<TextView>(R.id.text_view_weekly_total_carbs).text = String.format(
+        view.findViewById<TextView>(R.id.text_view_weekly_carbs).text = String.format(
                 getString(R.string.val_with_unit),
                 DashboardActivity.userInfo.weeklyNutriments.carbohydrates,
                 "mg"
