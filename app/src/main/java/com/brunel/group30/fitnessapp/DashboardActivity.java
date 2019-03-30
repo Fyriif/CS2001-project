@@ -314,6 +314,26 @@ public class DashboardActivity extends AppCompatActivity {
         dialogFragment.show(getSupportFragmentManager(), "CaloriesDialog");
     }
 
+    public void weightGainTarget(View v) {
+        final Dialog dialog= new Dialog(this);
+        dialog.setContentView(R.layout.dialog_insert_weight_target);
+
+        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_weight_target);
+        numberPicker.setMaxValue(userInfo.getWeight() + 50);
+        numberPicker.setMinValue(userInfo.getWeight() - 50);
+        numberPicker.setValue(userInfo.getWeight());
+
+        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
+            userInfo.getGoals().setWeightTarget(numberPicker.getValue());
+            userInfo.getGoals().updateDB(mCurrentUser.getUid());
+
+            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
+            updateStats();
+
+            dialog.dismiss();
+        });
+    }
+
     public void hydrationCountTarget(View v) {
         CustomHydrationDialog dialogFragment = new CustomHydrationDialog();
         dialogFragment.show(getSupportFragmentManager(), "HydrationDialog");

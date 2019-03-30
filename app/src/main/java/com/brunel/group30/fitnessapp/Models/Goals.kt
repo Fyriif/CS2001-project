@@ -5,6 +5,7 @@ import com.brunel.group30.fitnessapp.Utils.Exceptions
 import com.google.firebase.firestore.PropertyName
 
 data class Goals(@PropertyName("steps_target") var stepsTarget: Int = 10000,
+                 @PropertyName("weight_target") var weightTarget: Int,
                  @PropertyName("hydration_target") var hydrationTarget: Int = 3*1000,
                  @PropertyName("calorie_target") var calorieTarget: Int = 100) {
     companion object {

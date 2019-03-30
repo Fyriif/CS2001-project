@@ -20,7 +20,11 @@ public class UserInfo {
     private boolean isDisabled;
     private HashMap<String, Boolean> locations;
     private HashMap<String, List<String>> workOutDays;
+
+    @Exclude
     private Nutriments dailyNutriments;
+
+    @Exclude
     private Nutriments weeklyNutriments;
 
     @Exclude
@@ -134,18 +138,22 @@ public class UserInfo {
         this.goals = goals;
     }
 
+    @Exclude
     public Nutriments getDailyNutriments() {
         return dailyNutriments;
     }
 
+    @Exclude
     public void setDailyNutriments(Nutriments dailyNutriments) {
         this.dailyNutriments = dailyNutriments;
     }
 
+    @Exclude
     public Nutriments getWeeklyNutriments() {
         return weeklyNutriments;
     }
 
+    @Exclude
     public void setWeeklyNutriments(Nutriments weeklyNutriments) {
         this.weeklyNutriments = weeklyNutriments;
     }

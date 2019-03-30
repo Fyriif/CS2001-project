@@ -23,6 +23,7 @@ import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Custom.CustomTimeRangePicker;
 import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
+import com.brunel.group30.fitnessapp.Enums.BMI;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
 import com.brunel.group30.fitnessapp.Models.Goals;
@@ -352,8 +353,14 @@ public class SettingUpActivity extends AppCompatActivity {
                         );
                     }
                 });
+                int targetWeight = this.userInfo.getWeight();
+                if (BMI.Companion.getString(userInfo.calculateBMI()) == BMI.UNDERWEIGHT) {
+                   targetWeight += 10;
+                } else if (BMI.Companion.getString(userInfo.calculateBMI()) == BMI.OVERWEIGHT) {
+                   targetWeight -= 10;
+                }
 
-                Goals goals = new Goals(10000,3*1000,100);
+                Goals goals = new Goals(10000, targetWeight,3 * 1000,100);
                 Task<Void> sendUserGoalsTask = CustomFirebaseFirestoreService.INSTANCE.sendDocument(
                         Goals.COLLECTION_NAME,
                         currentUser.getUid(),
