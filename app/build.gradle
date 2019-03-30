@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-android'
+apply plugin: 'io.fabric'
 
 android {
     signingConfigs {
@@ -30,11 +31,13 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.config
+            manifestPlaceholders = [firebase_crashlytics_collection_enabled: "false"]
         }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.config
+            manifestPlaceholders = [firebase_crashlytics_collection_enabled: "true"]
         }
     }
     sourceSets {
@@ -90,6 +93,7 @@ dependencies {
     implementation 'com.nabinbhandari.android:permissions:3.8'
 
     implementation 'com.google.firebase:firebase-core:16.0.8'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.9'
     implementation 'com.google.firebase:firebase-auth:16.2.0'
     implementation 'com.google.firebase:firebase-firestore:18.1.0'
     implementation 'com.google.firebase:firebase-messaging:17.4.0'
