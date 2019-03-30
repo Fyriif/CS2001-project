@@ -57,6 +57,12 @@ class WeeklyNutrientsSummary : Fragment() {
                 "mg"
         )
 
+        view.findViewById<TextView>(R.id.text_view_weekly_calories).text = String.format(
+                getString(R.string.val_with_unit),
+                DashboardActivity.userInfo.weeklyNutriments.calories,
+                "kcal"
+        )
+
         view.findViewById<TextView>(R.id.text_view_weekly_fibre).text = String.format(
                 getString(R.string.val_with_unit),
                 DashboardActivity.userInfo.weeklyNutriments.fiber,
