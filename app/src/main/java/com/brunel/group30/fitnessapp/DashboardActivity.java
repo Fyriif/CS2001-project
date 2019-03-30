@@ -11,6 +11,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -49,6 +50,7 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     private CircularProgressIndicator stepCountCircularProgressIndicator;
+    private CircularProgressIndicator calorieCountCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
     private CustomViewPager dashboardInsightsViewPager;
 
@@ -109,6 +111,12 @@ public class DashboardActivity extends AppCompatActivity {
 
                                         dailyNutrientsInsightsViewPager.setAdapter(dailyNutrientsInsightsPageAdapter);
                                         dailyNutrientsInsightsDotsIndicator.setViewPager(dailyNutrientsInsightsViewPager);
+
+                                        calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
+                                        calorieCountCircularProgressIndicator.setProgress(
+                                                userInfo.getDailyNutriments().getCalories(),
+                                                userInfo.getGoals().getCalorieTarget()
+                                        );
 
                                         // THIS IS A BIT BUGGY!
                                         //new CustomAutoSwipeTask(dailyNutrientsInsightsViewPager, dailyNutrientsInsightsPageAdapter.getCount());
@@ -311,12 +319,17 @@ public class DashboardActivity extends AppCompatActivity {
 
             // Re-save the object in device's SharedPreferences
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-            updateStats();
+
+            this.calorieCountCircularProgressIndicator.setProgress(
+                    userInfo.getDailyNutriments().getCalories(),
+                    userInfo.getGoals().getCalorieTarget()
+            );
 
             dialog.dismiss();
         });
 
         caloriesTargetEditText.setText(String.valueOf(userInfo.getGoals().getCalorieTarget()));
+
         dialog.show();
     }
 
