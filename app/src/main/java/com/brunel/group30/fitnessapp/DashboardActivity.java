@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
+import com.brunel.group30.fitnessapp.Custom.CustomCaloriesDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomAutoSwipeTask;
 import com.brunel.group30.fitnessapp.Custom.CustomHydrationDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
@@ -309,28 +310,8 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void calorieCountTarget(View v) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_insert_calories_target);
-        EditText caloriesTargetEditText = dialog.findViewById(R.id.edit_calories);
-
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
-            userInfo.getGoals().setCalorieTarget((Integer.parseInt(caloriesTargetEditText.getText().toString())));
-            userInfo.getGoals().updateDB(mCurrentUser.getUid());
-
-            // Re-save the object in device's SharedPreferences
-            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-
-            this.calorieCountCircularProgressIndicator.setProgress(
-                    userInfo.getDailyNutriments().getCalories(),
-                    userInfo.getGoals().getCalorieTarget()
-            );
-
-            dialog.dismiss();
-        });
-
-        caloriesTargetEditText.setText(String.valueOf(userInfo.getGoals().getCalorieTarget()));
-
-        dialog.show();
+        CustomCaloriesDialog dialogFragment = new CustomCaloriesDialog();
+        dialogFragment.show(getSupportFragmentManager(), "CaloriesDialog");
     }
 
     public void hydrationCountTarget(View v) {
