@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.appizona.yehiahd.fastsave.FastSave;
@@ -33,7 +34,6 @@ import com.nabinbhandari.android.permissions.Permissions;
 import java.util.ArrayList;
 
 public class SplashScreenActivity extends AppCompatActivity {
-    private final static int NEXT_ACTIVITY_DELAY = 750;
     private final static int RC_SIGN_IN = 9001;
 
     private GoogleSignInClient mGoogleSignInClient;
@@ -49,6 +49,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash_screen);
 
         FastSave.init(getApplicationContext());
+        this.mAuth = FirebaseAuth.getInstance();
 
         GoogleSignInOptions gso =
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -59,14 +60,12 @@ public class SplashScreenActivity extends AppCompatActivity {
                         .requestScopes(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
                         .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        this.mAuth = FirebaseAuth.getInstance();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        requestPermissions();
+    protected void onStart() {
+        super.onStart();
+        startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
     }
 
     void isUserSetUp() {
@@ -124,7 +123,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                                 Toast.LENGTH_SHORT).show();
                     } else {
                         this.user = this.mAuth.getCurrentUser();
-                        isUserSetUp();
+                        requestPermissions();
                     }
                 });
     }
@@ -136,33 +135,29 @@ public class SplashScreenActivity extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-            try {
-                // Google Sign In was successful, authenticate with Firebase
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                if (account != null) {
-                    firebaseAuthWithGoogle(account);
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            getString(R.string.error_auth_failed),
-                            Toast.LENGTH_SHORT).show();
-                }
-            } catch (ApiException e) {
-                // Google Sign In failed, update UI appropriately
-                Toast.makeText(getApplicationContext(),
-                        getString(R.string.error_auth_failed),
-                        Toast.LENGTH_SHORT).show();
+            handleSignResult(task);
+        }
+    }
+
+    void handleSignResult(Task<GoogleSignInAccount> completedTask) {
+        try {
+            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            if (account != null) {
+                firebaseAuthWithGoogle(account);
             }
+
+        } catch (ApiException e) {
+            Log.e("GoogleSignIn", e.getMessage());
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.error_auth_failed),
+                    Toast.LENGTH_SHORT).show();
         }
     }
 
     void nextActivity(Class activity) {
-        new Handler().postDelayed (() -> startActivity(
-                new Intent(getApplicationContext(), activity)
-                        .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        .putExtra(UserInfo.COLLECTION_NAME,
-                                new Gson().toJson(this.userInfo))),
-                NEXT_ACTIVITY_DELAY
-        );
+        startActivity(new Intent(getApplicationContext(), activity)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                .putExtra(UserInfo.COLLECTION_NAME, new Gson().toJson(this.userInfo)));
     }
 
     private void requestPermissions() {
@@ -172,7 +167,7 @@ public class SplashScreenActivity extends AppCompatActivity {
                     public void onGranted() {
                         user = mAuth.getCurrentUser();
                         if (user == null) {
-                            startActivityForResult(new Intent(mGoogleSignInClient.getSignInIntent()), RC_SIGN_IN);
+                            onResume();
                         } else {
                             isUserSetUp();
                         }

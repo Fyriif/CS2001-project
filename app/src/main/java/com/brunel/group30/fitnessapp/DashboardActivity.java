@@ -171,13 +171,36 @@ public class DashboardActivity extends AppCompatActivity {
         GoogleFitApi.getDailyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
             List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
 
-            int calories = 0;
+            int caloriesDaily = 0, fatDaily = 0, sodiumDaily = 0, fibreDaily = 0, proteinDaily = 0, satFatDaily = 0, sugarDaily = 0, carbsDaily = 0;
             for (DataPoint dataPoint : dataPoints) {
-                calories += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue();
+                caloriesDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue();
+                fatDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue();
+                sodiumDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue();
+                fibreDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue();
+                proteinDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue();
+                satFatDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue();
+                sugarDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue();
+                carbsDaily += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue();
             }
           
             CircularProgressIndicator dailyNutritionCircularProgress = findViewById(R.id.circular_progress_daily_calorie_intake);
-            dailyNutritionCircularProgress.setCurrentProgress(calories);
+            dailyNutritionCircularProgress.setCurrentProgress(caloriesDaily);
+
+            TextView dailyFatTextView = findViewById(R.id.text_view_fat_daily);
+            TextView dailyFibreTextView = findViewById(R.id.text_view_fibre_daily);
+            TextView dailyProteinTextView = findViewById(R.id.text_view_protein_daily);
+            TextView dailySaturatedFatTextView = findViewById(R.id.text_view_sat_fat_daily);
+            TextView dailySodiumTextView = findViewById(R.id.text_view_sodium_daily);
+            TextView dailySugarTextView = findViewById(R.id.text_view_sugar_daily);
+            TextView dailyCarbohydratesTextView = findViewById(R.id.text_view_weekly_total_carbs);
+
+            updateStatWithVal(dailyFatTextView, fatDaily, "mg");
+            updateStatWithVal(dailyFibreTextView, fibreDaily, "mg");
+            updateStatWithVal(dailyProteinTextView, proteinDaily, "mg");
+            updateStatWithVal(dailySaturatedFatTextView, satFatDaily, "mg");
+            updateStatWithVal(dailySodiumTextView, sodiumDaily, "mg");
+            updateStatWithVal(dailySugarTextView, sugarDaily, "mg");
+            updateStatWithVal(dailyCarbohydratesTextView, carbsDaily, "mg");
         });
     }
 
@@ -185,8 +208,7 @@ public class DashboardActivity extends AppCompatActivity {
         GoogleFitApi.getWeeklyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
             List<Bucket> buckets = dataReadResponse.getBuckets();
 
-            double fat = 0, sodium = 0, fibre = 0, protein = 0, satFat = 0, sugar = 0, carbsTotal = 0;
-
+            int fat = 0, sodium = 0, fibre = 0, protein = 0, satFat = 0, sugar = 0, carbsTotal = 0;
             for (Bucket bucket : buckets) {
                 for (DataPoint dataPoint : bucket.getDataSets().get(0).getDataPoints()) {
                     fat += dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue();
@@ -200,25 +222,21 @@ public class DashboardActivity extends AppCompatActivity {
             }
 
             TextView weeklyFatTextView = findViewById(R.id.text_view_weekly_fat);
-            weeklyFatTextView.setText(String.valueOf(fat));
-
             TextView weeklyFibreTextView = findViewById(R.id.text_view_weekly_fibre);
-            weeklyFibreTextView.setText(String.valueOf(fibre));
-
             TextView weeklyProteinTextView = findViewById(R.id.text_view_weekly_protein);
-            weeklyProteinTextView.setText(String.valueOf(protein));
-
             TextView weeklySaturatedFatTextView = findViewById(R.id.text_view_weekly_saturated_fat);
-            weeklySaturatedFatTextView.setText(String.valueOf(satFat));
-
             TextView weeklySodiumTextView = findViewById(R.id.text_view_weekly_sodium);
-            weeklySodiumTextView.setText(String.valueOf(sodium));
-
             TextView weeklySugarTextView = findViewById(R.id.text_view_weekly_sugar);
-            weeklySugarTextView.setText(String.valueOf(sugar));
-
             TextView weeklyCarbohydratesTextView = findViewById(R.id.text_view_weekly_total_carbs);
-            weeklyCarbohydratesTextView.setText(String.valueOf(carbsTotal));
+
+
+            updateStatWithVal(weeklyFatTextView, fat, "mg");
+            updateStatWithVal(weeklyFibreTextView, fibre, "mg");
+            updateStatWithVal(weeklyProteinTextView, protein, "mg");
+            updateStatWithVal(weeklySaturatedFatTextView, satFat, "mg");
+            updateStatWithVal(weeklySodiumTextView, sodium, "mg");
+            updateStatWithVal(weeklySugarTextView, sugar, "mg");
+            updateStatWithVal(weeklyCarbohydratesTextView, carbsTotal, "mg");
         });
 
     }
@@ -297,5 +315,15 @@ public class DashboardActivity extends AppCompatActivity {
                     mAuth.signOut();
                     startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
                 }).create().show();
+    }
+
+    void updateStatWithVal(TextView textView, double value, String unit) {
+        textView.setText(
+                String.format(
+                        getString(R.string.val_with_unit),
+                        value == 0.0 ? String.valueOf(0) : String.valueOf(value),
+                        unit
+                )
+        );
     }
 }
