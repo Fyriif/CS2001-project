@@ -195,7 +195,9 @@ public class DashboardActivity extends AppCompatActivity {
         TextView bmiValInsightTextView = dashboardInsightsViewPager.findViewById(R.id.text_view_insights_bmi_val);
         TextView bmiInsightTextView = dashboardInsightsViewPager.findViewById(R.id.text_view_insights_bmi);
 
-        weightInsightCircularProgressIndicator.setCurrentProgress(userInfo.getWeight());
+
+        weightInsightCircularProgressIndicator.setProgress(weightInsightCircularProgressIndicator.getProgress(), userInfo.getGoals().getWeightTarget());
+
 
         bmiValInsightTextView.setText(
                 String.format(
@@ -207,7 +209,7 @@ public class DashboardActivity extends AppCompatActivity {
         bmiInsightTextView.setText(
                 String.format(
                         getString(R.string.val),
-                        BMI.Companion.getString(userInfo.calculateBMI())
+                        String.valueOf(userInfo.calculateBMI())
                 )
         );
 
@@ -336,16 +338,22 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     public void weightGainTarget(View v) {
-        final Dialog dialog= new Dialog(this);
+        final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_insert_weight_target);
 
         CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_weight_target);
-        numberPicker.setMaxValue(userInfo.getWeight() + 50);
-        numberPicker.setMinValue(userInfo.getWeight() - 50);
-        numberPicker.setValue(userInfo.getWeight());
+        int minWeight = userInfo.getWeight() - 50;
+        int maxWeight = userInfo.getWeight() + 50;
+        int targetWeightIndex = userInfo.getGoals().getWeightTarget() - minWeight;
+
+        numberPicker.setMaxValue(maxWeight);
+        numberPicker.setMinValue(minWeight);
+
+        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1, "kg"));
+        numberPicker.setValue(targetWeightIndex);
 
         dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
-            userInfo.getGoals().setWeightTarget(numberPicker.getValue());
+            userInfo.getGoals().setWeightTarget(userInfo.getGoals().getWeightTarget() + (numberPicker.getValue() - targetWeightIndex));
             userInfo.getGoals().updateDB(mCurrentUser.getUid());
 
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
@@ -353,6 +361,8 @@ public class DashboardActivity extends AppCompatActivity {
 
             dialog.dismiss();
         });
+
+        dialog.show();
     }
 
     public void hydrationCountTarget(View v) {
