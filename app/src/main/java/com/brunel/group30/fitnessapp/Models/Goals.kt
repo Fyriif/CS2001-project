@@ -7,7 +7,7 @@ import com.google.firebase.firestore.PropertyName
 data class Goals(@get:PropertyName("steps_target") @set:PropertyName("steps_target") var stepsTarget: Int = 10000,
                  @get:PropertyName("weight_target") @set:PropertyName("weight_target") var weightTarget: Int = 60,
                  @get:PropertyName("hydration_target") @set:PropertyName("hydration_target") var hydrationTarget: Int = 3000,
-                 @get:PropertyName("calorie_target") @set:PropertyName("calorie_target") var calorieTarget: Int = 100) {
+                 @get:PropertyName("calorie_target") @set:PropertyName("calorie_target") var calorieTarget: Int = 2250) {
 
     companion object {
         const val COLLECTION_NAME = "goals"
