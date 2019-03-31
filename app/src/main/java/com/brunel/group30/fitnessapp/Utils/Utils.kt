@@ -48,4 +48,8 @@ object Utils {
 
         return calendar.timeInMillis
     }
+
+    fun numToDp(value: Double, decimalPlaces: Int): Double {
+        return String.format("%." + decimalPlaces.toString() + "f", value).toDouble()
+    }
 }

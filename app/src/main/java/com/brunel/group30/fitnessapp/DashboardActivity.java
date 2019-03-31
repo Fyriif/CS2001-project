@@ -30,6 +30,7 @@ import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
+import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.fitness.data.Bucket;
 import com.google.android.gms.fitness.data.DataPoint;
@@ -226,14 +227,14 @@ public class DashboardActivity extends AppCompatActivity {
             }
 
             for (DataPoint dataPoint : dataPoints) {
-                dailyNutriments.setCalories(dailyNutriments.getCalories() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue());
-                dailyNutriments.setFat(dailyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue());
-                dailyNutriments.setSodium(dailyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue());
-                dailyNutriments.setFiber(dailyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue());
-                dailyNutriments.setProtein(dailyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue());
-                dailyNutriments.setSaturatedFat(dailyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue());
-                dailyNutriments.setSugar(dailyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue());
-                dailyNutriments.setCarbohydrates(dailyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue());
+                dailyNutriments.setCalories(Utils.INSTANCE.numToDp(dailyNutriments.getCalories() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue(), 2));
+                dailyNutriments.setFat(Utils.INSTANCE.numToDp(dailyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue(), 2));
+                dailyNutriments.setSodium(Utils.INSTANCE.numToDp(dailyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue(), 2));
+                dailyNutriments.setFiber(Utils.INSTANCE.numToDp(dailyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue(), 2));
+                dailyNutriments.setProtein(Utils.INSTANCE.numToDp(dailyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue(), 2));
+                dailyNutriments.setSaturatedFat(Utils.INSTANCE.numToDp(dailyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue(), 2));
+                dailyNutriments.setSugar(Utils.INSTANCE.numToDp(dailyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue(), 2));
+                dailyNutriments.setCarbohydrates(Utils.INSTANCE.numToDp(dailyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue(), 2));
             }
 
             userInfo.setDailyNutriments(dailyNutriments);
@@ -251,13 +252,13 @@ public class DashboardActivity extends AppCompatActivity {
 
             for (Bucket bucket : buckets) {
                 for (DataPoint dataPoint : bucket.getDataSets().get(0).getDataPoints()) {
-                    weeklyNutriments.setFat(weeklyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue());
-                    weeklyNutriments.setSodium(weeklyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue());
-                    weeklyNutriments.setFiber(weeklyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue());
-                    weeklyNutriments.setProtein(weeklyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue());
-                    weeklyNutriments.setSaturatedFat(weeklyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue());
-                    weeklyNutriments.setSugar(weeklyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue());
-                    weeklyNutriments.setCarbohydrates(weeklyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue());
+                    weeklyNutriments.setFat(Utils.INSTANCE.numToDp(weeklyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue(), 2));
+                    weeklyNutriments.setSodium(Utils.INSTANCE.numToDp(weeklyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue(), 2));
+                    weeklyNutriments.setFiber(Utils.INSTANCE.numToDp(weeklyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue(), 2));
+                    weeklyNutriments.setProtein(Utils.INSTANCE.numToDp(weeklyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue(), 2));
+                    weeklyNutriments.setSaturatedFat(Utils.INSTANCE.numToDp(weeklyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue(), 2));
+                    weeklyNutriments.setSugar(Utils.INSTANCE.numToDp(weeklyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue(), 2));
+                    weeklyNutriments.setCarbohydrates(Utils.INSTANCE.numToDp(weeklyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue(), 2));
                 }
             }
 
