@@ -59,7 +59,7 @@
     <string name="title_weekly_nutrients_intake">Weekly Nutrients Intake</string>
     <string name="title_weight_target">Weight Target</string>
     <string name="title_calories_target">Calories Target</string>
-    <string name="title_water_target">Water Consumption Target</string>
+    <string name="title_water_target">Water Intake Target</string>
     <string name="title_daily_water_intake">Daily Water Intake</string>
     <string name="title_barcode_entry">Is this the correct barcode?</string>
     <string name="btn_cancel">Cancel</string>

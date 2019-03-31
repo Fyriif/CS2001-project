@@ -53,6 +53,7 @@ public class DashboardActivity extends AppCompatActivity {
 
     private CircularProgressIndicator stepCountCircularProgressIndicator;
     private CircularProgressIndicator calorieCountCircularProgressIndicator;
+    public static CircularProgressIndicator hydrationCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
     private CustomViewPager dashboardInsightsViewPager;
 
@@ -119,6 +120,8 @@ public class DashboardActivity extends AppCompatActivity {
                                                 userInfo.getDailyNutriments().getCalories(),
                                                 userInfo.getGoals().getCalorieTarget()
                                         );
+
+                                        updateHydrationProgress();
 
                                         // THIS IS A BIT BUGGY!
                                         //new CustomAutoSwipeTask(dailyNutrientsInsightsViewPager, dailyNutrientsInsightsPageAdapter.getCount());
@@ -303,7 +306,7 @@ public class DashboardActivity extends AppCompatActivity {
 
             dialog.dismiss();
         });
-        
+
         numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(250, "ml"));
         numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
 
@@ -338,6 +341,11 @@ public class DashboardActivity extends AppCompatActivity {
     public void hydrationCountTarget(View v) {
         CustomHydrationDialog dialogFragment = new CustomHydrationDialog();
         dialogFragment.show(getSupportFragmentManager(), "HydrationDialog");
+    }
+
+    // TODO: Retrieve some hydration data and update the progress
+    void updateHydrationProgress() {
+        hydrationCircularProgressIndicator = findViewById(R.id.circular_progress_daily_hydration_intake);
     }
 
     @Override
