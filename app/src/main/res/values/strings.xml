@@ -85,7 +85,7 @@
     <string name="btn_radio_imperial">Imperial (ft/lbs)</string>
     <string name="btn_delete_acc">Delete Account</string>
     <string name="val">%s</string>
-  <string name="title_filter_location">Location</string>
+    <string name="title_filter_location">Location</string>
     <string name="title_filter_difficulty">Difficulty</string>
     <string name="title_filter_bodygroup">Body Group</string>
     <string name="msg_filter_easy">Easy</string>
