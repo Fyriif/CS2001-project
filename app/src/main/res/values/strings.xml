@@ -41,6 +41,7 @@
     <string name="title_sign_out">Sign out</string>
     <string name="msg_confirm_sign_out">Are you sure you want to sign out?</string>
     <string name="msg_user_already_logged_in">User logged in</string>
+    <string name="msg_user_successfully_signed_out">Successfully signed out</string>
     <string name="title_home">Home</string>
     <string name="title_nutriments">Nutriments</string>
     <string name="title_workouts">Workouts</string>
