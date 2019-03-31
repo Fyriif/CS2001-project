@@ -10,8 +10,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -121,7 +119,26 @@ public class DashboardActivity extends AppCompatActivity {
                                                 userInfo.getGoals().getCalorieTarget()
                                         );
 
+                                        TextView dailyCalorieIntakeTarget = findViewById(R.id.text_view_target_calorie);
+                                        dailyCalorieIntakeTarget.setText(
+                                                getString(
+                                                        R.string.msg_target_with_val,
+                                                        String.valueOf(userInfo.getGoals().getCalorieTarget()),
+                                                        "kcal"
+                                                )
+                                        );
+
+                                        TextView dailyHydrationIntakeTarget = findViewById(R.id.text_view_target_hydration);
+                                        dailyHydrationIntakeTarget.setText(
+                                                getString(
+                                                        R.string.msg_target_with_val,
+                                                        String.valueOf(userInfo.getGoals().getHydrationTarget()),
+                                                        "ml"
+                                                )
+                                        );
+
                                         updateHydrationProgress();
+
 
                                         // THIS IS A BIT BUGGY!
                                         //new CustomAutoSwipeTask(dailyNutrientsInsightsViewPager, dailyNutrientsInsightsPageAdapter.getCount());

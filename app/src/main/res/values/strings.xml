@@ -84,6 +84,7 @@
     <string name="btn_radio_metric">Metric (m/kg)</string>
     <string name="btn_radio_imperial">Imperial (ft/lbs)</string>
     <string name="btn_delete_acc">Delete Account</string>
+    <string name="msg_target_with_val">Target: %1$s %2$s</string>
 
     <!-- Placeholder strings used for dynamic values -->
     <string name="val">%s</string>
