@@ -13,6 +13,7 @@ import com.brunel.group30.fitnessapp.DashboardActivity
 import com.brunel.group30.fitnessapp.Enums.BMI
 import com.brunel.group30.fitnessapp.R
 
+
 class DashboardInsightsPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment? = when (position) {
@@ -29,7 +30,13 @@ class WeightData : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         val view: View = inflater.inflate(R.layout.view_weight_kg_stat, container, false)
-        view.findViewById<CircularProgressIndicator>(R.id.circular_progress_insights_weight).setCurrentProgress(
+        val weightProgressIndicator: CircularProgressIndicator = view.findViewById(R.id.circular_progress_insights_weight)
+
+        weightProgressIndicator.setProgressTextAdapter {
+            DefaultProgressTextAdapter().formatText(DashboardActivity.userInfo.weight.toDouble())
+        }
+
+        weightProgressIndicator.setCurrentProgress(
                 DashboardActivity.userInfo.weight.toDouble()
         )
 
@@ -61,5 +68,12 @@ class BMIData : Fragment() {
 
     companion object {
         fun newInstance(): BMIData = BMIData()
+    }
+}
+
+class DefaultProgressTextAdapter : CircularProgressIndicator.ProgressTextAdapter {
+
+    override fun formatText(currentProgress: Double): String {
+        return currentProgress.toInt().toString()
     }
 }

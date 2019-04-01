@@ -14,12 +14,11 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
-import com.brunel.group30.fitnessapp.Custom.CustomCaloriesDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomAutoSwipeTask;
+import com.brunel.group30.fitnessapp.Custom.CustomCaloriesDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomHydrationDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
-import com.brunel.group30.fitnessapp.Enums.BMI;
 import com.brunel.group30.fitnessapp.Fragments.DailyNutrientsInsightsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.DashboardInsightsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.NutrientsPageAdapter;
@@ -53,14 +52,11 @@ public class DashboardActivity extends AppCompatActivity {
     private CircularProgressIndicator calorieCountCircularProgressIndicator;
     public static CircularProgressIndicator hydrationCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
-    private CustomViewPager dashboardInsightsViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
-
-        this.stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
 
         FastSave.init(getApplicationContext());
 
@@ -76,10 +72,6 @@ public class DashboardActivity extends AppCompatActivity {
                 bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
 
         CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
-
-        invokeApi();
-        getDailyNutrition();
-        getWeeklyNutrition();
 
         BottomNavigationView.OnNavigationItemSelectedListener
                 mOnNavigationItemSelectedListener = item -> {
@@ -139,7 +131,6 @@ public class DashboardActivity extends AppCompatActivity {
 
                                         updateHydrationProgress();
 
-
                                         // THIS IS A BIT BUGGY!
                                         //new CustomAutoSwipeTask(dailyNutrientsInsightsViewPager, dailyNutrientsInsightsPageAdapter.getCount());
                                 }
@@ -175,52 +166,30 @@ public class DashboardActivity extends AppCompatActivity {
             return false;
         };
 
+        this.stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
         this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation_view_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        this.dashboardInsightsViewPager = findViewById(R.id.view_pager_insights);
+        CustomViewPager dashboardInsightsViewPager = findViewById(R.id.view_pager_insights);
 
         DotsIndicator dotsIndicator = findViewById(R.id.dots_indicator_view_pager_insights);
         DashboardInsightsPageAdapter dashboardInsightsPageAdapter = new DashboardInsightsPageAdapter(getSupportFragmentManager());
 
-        this.dashboardInsightsViewPager.setAdapter(dashboardInsightsPageAdapter);
+        dashboardInsightsViewPager.setAdapter(dashboardInsightsPageAdapter);
         dotsIndicator.setViewPager(dashboardInsightsViewPager);
 
         new CustomAutoSwipeTask(dashboardInsightsViewPager, dashboardInsightsPageAdapter.getCount());
-    }
 
-    void updateStats() {
-        CircularProgressIndicator weightInsightCircularProgressIndicator = dashboardInsightsViewPager.findViewById(R.id.circular_progress_insights_weight);
-        TextView bmiValInsightTextView = dashboardInsightsViewPager.findViewById(R.id.text_view_insights_bmi_val);
-        TextView bmiInsightTextView = dashboardInsightsViewPager.findViewById(R.id.text_view_insights_bmi);
-
-
-        weightInsightCircularProgressIndicator.setProgress(weightInsightCircularProgressIndicator.getProgress(), userInfo.getGoals().getWeightTarget());
-
-
-        bmiValInsightTextView.setText(
-                String.format(
-                        getString(R.string.val),
-                        BMI.Companion.getString(userInfo.calculateBMI())
-                )
-        );
-
-        bmiInsightTextView.setText(
-                String.format(
-                        getString(R.string.val),
-                        String.valueOf(userInfo.calculateBMI())
-                )
-        );
-
-        this.stepCountCircularProgressIndicator.setProgress(
-                this.stepCountCircularProgressIndicator.getProgress(),
-                userInfo.getGoals().getStepsTarget());
+        invokeApi();
+        getDailyNutrition();
+        getWeeklyNutrition();
     }
 
     void invokeApi() {
         try {
             if (this.mGoogleFitApi == null) {
+                this.stepCountCircularProgressIndicator.setMaxProgress(userInfo.getGoals().getStepsTarget());
                 this.mGoogleFitApi = new StepCountSensor(this,
                         this.stepCountCircularProgressIndicator);
             }
@@ -299,7 +268,10 @@ public class DashboardActivity extends AppCompatActivity {
 
             // Re-save the object in device's SharedPreferences
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-            updateStats();
+
+            this.stepCountCircularProgressIndicator.setProgress(
+                    this.stepCountCircularProgressIndicator.getProgress(),
+                    userInfo.getGoals().getStepsTarget());
 
             dialog.dismiss();
         });
@@ -321,7 +293,6 @@ public class DashboardActivity extends AppCompatActivity {
 
             // Re-save the object in device's SharedPreferences
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-            updateStats();
 
             dialog.dismiss();
         });
@@ -357,7 +328,20 @@ public class DashboardActivity extends AppCompatActivity {
             userInfo.getGoals().updateDB(mCurrentUser.getUid());
 
             FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-            updateStats();
+
+            CircularProgressIndicator weightCircularProgressIndicator = findViewById(R.id.circular_progress_insights_weight);
+
+            if (userInfo.getGoals().getWeightTarget() > userInfo.getWeight()) {
+                weightCircularProgressIndicator.setProgress(
+                        userInfo.getWeight(),
+                        userInfo.getGoals().getWeightTarget()
+                );
+            } else {
+                weightCircularProgressIndicator.setProgress(
+                        userInfo.getGoals().getWeightTarget(),
+                        userInfo.getWeight()
+                );
+            }
 
             dialog.dismiss();
         });
