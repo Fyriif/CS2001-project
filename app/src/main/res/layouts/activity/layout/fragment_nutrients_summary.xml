@@ -87,7 +87,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:gravity="center"
                             android:text="@string/val"
-                            android:textSize="28sp" />
+                            android:textSize="32sp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -165,7 +165,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:gravity="center"
                             android:text="@string/val"
-                            android:textSize="28sp" />
+                            android:textSize="32sp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -243,7 +243,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:gravity="center"
                             android:text="@string/val"
-                            android:textSize="28sp" />
+                            android:textSize="32sp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
@@ -321,7 +321,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:gravity="center"
                             android:text="@string/val"
-                            android:textSize="28sp" />
+                            android:textSize="32sp" />
                     </RelativeLayout>
 
                 </android.support.v7.widget.CardView>
