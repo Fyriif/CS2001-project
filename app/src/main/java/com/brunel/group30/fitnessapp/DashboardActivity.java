@@ -105,30 +105,7 @@ public class DashboardActivity extends AppCompatActivity {
                                         dailyNutrientsInsightsViewPager.setAdapter(dailyNutrientsInsightsPageAdapter);
                                         dailyNutrientsInsightsDotsIndicator.setViewPager(dailyNutrientsInsightsViewPager);
 
-                                        calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
-                                        calorieCountCircularProgressIndicator.setProgress(
-                                                userInfo.getDailyNutriments().getCalories(),
-                                                userInfo.getGoals().getCalorieTarget()
-                                        );
-
-                                        TextView dailyCalorieIntakeTarget = findViewById(R.id.text_view_target_calorie);
-                                        dailyCalorieIntakeTarget.setText(
-                                                getString(
-                                                        R.string.msg_target_with_val,
-                                                        String.valueOf(userInfo.getGoals().getCalorieTarget()),
-                                                        "kcal"
-                                                )
-                                        );
-
-                                        TextView dailyHydrationIntakeTarget = findViewById(R.id.text_view_target_hydration);
-                                        dailyHydrationIntakeTarget.setText(
-                                                getString(
-                                                        R.string.msg_target_with_val,
-                                                        String.valueOf(userInfo.getGoals().getHydrationTarget()),
-                                                        "ml"
-                                                )
-                                        );
-
+                                        updateCalorieProgress();
                                         updateHydrationProgress();
 
                                         // THIS IS A BIT BUGGY!
@@ -354,9 +331,35 @@ public class DashboardActivity extends AppCompatActivity {
         dialogFragment.show(getSupportFragmentManager(), "HydrationDialog");
     }
 
+    void updateCalorieProgress() {
+        calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
+        calorieCountCircularProgressIndicator.setProgress(
+                userInfo.getDailyNutriments().getCalories(),
+                userInfo.getGoals().getCalorieTarget()
+        );
+
+        TextView dailyCalorieIntakeTarget = findViewById(R.id.text_view_target_calorie);
+        dailyCalorieIntakeTarget.setText(
+                getString(
+                        R.string.msg_target_with_val,
+                        String.valueOf(userInfo.getGoals().getCalorieTarget()),
+                        "kcal"
+                )
+        );
+    }
+
     // TODO: Retrieve some hydration data and update the progress
     void updateHydrationProgress() {
+        TextView dailyHydrationIntakeTarget = findViewById(R.id.text_view_target_hydration);
         hydrationCircularProgressIndicator = findViewById(R.id.circular_progress_daily_hydration_intake);
+
+        dailyHydrationIntakeTarget.setText(
+                getString(
+                        R.string.msg_target_with_val,
+                        String.valueOf(userInfo.getGoals().getHydrationTarget()),
+                        "ml"
+                )
+        );
     }
 
     @Override
