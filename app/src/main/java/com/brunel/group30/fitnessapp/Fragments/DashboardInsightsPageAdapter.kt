@@ -33,7 +33,7 @@ class WeightData : Fragment() {
         val weightProgressIndicator: CircularProgressIndicator = view.findViewById(R.id.circular_progress_insights_weight)
 
         weightProgressIndicator.setProgressTextAdapter {
-            DefaultProgressTextAdapter().formatText(DashboardActivity.userInfo.weight.toDouble())
+            PatternProgressTextAdapter(getString(R.string.msg_progress_weight_pattern)).formatText(DashboardActivity.userInfo.weight.toDouble())
         }
 
         weightProgressIndicator.setCurrentProgress(
@@ -71,9 +71,8 @@ class BMIData : Fragment() {
     }
 }
 
-class DefaultProgressTextAdapter : CircularProgressIndicator.ProgressTextAdapter {
-
+class PatternProgressTextAdapter(private val pattern: String = "%.0f") : CircularProgressIndicator.ProgressTextAdapter {
     override fun formatText(currentProgress: Double): String {
-        return currentProgress.toInt().toString()
+        return String.format(pattern, currentProgress)
     }
 }

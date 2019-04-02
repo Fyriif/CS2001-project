@@ -22,6 +22,7 @@ import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
 import com.brunel.group30.fitnessapp.Fragments.DailyNutrientsInsightsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.DashboardInsightsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.NutrientsPageAdapter;
+import com.brunel.group30.fitnessapp.Fragments.PatternProgressTextAdapter;
 import com.brunel.group30.fitnessapp.Models.Nutriments;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
@@ -49,7 +50,6 @@ public class DashboardActivity extends AppCompatActivity {
     private FirebaseUser mCurrentUser;
 
     private CircularProgressIndicator stepCountCircularProgressIndicator;
-    private CircularProgressIndicator calorieCountCircularProgressIndicator;
     public static CircularProgressIndicator hydrationCircularProgressIndicator;
     private ViewFlipper dashboardViewFlipper;
 
@@ -332,11 +332,15 @@ public class DashboardActivity extends AppCompatActivity {
     }
 
     void updateCalorieProgress() {
-        calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
+        CircularProgressIndicator calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
         calorieCountCircularProgressIndicator.setProgress(
                 userInfo.getDailyNutriments().getCalories(),
                 userInfo.getGoals().getCalorieTarget()
         );
+
+        PatternProgressTextAdapter textAdapter = new PatternProgressTextAdapter(getString(R.string.msg_progress_calorie_pattern));
+        textAdapter.formatText(userInfo.getDailyNutriments().getCalories());
+        calorieCountCircularProgressIndicator.setProgressTextAdapter(textAdapter);
 
         TextView dailyCalorieIntakeTarget = findViewById(R.id.text_view_target_calorie);
         dailyCalorieIntakeTarget.setText(

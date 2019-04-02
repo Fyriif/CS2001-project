@@ -55,6 +55,7 @@
     <string name="title_insights">Insights</string>
     <string name="msg_progress_steps_pattern">%.0f Steps</string>
     <string name="msg_progress_weight_pattern">%.0f kg</string>
+    <string name="msg_progress_calorie_pattern">%.0f kcal</string>
     <string name="title_step_target">Step Target</string>
     <string name="title_calories_intake">Calories Intake</string>
     <string name="title_hydration_intake">Water Intake</string>

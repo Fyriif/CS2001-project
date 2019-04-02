@@ -42,7 +42,6 @@
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_vertical"
                 app:direction="clockwise"
-                app:formattingPattern="@string/msg_progress_weight_pattern"
                 app:enableProgressAnimation="true"
                 app:progressBackgroundColor="@color/colorAccent"
                 app:progressColor="@color/colorPrimary"
