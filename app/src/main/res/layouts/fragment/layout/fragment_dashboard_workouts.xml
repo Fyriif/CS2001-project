@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -19,7 +18,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:layout_margin="8dp"
             android:orientation="vertical">
 
@@ -82,7 +81,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -91,6 +90,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingEnd="2dp"
+                            android:paddingStart="0dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_location_home"
                             android:textAlignment="center"
@@ -110,7 +110,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -119,6 +119,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingEnd="2dp"
+                            android:paddingStart="0dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_easy"
                             android:textAlignment="center"
@@ -138,7 +139,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -147,6 +148,7 @@
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
                             android:paddingEnd="2dp"
+                            android:paddingStart="0dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_whole"
                             android:textAlignment="center"
@@ -172,7 +174,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -180,6 +182,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_location_gym"
@@ -200,7 +203,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -208,6 +211,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_medium"
@@ -227,7 +231,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -235,6 +239,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_upper"
@@ -253,14 +258,14 @@
                     android:id="@+id/card_view_filter_Park"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
+                    app:layout_columnWeight="1"
                     android:layout_marginEnd="6dp"
                     card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -268,6 +273,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_location_park"
@@ -280,7 +286,7 @@
                     android:id="@+id/card_view_filter_hard"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
+                    app:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     android:layout_marginEnd="6dp"
                     card_view:cardCornerRadius="8dp">
@@ -288,7 +294,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -296,6 +302,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_hard"
@@ -308,14 +315,14 @@
                     android:id="@+id/card_view_filter_lower"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
+                    app:layout_columnWeight="1"
                     android:layout_marginStart="6dp"
                     card_view:cardCornerRadius="8dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="left"
+                        android:layout_gravity="start"
                         android:orientation="horizontal">
 
                         <TextView
@@ -323,6 +330,7 @@
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/questrial_regular"
                             android:paddingTop="4dp"
+                            android:paddingStart="0dp"
                             android:paddingEnd="2dp"
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_lower"

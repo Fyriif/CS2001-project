@@ -95,4 +95,9 @@
     <string name="msg_filter_upper">Upper</string>
     <string name="msg_filter_lower">Lower</string>
     <string name="val_with_unit">%1$s %2$s</string>
+    <string name="title_workout_name">Workout Name</string>
+    <string name="msg_location_tags">Locations</string>
+    <string name="msg_workout_reps">%1$dreps</string>
+    <string name="msg__bodygroup_tags">Body</string>
+    <string name="msg_difficulty_tags">Difficulty</string>
 </resources>
