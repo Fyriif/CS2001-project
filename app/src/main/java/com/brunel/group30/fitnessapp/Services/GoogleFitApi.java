@@ -1,16 +1,17 @@
 package com.brunel.group30.fitnessapp.Services;
 
 import android.app.Activity;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.brunel.group30.fitnessapp.DashboardActivity;
+import com.brunel.group30.fitnessapp.Models.Nutriments;
 import com.brunel.group30.fitnessapp.Models.Product;
 import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.FitnessOptions;
+import com.google.android.gms.fitness.data.Bucket;
 import com.google.android.gms.fitness.data.DataPoint;
 import com.google.android.gms.fitness.data.DataSet;
 import com.google.android.gms.fitness.data.DataSource;
@@ -18,10 +19,9 @@ import com.google.android.gms.fitness.data.DataType;
 import com.google.android.gms.fitness.data.Field;
 import com.google.android.gms.fitness.request.DataReadRequest;
 import com.google.android.gms.fitness.result.DataReadResponse;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class GoogleFitApi {
@@ -155,7 +155,7 @@ public class GoogleFitApi {
                 activity, account).readData(readWeightRequest);
     }
 
-    public static Task<DataReadResponse> getDailyNutrition(Activity activity, GoogleSignInAccount account) {
+    private static Task<DataReadResponse> getDailyNutrition(Activity activity, GoogleSignInAccount account) {
         DataReadRequest readNutritionRequest = new DataReadRequest.Builder()
                 .aggregate(DataType.TYPE_NUTRITION, DataType.AGGREGATE_NUTRITION_SUMMARY)
                 .bucketByTime(1, TimeUnit.DAYS)
@@ -168,7 +168,7 @@ public class GoogleFitApi {
                 activity, account).readData(readNutritionRequest);
     }
 
-    public static Task<DataReadResponse> getWeeklyNutrition(Activity activity, GoogleSignInAccount account) {
+    private static Task<DataReadResponse> getWeeklyNutrition(Activity activity, GoogleSignInAccount account) {
         DataReadRequest readNutritionRequest = new DataReadRequest.Builder()
                 .aggregate(DataType.TYPE_NUTRITION, DataType.AGGREGATE_NUTRITION_SUMMARY)
                 .bucketByTime(1, TimeUnit.DAYS)
@@ -179,5 +179,54 @@ public class GoogleFitApi {
 
         return Fitness.getHistoryClient(
                 activity, account).readData(readNutritionRequest);
+    }
+
+    static void getDailyNutrition() {
+        GoogleFitApi.getDailyNutrition(activity, mGoogleSignInAccount).addOnSuccessListener(dataReadResponse -> {
+            List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
+
+            Nutriments dailyNutriments = DashboardActivity.userInfo.getDailyNutriments();
+            if (dailyNutriments == null) {
+                dailyNutriments = new Nutriments();
+            }
+
+            for (DataPoint dataPoint : dataPoints) {
+                dailyNutriments.setCalories(dailyNutriments.getCalories() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue());
+                dailyNutriments.setFat(dailyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue());
+                dailyNutriments.setSodium(dailyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue());
+                dailyNutriments.setFiber(dailyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue());
+                dailyNutriments.setProtein(dailyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue());
+                dailyNutriments.setSaturatedFat(dailyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue());
+                dailyNutriments.setSugar(dailyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue());
+                dailyNutriments.setCarbohydrates(dailyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue());
+            }
+
+            DashboardActivity.userInfo.setDailyNutriments(dailyNutriments);
+        });
+    }
+
+    static void getWeeklyNutrition() {
+        GoogleFitApi.getWeeklyNutrition(activity, mGoogleSignInAccount).addOnSuccessListener(dataReadResponse -> {
+            List<Bucket> buckets = dataReadResponse.getBuckets();
+
+            Nutriments weeklyNutriments = DashboardActivity.userInfo.getWeeklyNutriments();
+            if (weeklyNutriments == null) {
+                weeklyNutriments = new Nutriments();
+            }
+
+            for (Bucket bucket : buckets) {
+                for (DataPoint dataPoint : bucket.getDataSets().get(0).getDataPoints()) {
+                    weeklyNutriments.setFat(weeklyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue());
+                    weeklyNutriments.setSodium(weeklyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue());
+                    weeklyNutriments.setFiber(weeklyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue());
+                    weeklyNutriments.setProtein(weeklyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue());
+                    weeklyNutriments.setSaturatedFat(weeklyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue());
+                    weeklyNutriments.setSugar(weeklyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue());
+                    weeklyNutriments.setCarbohydrates(weeklyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue());
+                }
+            }
+
+            DashboardActivity.userInfo.setWeeklyNutriments(weeklyNutriments);
+        });
     }
 }

@@ -2,8 +2,8 @@ package com.brunel.group30.fitnessapp.Services;
 
 import android.app.Activity;
 import android.util.Log;
-import android.widget.TextView;
 
+import com.brunel.group30.fitnessapp.DashboardActivity;
 import com.brunel.group30.fitnessapp.Utils.Utils;
 import com.google.android.gms.fitness.Fitness;
 import com.google.android.gms.fitness.data.DataPoint;
@@ -58,6 +58,9 @@ public class StepCountSensor extends GoogleFitApi {
                     .addOnFailureListener(
                             e -> Log.e(TAG, "failed", e));
         }
+
+        getDailyNutrition();
+        getWeeklyNutrition();
     }
 
     /**
@@ -102,7 +105,7 @@ public class StepCountSensor extends GoogleFitApi {
             return;
         }
 
-        Fitness.getSensorsClient(super.activity, super.mGoogleSignInAccount)
+        Fitness.getSensorsClient(activity, mGoogleSignInAccount)
                 .remove(mListener)
                 .addOnCompleteListener(
                         task -> {
@@ -115,7 +118,7 @@ public class StepCountSensor extends GoogleFitApi {
     }
 
     private void getDailyStepCount() {
-        Fitness.getHistoryClient(super.activity, super.mGoogleSignInAccount)
+        Fitness.getHistoryClient(activity, mGoogleSignInAccount)
                 .readDailyTotal(DataType.AGGREGATE_STEP_COUNT_DELTA)
                 .addOnCompleteListener(task -> {
                     if (task.isComplete() && task.isSuccessful()) {
@@ -123,8 +126,9 @@ public class StepCountSensor extends GoogleFitApi {
                         if (results.size() > 0) {
                             DataPoint dataPoint = results.get(0);
                             if (Utils.INSTANCE.isDateToday(dataPoint.getTimestamp(TimeUnit.MILLISECONDS))) {
-                                this.stepCountCircularProgressIndicator.setCurrentProgress(
-                                        dataPoint.getValue(Field.FIELD_STEPS).asInt());
+                                this.stepCountCircularProgressIndicator.setProgress(
+                                        dataPoint.getValue(Field.FIELD_STEPS).asInt(),
+                                        DashboardActivity.userInfo.getGoals().getStepsTarget());
                             } else {
                                 this.stepCountCircularProgressIndicator.setCurrentProgress(0);
                             }

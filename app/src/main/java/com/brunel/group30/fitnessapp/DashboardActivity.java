@@ -2,7 +2,6 @@ package com.brunel.group30.fitnessapp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
@@ -14,31 +13,23 @@ import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import com.appizona.yehiahd.fastsave.FastSave;
-import com.brunel.group30.fitnessapp.Custom.CustomAutoSwipeTask;
 import com.brunel.group30.fitnessapp.Custom.CustomCaloriesDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomHydrationDialog;
-import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
+import com.brunel.group30.fitnessapp.Custom.CustomStepCountTargetDialog;
 import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
+import com.brunel.group30.fitnessapp.Custom.CustomWeightTargetDialog;
 import com.brunel.group30.fitnessapp.Fragments.DailyNutrientsInsightsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.DashboardInsightsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.NutrientsPageAdapter;
 import com.brunel.group30.fitnessapp.Fragments.PatternProgressTextAdapter;
-import com.brunel.group30.fitnessapp.Models.Nutriments;
 import com.brunel.group30.fitnessapp.Models.UserInfo;
 import com.brunel.group30.fitnessapp.Services.CustomFirebaseMessagingService;
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi;
 import com.brunel.group30.fitnessapp.Services.StepCountSensor;
-import com.brunel.group30.fitnessapp.Utils.Utils;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.fitness.data.Bucket;
-import com.google.android.gms.fitness.data.DataPoint;
-import com.google.android.gms.fitness.data.Field;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
-
-import java.util.List;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
 
@@ -47,11 +38,12 @@ public class DashboardActivity extends AppCompatActivity {
     GoogleFitApi mGoogleFitApi;
 
     private FirebaseAuth mAuth;
-    private FirebaseUser mCurrentUser;
 
-    private CircularProgressIndicator stepCountCircularProgressIndicator;
+    public static CircularProgressIndicator stepCountCircularProgressIndicator;
+    public static CircularProgressIndicator calorieCountCircularProgressIndicator;
     public static CircularProgressIndicator hydrationCircularProgressIndicator;
-    private ViewFlipper dashboardViewFlipper;
+
+    ViewFlipper dashboardViewFlipper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +53,9 @@ public class DashboardActivity extends AppCompatActivity {
         FastSave.init(getApplicationContext());
 
         this.mAuth = FirebaseAuth.getInstance();
-        this.mCurrentUser = this.mAuth.getCurrentUser();
+        FirebaseUser mCurrentUser = this.mAuth.getCurrentUser();
 
-        if (this.mCurrentUser == null) {
+        if (mCurrentUser == null) {
             startActivity(new Intent(getApplicationContext(), SplashScreenActivity.class));
         }
 
@@ -71,8 +63,7 @@ public class DashboardActivity extends AppCompatActivity {
         userInfo = new Gson().fromJson(bundle != null ?
                 bundle.getString(UserInfo.COLLECTION_NAME) : null, UserInfo.class);
 
-        CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
-
+        this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
         BottomNavigationView.OnNavigationItemSelectedListener
                 mOnNavigationItemSelectedListener = item -> {
             switch (item.getItemId()) {
@@ -105,11 +96,10 @@ public class DashboardActivity extends AppCompatActivity {
                                         dailyNutrientsInsightsViewPager.setAdapter(dailyNutrientsInsightsPageAdapter);
                                         dailyNutrientsInsightsDotsIndicator.setViewPager(dailyNutrientsInsightsViewPager);
 
+                                        hydrationCircularProgressIndicator = findViewById(R.id.circular_progress_daily_hydration_intake);
+
                                         updateCalorieProgress();
                                         updateHydrationProgress();
-
-                                        // THIS IS A BIT BUGGY!
-                                        //new CustomAutoSwipeTask(dailyNutrientsInsightsViewPager, dailyNutrientsInsightsPageAdapter.getCount());
                                 }
                             }
 
@@ -143,32 +133,34 @@ public class DashboardActivity extends AppCompatActivity {
             return false;
         };
 
-        this.stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
-        this.dashboardViewFlipper = findViewById(R.id.view_dashboard);
+        // Assign UI elements to variables
         BottomNavigationView navigation = findViewById(R.id.bottom_navigation_view_dashboard);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        stepCountCircularProgressIndicator = findViewById(R.id.progress_circular_step_count);
         CustomViewPager dashboardInsightsViewPager = findViewById(R.id.view_pager_insights);
-
         DotsIndicator dotsIndicator = findViewById(R.id.dots_indicator_view_pager_insights);
-        DashboardInsightsPageAdapter dashboardInsightsPageAdapter = new DashboardInsightsPageAdapter(getSupportFragmentManager());
 
+        DashboardInsightsPageAdapter dashboardInsightsPageAdapter = new DashboardInsightsPageAdapter(getSupportFragmentManager());
         dashboardInsightsViewPager.setAdapter(dashboardInsightsPageAdapter);
         dotsIndicator.setViewPager(dashboardInsightsViewPager);
 
-        new CustomAutoSwipeTask(dashboardInsightsViewPager, dashboardInsightsPageAdapter.getCount());
-
+        // Start making API calls
+        CustomFirebaseMessagingService.isNewTokenRequired(getApplicationContext());
         invokeApi();
-        getDailyNutrition();
-        getWeeklyNutrition();
     }
 
+    /**
+     * Google's Fit API gets called from here
+     * Step Count Sensor listeners get created,
+     * weekly and daily nutrition information is
+     * also requested.
+     */
     void invokeApi() {
         try {
             if (this.mGoogleFitApi == null) {
-                this.stepCountCircularProgressIndicator.setMaxProgress(userInfo.getGoals().getStepsTarget());
                 this.mGoogleFitApi = new StepCountSensor(this,
-                        this.stepCountCircularProgressIndicator);
+                        stepCountCircularProgressIndicator);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -176,163 +168,45 @@ public class DashboardActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == GoogleFitApi.REQUEST_OAUTH_REQUEST_CODE) {
-                mGoogleFitApi.subscribe();
-            }
-        }
+    public void showStepCountTargetDialog(View v) {
+        CustomStepCountTargetDialog dialogFragment = new CustomStepCountTargetDialog();
+        dialogFragment.show(getSupportFragmentManager(), "StepCountTargetDialog");
     }
 
-    void getDailyNutrition() {
-        GoogleFitApi.getDailyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
-            List<DataPoint> dataPoints = dataReadResponse.getBuckets().get(0).getDataSets().get(0).getDataPoints();
-
-            Nutriments dailyNutriments = userInfo.getDailyNutriments();
-            if (dailyNutriments == null) {
-                dailyNutriments = new Nutriments();
-            }
-
-            for (DataPoint dataPoint : dataPoints) {
-                dailyNutriments.setCalories(Utils.INSTANCE.numToDp(dailyNutriments.getCalories() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("calories").doubleValue(), 2));
-                dailyNutriments.setFat(Utils.INSTANCE.numToDp(dailyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue(), 2));
-                dailyNutriments.setSodium(Utils.INSTANCE.numToDp(dailyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue(), 2));
-                dailyNutriments.setFiber(Utils.INSTANCE.numToDp(dailyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue(), 2));
-                dailyNutriments.setProtein(Utils.INSTANCE.numToDp(dailyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue(), 2));
-                dailyNutriments.setSaturatedFat(Utils.INSTANCE.numToDp(dailyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue(), 2));
-                dailyNutriments.setSugar(Utils.INSTANCE.numToDp(dailyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue(), 2));
-                dailyNutriments.setCarbohydrates(Utils.INSTANCE.numToDp(dailyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue(), 2));
-            }
-
-            userInfo.setDailyNutriments(dailyNutriments);
-        });
+    public void showHydrationCountIntakeAndTargetDialog(View v) {
+        CustomHydrationDialog dialogFragment = new CustomHydrationDialog();
+        dialogFragment.show(getSupportFragmentManager(), "HydrationTargetDialog");
     }
 
-    void getWeeklyNutrition() {
-        GoogleFitApi.getWeeklyNutrition(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
-            List<Bucket> buckets = dataReadResponse.getBuckets();
-
-            Nutriments weeklyNutriments = userInfo.getWeeklyNutriments();
-            if (weeklyNutriments == null) {
-                weeklyNutriments = new Nutriments();
-            }
-
-            for (Bucket bucket : buckets) {
-                for (DataPoint dataPoint : bucket.getDataSets().get(0).getDataPoints()) {
-                    weeklyNutriments.setFat(Utils.INSTANCE.numToDp(weeklyNutriments.getFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.total").doubleValue(), 2));
-                    weeklyNutriments.setSodium(Utils.INSTANCE.numToDp(weeklyNutriments.getSodium() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sodium").doubleValue(), 2));
-                    weeklyNutriments.setFiber(Utils.INSTANCE.numToDp(weeklyNutriments.getFiber() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("dietary_fiber").doubleValue(), 2));
-                    weeklyNutriments.setProtein(Utils.INSTANCE.numToDp(weeklyNutriments.getProtein() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("protein").doubleValue(), 2));
-                    weeklyNutriments.setSaturatedFat(Utils.INSTANCE.numToDp(weeklyNutriments.getSaturatedFat() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("fat.saturated").doubleValue(), 2));
-                    weeklyNutriments.setSugar(Utils.INSTANCE.numToDp(weeklyNutriments.getSugar() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("sugar").doubleValue(), 2));
-                    weeklyNutriments.setCarbohydrates(Utils.INSTANCE.numToDp(weeklyNutriments.getCarbohydrates() + dataPoint.getValue(Field.FIELD_NUTRIENTS).getKeyValue("carbs.total").doubleValue(), 2));
-                }
-            }
-
-            userInfo.setWeeklyNutriments(weeklyNutriments);
-        });
-    }
-
-    public void stepCountTarget(View v) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_insert_step_target);
-        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_step_target);
-
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
-            userInfo.getGoals().setStepsTarget((numberPicker.getValue() + 1) * 1000);
-            userInfo.getGoals().updateDB(mCurrentUser.getUid());
-
-            // Re-save the object in device's SharedPreferences
-            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-
-            this.stepCountCircularProgressIndicator.setProgress(
-                    this.stepCountCircularProgressIndicator.getProgress(),
-                    userInfo.getGoals().getStepsTarget());
-
-            dialog.dismiss();
-        });
-
-        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1000, ""));
-        numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
-
-        dialog.show();
-    }
-
-    public void waterCountTarget(View v) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_insert_water_target);
-        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_water_target);
-
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
-            userInfo.getGoals().setHydrationTarget((numberPicker.getValue() + 1) * 1000);
-            userInfo.getGoals().updateDB(mCurrentUser.getUid());
-
-            // Re-save the object in device's SharedPreferences
-            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-
-            dialog.dismiss();
-        });
-
-        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(250, "ml"));
-        numberPicker.setValue(((int) this.stepCountCircularProgressIndicator.getMaxProgress() / 1000) - 1);
-
-        dialog.show();
-    }
-
-    public void calorieCountTarget(View v) {
+    public void showCalorieCountIntakeAndTargetDialog(View v) {
         CustomCaloriesDialog dialogFragment = new CustomCaloriesDialog();
-        dialogFragment.show(getSupportFragmentManager(), "CaloriesDialog");
+        dialogFragment.show(getSupportFragmentManager(), "CalorieCountTargetDialog");
     }
 
     public void weightGainTarget(View v) {
-        final Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_insert_weight_target);
-
-        CustomNumberPicker numberPicker = dialog.findViewById(R.id.number_picker_weight_target);
-        int minWeight = userInfo.getWeight() - 50;
-        int maxWeight = userInfo.getWeight() + 50;
-        int targetWeightIndex = userInfo.getGoals().getWeightTarget() - minWeight;
-
-        numberPicker.setMaxValue(maxWeight);
-        numberPicker.setMinValue(minWeight);
-
-        numberPicker.setDisplayedValues(numberPicker.getArrayWithSteps(1, "kg"));
-        numberPicker.setValue(targetWeightIndex);
-
-        dialog.findViewById(R.id.button_confirm).setOnClickListener(v1 -> {
-            userInfo.getGoals().setWeightTarget(userInfo.getGoals().getWeightTarget() + (numberPicker.getValue() - targetWeightIndex));
-            userInfo.getGoals().updateDB(mCurrentUser.getUid());
-
-            FastSave.getInstance().saveObject(UserInfo.COLLECTION_NAME, userInfo);
-
-            CircularProgressIndicator weightCircularProgressIndicator = findViewById(R.id.circular_progress_insights_weight);
-
-            if (userInfo.getGoals().getWeightTarget() > userInfo.getWeight()) {
-                weightCircularProgressIndicator.setProgress(
-                        userInfo.getWeight(),
-                        userInfo.getGoals().getWeightTarget()
-                );
-            } else {
-                weightCircularProgressIndicator.setProgress(
-                        userInfo.getGoals().getWeightTarget(),
-                        userInfo.getWeight()
-                );
-            }
-
-            dialog.dismiss();
-        });
-
-        dialog.show();
+        CustomWeightTargetDialog dialogFragment = new CustomWeightTargetDialog();
+        dialogFragment.show(getSupportFragmentManager(), "WeightTargetDialog");
     }
 
-    public void hydrationCountTarget(View v) {
-        CustomHydrationDialog dialogFragment = new CustomHydrationDialog();
-        dialogFragment.show(getSupportFragmentManager(), "HydrationDialog");
+    // TODO: Retrieve some hydration data and update the progress
+    void updateHydrationProgress() {
+        TextView dailyHydrationIntakeTargetTextView = findViewById(R.id.text_view_target_hydration);
+
+        PatternProgressTextAdapter textAdapter = new PatternProgressTextAdapter(getString(R.string.msg_progress_hydration_pattern));
+        textAdapter.formatText(0);
+        hydrationCircularProgressIndicator.setProgressTextAdapter(textAdapter);
+
+        dailyHydrationIntakeTargetTextView.setText(
+                getString(
+                        R.string.msg_target_with_val,
+                        String.valueOf(userInfo.getGoals().getHydrationTarget()),
+                        "ml"
+                )
+        );
     }
 
     void updateCalorieProgress() {
-        CircularProgressIndicator calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
+        calorieCountCircularProgressIndicator = findViewById(R.id.circular_progress_daily_calorie_intake);
         calorieCountCircularProgressIndicator.setProgress(
                 userInfo.getDailyNutriments().getCalories(),
                 userInfo.getGoals().getCalorieTarget()
@@ -352,18 +226,13 @@ public class DashboardActivity extends AppCompatActivity {
         );
     }
 
-    // TODO: Retrieve some hydration data and update the progress
-    void updateHydrationProgress() {
-        TextView dailyHydrationIntakeTarget = findViewById(R.id.text_view_target_hydration);
-        hydrationCircularProgressIndicator = findViewById(R.id.circular_progress_daily_hydration_intake);
-
-        dailyHydrationIntakeTarget.setText(
-                getString(
-                        R.string.msg_target_with_val,
-                        String.valueOf(userInfo.getGoals().getHydrationTarget()),
-                        "ml"
-                )
-        );
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == GoogleFitApi.REQUEST_OAUTH_REQUEST_CODE) {
+                mGoogleFitApi.subscribe();
+            }
+        }
     }
 
     @Override

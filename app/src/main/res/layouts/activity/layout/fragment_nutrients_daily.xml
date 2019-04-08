@@ -57,7 +57,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:onClick="calorieCountTarget">
+                    android:onClick="showCalorieCountIntakeAndTargetDialog">
 
                     <include layout="@layout/view_calorie_intake_stat" />
 
@@ -76,7 +76,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:onClick="hydrationCountTarget">
+                    android:onClick="showHydrationCountIntakeAndTargetDialog">
 
                     <include layout="@layout/view_hydration_intake_stat" />
 

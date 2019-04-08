@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator
 import com.brunel.group30.fitnessapp.DashboardActivity
+import com.brunel.group30.fitnessapp.DashboardActivity.userInfo
 import com.brunel.group30.fitnessapp.Enums.BMI
 import com.brunel.group30.fitnessapp.R
 
@@ -36,9 +37,17 @@ class WeightData : Fragment() {
             PatternProgressTextAdapter(getString(R.string.msg_progress_weight_pattern)).formatText(DashboardActivity.userInfo.weight.toDouble())
         }
 
-        weightProgressIndicator.setCurrentProgress(
-                DashboardActivity.userInfo.weight.toDouble()
-        )
+        if (userInfo.goals.weightTarget > userInfo.weight) {
+            weightProgressIndicator.setProgress(
+                    userInfo.weight.toDouble(),
+                    userInfo.goals.weightTarget.toDouble()
+            )
+        } else {
+            weightProgressIndicator.setProgress(
+                    userInfo.weight.toDouble(),
+                    userInfo.goals.weightTarget.toDouble()
+            )
+        }
 
         return view
     }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.appizona.yehiahd.fastsave.FastSave
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker
 import com.brunel.group30.fitnessapp.DashboardActivity
@@ -16,6 +17,7 @@ import com.brunel.group30.fitnessapp.Models.UserInfo
 import com.brunel.group30.fitnessapp.R
 import com.brunel.group30.fitnessapp.Services.GoogleFitApi
 import com.google.firebase.auth.FirebaseAuth
+
 
 class HydrationPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
@@ -46,11 +48,18 @@ class HydrationTargetData : Fragment() {
         numberPicker.value = (DashboardActivity.userInfo.goals.hydrationTarget / incrementAmount) - 1
 
         v.findViewById<Button>(R.id.button_submit_daily_water_target).setOnClickListener {
+            val newVal = (incrementAmount * numberPicker.value) + incrementAmount
             DashboardActivity.userInfo.goals.hydrationTarget = (incrementAmount * numberPicker.value) + incrementAmount
             DashboardActivity.userInfo.goals.updateDB(FirebaseAuth.getInstance().currentUser!!.uid)
 
             FastSave.getInstance().saveObject<UserInfo>(UserInfo.COLLECTION_NAME, DashboardActivity.userInfo)
             DashboardActivity.hydrationCircularProgressIndicator.maxProgress = DashboardActivity.userInfo.goals.hydrationTarget.toDouble()
+
+            activity!!.findViewById<TextView>(R.id.text_view_target_hydration).text = getString(
+                    R.string.msg_target_with_val,
+                    newVal.toString(),
+                    "ml"
+            )
 
             (parentFragment as DialogFragment).dismiss()
         }
@@ -69,11 +78,13 @@ class HydrationInsertData : Fragment() {
 
         val v = inflater.inflate(R.layout.dialog_insert_water_data, container, false)
         val numberPicker: CustomNumberPicker = v.findViewById(R.id.number_picker_water_daily)
-        numberPicker.displayedValues = numberPicker.getArrayWithSteps(250, "ml")
+
+        val incrementAmount = 250
+        numberPicker.displayedValues = numberPicker.getArrayWithSteps(incrementAmount, "ml")
         numberPicker.value = 0
 
         v.findViewById<Button>(R.id.button_submit_daily_water_intake).setOnClickListener {
-            GoogleFitApi.sendHydrationData(numberPicker.value + 1 * 250)
+            GoogleFitApi.sendHydrationData(numberPicker.value + 1 * incrementAmount)
             (parentFragment as DialogFragment).dismiss()
         }
 

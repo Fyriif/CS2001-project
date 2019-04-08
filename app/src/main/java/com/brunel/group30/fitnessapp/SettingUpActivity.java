@@ -356,6 +356,7 @@ public class SettingUpActivity extends AppCompatActivity {
                         );
                     }
                 });
+
                 int targetWeight = this.userInfo.getWeight();
                 if (BMI.Companion.getString(userInfo.calculateBMI()) == BMI.UNDERWEIGHT) {
                    targetWeight += 10;
@@ -363,7 +364,8 @@ public class SettingUpActivity extends AppCompatActivity {
                    targetWeight -= 10;
                 }
 
-                Goals goals = new Goals(10000, targetWeight,3 * 1000,100);
+                Goals goals = new Goals();
+                goals.setWeightTarget(targetWeight);
                 Task<Void> sendUserGoalsTask = CustomFirebaseFirestoreService.INSTANCE.sendDocument(
                         Goals.COLLECTION_NAME,
                         currentUser.getUid(),

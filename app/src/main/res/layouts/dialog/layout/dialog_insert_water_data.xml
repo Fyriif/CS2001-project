@@ -6,8 +6,8 @@
     android:layout_gravity="center_horizontal"
     android:layout_marginLeft="36dp"
     android:layout_marginRight="36dp"
-    android:background="@drawable/bg_rounded_dialog"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/bg_rounded_dialog">
 
     <TextView
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
         android:layout_marginTop="12dp"
         android:fontFamily="@font/questrial_regular"
         android:gravity="center"
-        android:text="@string/title_hydration_intake"
+        android:text="@string/title_water_intake"
         android:textColor="@color/textColorPrimary"
         android:textSize="30sp" />
 
