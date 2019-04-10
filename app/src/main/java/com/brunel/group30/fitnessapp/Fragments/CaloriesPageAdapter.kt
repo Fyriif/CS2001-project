@@ -12,8 +12,8 @@ import com.brunel.group30.fitnessapp.R
 class CaloriesPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment? = when (position) {
-        0 -> CaloriesTargetData.newInstance()
-        1 -> CaloriesInsertData.newInstance()
+        0 -> CaloriesInsertData.newInstance()
+        1 -> CaloriesTargetData.newInstance()
         else -> null
     }
 

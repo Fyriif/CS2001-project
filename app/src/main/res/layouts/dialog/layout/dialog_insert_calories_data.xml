@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_marginLeft="36dp"
     android:layout_marginRight="36dp"
-    android:orientation="vertical"
-    android:background="@drawable/bg_rounded_dialog">
+    android:background="@drawable/bg_rounded_dialog"
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/text_view_title_calories_intake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="@font/questrial_regular"
         android:gravity="center"
         android:text="@string/title_calories_intake"
         android:textColor="@color/textColorPrimary"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        custom:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/edit_calories"
+        android:id="@+id/edit_calories_insert"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
+        android:layout_height="53dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/btn_rounded_edit_text"
         android:drawablePadding="25dp"
         android:ems="15"
-        android:fontFamily="@font/rubik_regular"
+        android:fontFamily="@font/questrial_regular"
         android:hint="@string/title_calories_intake"
         android:inputType="number"
         android:paddingStart="10dp"
@@ -37,27 +42,26 @@
         android:textColor="#333333"
         android:textColorHint="#d8d8d8"
         android:textCursorDrawable="@null"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintStart_toStartOf="parent"
+        custom:layout_constraintTop_toBottomOf="@id/text_view_title_calories_intake"
+        tools:ignore="Autofill" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/button_confirm"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/btn_rounded_primary"
+        android:fontFamily="@font/rubik_regular"
+        android:text="@string/action_confirm"
+        android:textAllCaps="true"
+        android:textColor="@color/textColorSecondary"
+        android:textSize="20sp"
+        custom:layout_constraintBottom_toBottomOf="parent"
+        custom:layout_constraintEnd_toEndOf="parent"
+        custom:layout_constraintHorizontal_bias="0.5"
+        custom:layout_constraintStart_toStartOf="parent" />
 
-        <Button
-            android:id="@+id/button_confirm"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
-            android:background="@drawable/btn_rounded_primary"
-            android:fontFamily="@font/rubik_regular"
-            android:text="@string/action_confirm"
-            android:textAllCaps="true"
-            android:textColor="@color/textColorSecondary"
-            android:textSize="20sp" />
-
-    </LinearLayout>
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

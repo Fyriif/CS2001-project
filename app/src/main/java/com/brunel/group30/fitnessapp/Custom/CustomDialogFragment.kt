@@ -35,7 +35,7 @@ open class CustomDialogFragment : DialogFragment() {
         super.onResume()
         dialog.window!!.setLayout(
                 (resources.displayMetrics.widthPixels * 0.75).toInt(),
-                (resources.displayMetrics.heightPixels * 0.65).toInt()
+                (resources.displayMetrics.heightPixels * 0.55).toInt()
         )
     }
 }
@@ -59,7 +59,7 @@ class CustomStepCountTargetDialog : CustomDialogFragment() {
                     stepCountCircularProgressIndicator.progress,
                     userInfo.goals.stepsTarget.toDouble())
 
-            (parentFragment as DialogFragment).dismiss()
+            this.dismiss()
         }
 
         val incrementAmount = 1000
