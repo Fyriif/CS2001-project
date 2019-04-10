@@ -108,6 +108,10 @@ dependencies {
     implementation 'com.tbuonomo.andrui:viewpagerdotsindicator:3.0.3'
     implementation 'me.dm7.barcodescanner:zbar:1.9.13'
     implementation 'com.squareup.okhttp3:okhttp:3.14.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:gridlayout-v7:28.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
 }
 
 apply plugin: 'com.google.gms.google-services'
