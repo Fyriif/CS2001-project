@@ -44,8 +44,8 @@ class WeightData : Fragment() {
             )
         } else {
             weightProgressIndicator.setProgress(
-                    userInfo.weight.toDouble(),
-                    userInfo.goals.weightTarget.toDouble()
+                    userInfo.goals.weightTarget.toDouble(),
+                    userInfo.weight.toDouble()
             )
         }
 
