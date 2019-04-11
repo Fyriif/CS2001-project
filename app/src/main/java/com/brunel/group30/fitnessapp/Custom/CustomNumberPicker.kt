@@ -9,6 +9,9 @@ import java.util.*
 
 
 class CustomNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(context, attrs) {
+    var originalMinValue = 0
+    var originalMaxValue = 0
+
     init {
         processAttributeSet(attrs)
     }
@@ -22,6 +25,9 @@ class CustomNumberPicker(context: Context, attrs: AttributeSet) : NumberPicker(c
             this.maxValue = attributes.getInt(R.styleable.CustomNumberPicker_maxValue, 0)
             this.value = attributes.getInt(R.styleable.CustomNumberPicker_defaultValue,
                     attributes.getInt(R.styleable.CustomNumberPicker_minValue, 0))
+
+            this.originalMinValue = this.minValue
+            this.originalMaxValue = this.maxValue
         } finally {
             attributes.recycle()
         }

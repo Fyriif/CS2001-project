@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".DashboardActivity">
 
     <ScrollView
@@ -14,37 +15,35 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp">
+
+                <com.brunel.group30.fitnessapp.Custom.CustomViewPager
+                    android:id="@+id/view_pager_nutrients_insights"
+                    android:layout_width="match_parent"
+                    android:layout_height="136dp" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/dots_indicator_view_pager_nutrients_insights"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_margin="8dp"
+                    app:dotsColor="@color/colorAccent"
+                    app:dotsWidthFactor="2"
+                    app:selectedDotColor="@color/colorPrimary" />
+
+            </android.support.v7.widget.CardView>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="160dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginRight="10dp">
-
-                    <ViewFlipper
-                        android:id="@+id/view_flipper_daily_intake"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:autoStart="true"
-                        android:flipInterval="7000">
-
-                        <include layout="@layout/view_fat_stat" />
-                        <include layout="@layout/view_saturated_fat_stat" />
-                        <include layout="@layout/view_sodium_stat" />
-                        <include layout="@layout/view_protein_stat" />
-                        <include layout="@layout/view_total_carbs_stat" />
-                        <include layout="@layout/view_sugar_stat" />
-                        <include layout="@layout/view_fibre_stat" />
-
-                    </ViewFlipper>
-
-                </android.support.v7.widget.CardView>
-
             </LinearLayout>
 
             <LinearLayout
@@ -58,7 +57,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:onClick="calorieCountTarget">
+                    android:onClick="showCalorieCountIntakeAndTargetDialog">
 
                     <include layout="@layout/view_calorie_intake_stat" />
 
@@ -77,7 +76,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginRight="10dp"
-                    android:onClick="waterCountTarget">
+                    android:onClick="showHydrationCountIntakeAndTargetDialog">
 
                     <include layout="@layout/view_hydration_intake_stat" />
 

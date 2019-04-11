@@ -23,6 +23,7 @@ import com.appizona.yehiahd.fastsave.FastSave;
 import com.brunel.group30.fitnessapp.Custom.CustomNumberPicker;
 import com.brunel.group30.fitnessapp.Custom.CustomTimeRangePicker;
 import com.brunel.group30.fitnessapp.Custom.CustomViewPager;
+import com.brunel.group30.fitnessapp.Enums.BMI;
 import com.brunel.group30.fitnessapp.Enums.Day;
 import com.brunel.group30.fitnessapp.Enums.Location;
 import com.brunel.group30.fitnessapp.Models.Goals;
@@ -169,7 +170,8 @@ public class SettingUpActivity extends AppCompatActivity {
                         userInfo.setHeight(dataPoints.isEmpty() ? 175 : dataPoints.get(0).getValue(Field.FIELD_HEIGHT).asInt());
 
                         heightNumberPicker = findViewById(R.id.number_picker_height);
-                        heightNumberPicker.setValue(userInfo.getHeight());
+                        heightNumberPicker.setDisplayedValues(heightNumberPicker.getArrayWithSteps(1, "cm"));
+                        heightNumberPicker.setValue(userInfo.getHeight() - heightNumberPicker.getOriginalMinValue());
 
                         mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
                     });
@@ -178,26 +180,28 @@ public class SettingUpActivity extends AppCompatActivity {
                 break;
 
             case 4:
-                this.userInfo.setHeight(heightNumberPicker.getValue());
+                this.userInfo.setHeight((heightNumberPicker.getValue() - heightNumberPicker.getMinValue()) + heightNumberPicker.getOriginalMinValue());
 
                 GoogleFitApi.getWeight(this, GoogleSignIn.getLastSignedInAccount(this)).addOnSuccessListener(dataReadResponse -> {
                     List<DataPoint> dataPoints = dataReadResponse.getDataSets().get(0).getDataPoints();
                     userInfo.setWeight(dataPoints.isEmpty() ? 75 : dataPoints.get(0).getValue(Field.FIELD_WEIGHT).asInt());
 
-                    // TODO: Number picker should display the unit of measure
                     weightNumberPicker = findViewById(R.id.number_picker_weight);
-                    weightNumberPicker.setValue(userInfo.getWeight());
+                    weightNumberPicker.setDisplayedValues(weightNumberPicker.getArrayWithSteps(1, "kg"));
+                    weightNumberPicker.setValue(userInfo.getWeight() - weightNumberPicker.getOriginalMinValue());
 
                     mViewPager.setCurrentItem(mViewPager.getCurrentItem() + 1);
                 });
 
-                break;
+            break;
 
             case 5:
+                this.userInfo.setWeight(weightNumberPicker.getValue() + weightNumberPicker.getOriginalMinValue());
+
                 CheckBox preferNotToSayCheckBox = findViewById(R.id.button_weight_prefer_not_to_say);
 
                 this.userInfo.setWeight(preferNotToSayCheckBox.isChecked() ?
-                        0 : weightNumberPicker.getValue());
+                        0 : this.userInfo.getWeight());
                 this.mViewPager.setCurrentItem(this.mViewPager.getCurrentItem() + 1);
 
                 break;
@@ -353,7 +357,15 @@ public class SettingUpActivity extends AppCompatActivity {
                     }
                 });
 
-                Goals goals = new Goals(10000,3*1000,100);
+                int targetWeight = this.userInfo.getWeight();
+                if (BMI.Companion.getString(userInfo.calculateBMI()) == BMI.UNDERWEIGHT) {
+                   targetWeight += 10;
+                } else if (BMI.Companion.getString(userInfo.calculateBMI()) == BMI.OVERWEIGHT) {
+                   targetWeight -= 10;
+                }
+
+                Goals goals = new Goals();
+                goals.setWeightTarget(targetWeight);
                 Task<Void> sendUserGoalsTask = CustomFirebaseFirestoreService.INSTANCE.sendDocument(
                         Goals.COLLECTION_NAME,
                         currentUser.getUid(),

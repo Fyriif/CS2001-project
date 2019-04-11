@@ -1,140 +1,226 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_marginBottom="56dp">
+
 
     <android.support.v7.widget.CardView
-        android:id="@+id/graph_card"
-        android:layout_height="wrap_content"
+        android:id="@+id/card_view_profile"
         android:layout_width="match_parent"
-        android:layout_margin="8dp">
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        app:cardBackgroundColor="@color/colorAccent"
+        app:cardCornerRadius="0dp"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <com.jjoe64.graphview.GraphView
-            android:id="@+id/graph"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="216dp"
-            android:layout_margin="8dp" />
+            android:layout_height="match_parent">
 
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/profile_image"
+                android:layout_width="128dp"
+                android:layout_height="128dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/logo"
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="2dp" />
+            <TextView
+                android:id="@+id/text_view_user_full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_user_full_name"
+                android:textSize="28sp"
+                android:fontFamily="@font/questrial_regular"
+                android:textColor="@color/textColorSecondary"
+                android:layout_below="@id/profile_image"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 
-    <GridLayout
+    <ScrollView
+        android:id="@+id/scroll_view_settings"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        android:columnCount="2">
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/card_view_profile"
+        app:layout_constraintBottom_toTopOf="@id/linear_layout_button">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginRight="8dp">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_gravity="left"
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_margin="8dp">
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Weight"
-                    android:textSize="13sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="50kg"
-                    android:textSize="28sp"
-                    android:id="@+id/weight"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="68kg starting weight"
-                    android:textSize="13sp"
-                    android:id="@+id/starting_weight"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:fontFamily="@font/questrial_regular"
+                        android:gravity="center"
+                        android:text="@string/title_units_of_measure"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <RadioGroup
+                        android:id="@+id/radio_buttons_units"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_button_metric"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_rounded_secondary"
+                            android:button="@null"
+                            android:checked="false"
+                            android:fontFamily="@font/questrial_regular"
+                            android:text="@string/btn_radio_metric"
+                            android:textColor="@drawable/radio_text_selected"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/radio_button_imperial"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/questrial_regular"
+                            android:text="@string/btn_radio_imperial"
+                            android:textSize="14sp"
+                            style="@style/Widget.AppCompat.Button.Colored"
+                            android:background="@drawable/btn_rounded_secondary"
+                            android:button="@null"
+                            android:textColor="@drawable/radio_text_selected"/>
+                    </RadioGroup>
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/questrial_regular"
+                        android:gravity="center"
+                        android:text="@string/title_weight"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/edit_text_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:text="@string/val"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/questrial_regular"
+                        android:gravity="center"
+                        android:text="@string/title_height"
+                        android:textColor="@color/textColorPrimary"
+                        android:textSize="18sp" />
+
+                    <EditText
+                        android:id="@+id/editText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:inputType="number"
+                        android:text="@string/val"
+                        android:textAlignment="center"
+                        android:textSize="24sp" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/linear_layout_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scroll_view_settings">
+
+        <Button
+            android:id="@+id/button_delete_account"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginStart="8dp">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/btn_rounded_primary"
+            android:fontFamily="@font/questrial_regular"
+            android:text="@string/btn_delete_acc"
+            android:textColor="@color/textColorSecondary"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_gravity="left"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_margin="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Steps"
-                    android:textSize="13sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="4000"
-                    android:textSize="28sp"
-                    android:id="@+id/total_steps"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="300 steps last week"
-                    android:textSize="13sp"
-                    android:id="@+id/week_steps"/>
-
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_columnWeight="1"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp">
-
-            <LinearLayout
-                android:layout_gravity="left"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_margin="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Exercises"
-                    android:textSize="13sp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="68"
-                    android:textSize="28sp"
-                    android:id="@+id/total_exercises"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="40 exercises last week"
-                    android:textSize="13sp"
-                    android:id="@+id/week_exercises"/>
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-
-
-
-    </GridLayout>
-
-
-
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

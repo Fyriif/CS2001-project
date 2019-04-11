@@ -10,21 +10,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/text_view_title_calories_target"
+        android:id="@+id/text_view_title_calories_intake"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/questrial_regular"
         android:gravity="center"
-        android:text="@string/title_calories_target"
+        android:text="@string/title_calories_intake"
         android:textColor="@color/textColorPrimary"
         android:textSize="30sp"
         custom:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/edit_calories_target"
+        android:id="@+id/edit_calories_insert"
         android:layout_width="match_parent"
         android:layout_height="53dp"
         android:layout_marginStart="8dp"
@@ -34,7 +34,7 @@
         android:drawablePadding="25dp"
         android:ems="15"
         android:fontFamily="@font/questrial_regular"
-        android:hint="@string/title_calories_target"
+        android:hint="@string/title_calories_intake"
         android:inputType="number"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
@@ -45,7 +45,7 @@
         android:textSize="20sp"
         custom:layout_constraintEnd_toEndOf="parent"
         custom:layout_constraintStart_toStartOf="parent"
-        custom:layout_constraintTop_toBottomOf="@id/text_view_title_calories_target"
+        custom:layout_constraintTop_toBottomOf="@id/text_view_title_calories_intake"
         tools:ignore="Autofill" />
 
     <Button

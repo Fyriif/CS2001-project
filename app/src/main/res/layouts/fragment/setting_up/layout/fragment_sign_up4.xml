@@ -45,12 +45,13 @@
 
         <com.brunel.group30.fitnessapp.Custom.CustomNumberPicker
             android:id="@+id/number_picker_height"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:theme="@style/NumberPickerStyle"
-            custom:minValue="40"
-            custom:maxValue="200" />
+            android:descendantFocusability="blocksDescendants"
+            custom:maxValue="200"
+            custom:minValue="120" />
 
     </LinearLayout>
 

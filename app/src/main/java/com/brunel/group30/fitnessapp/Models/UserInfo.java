@@ -22,6 +22,12 @@ public class UserInfo {
     private HashMap<String, List<String>> workOutDays;
 
     @Exclude
+    private Nutriments dailyNutriments;
+
+    @Exclude
+    private Nutriments weeklyNutriments;
+
+    @Exclude
     private Goals goals;
 
     public UserInfo() {
@@ -130,5 +136,25 @@ public class UserInfo {
     @Exclude
     public void setGoals(Goals goals) {
         this.goals = goals;
+    }
+
+    @Exclude
+    public Nutriments getDailyNutriments() {
+        return dailyNutriments;
+    }
+
+    @Exclude
+    public void setDailyNutriments(Nutriments dailyNutriments) {
+        this.dailyNutriments = dailyNutriments;
+    }
+
+    @Exclude
+    public Nutriments getWeeklyNutriments() {
+        return weeklyNutriments;
+    }
+
+    @Exclude
+    public void setWeeklyNutriments(Nutriments weeklyNutriments) {
+        this.weeklyNutriments = weeklyNutriments;
     }
 }

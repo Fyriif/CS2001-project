@@ -9,7 +9,7 @@ enum class BMI {
                 return UNDERWEIGHT
             } else if (bmiVal > 18.5 && bmiVal < 24.9) {
                 return NORMAL
-            } else if (bmiVal > 25.0 && bmiVal < 29.0) {
+            } else if (bmiVal > 25.0) {
                 return OVERWEIGHT
             }
 

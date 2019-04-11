@@ -60,6 +60,13 @@ public class SplashScreenActivity extends AppCompatActivity {
                         .requestScopes(new Scope(Scopes.FITNESS_ACTIVITY_READ_WRITE))
                         .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        if (this.mAuth.getCurrentUser() == null) {
+            mGoogleSignInClient.signOut();
+            Toast.makeText(getApplicationContext(),
+                    getString(R.string.msg_user_successfully_signed_out),
+                    Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
