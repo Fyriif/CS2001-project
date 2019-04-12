@@ -94,7 +94,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_location_home"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -123,7 +124,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_easy"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -152,7 +154,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_whole"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </android.support.v7.widget.GridLayout>
@@ -187,7 +190,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_location_gym"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -216,7 +220,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_medium"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -244,7 +249,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_upper"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </android.support.v7.widget.GridLayout>
@@ -278,7 +284,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_location_park"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -307,7 +314,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_hard"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
@@ -335,7 +343,8 @@
                             android:paddingBottom="4dp"
                             android:text="@string/msg_filter_lower"
                             android:textAlignment="center"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            android:button="@null"/>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </android.support.v7.widget.GridLayout>
