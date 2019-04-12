@@ -88,7 +88,6 @@
     <string name="btn_radio_imperial">Imperial (ft/lbs)</string>
     <string name="btn_delete_acc">Delete Account</string>
     <string name="msg_target_with_val">Target: %1$s %2$s</string>
-    <string name="title_user_full_name">Full Name</string>
 
     <!-- Placeholder strings used for dynamic values -->
     <string name="val">%s</string>

@@ -3,12 +3,14 @@ package com.brunel.group30.fitnessapp;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
@@ -29,9 +31,11 @@ import com.brunel.group30.fitnessapp.Services.StepCountSensor;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 import com.tbuonomo.viewpagerdotsindicator.DotsIndicator;
 
 import antonkozyriatskyi.circularprogressindicator.CircularProgressIndicator;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DashboardActivity extends AppCompatActivity {
     public static UserInfo userInfo;
@@ -123,9 +127,43 @@ public class DashboardActivity extends AppCompatActivity {
                         dashboardViewFlipper.setDisplayedChild(2);
                     }
                     return true;
+
                 case R.id.navigation_dashboard_account:
                     if (dashboardViewFlipper.getCurrentView() != dashboardViewFlipper.getChildAt(3)) {
                         dashboardViewFlipper.setDisplayedChild(3);
+
+                        TextView nameOfUserTextView = findViewById(R.id.text_view_user_full_name);
+                        EditText weightTextView = findViewById(R.id.edit_text_user_weight);
+                        EditText heightTextView = findViewById(R.id.edit_text_user_height);
+                        CircleImageView profileImageOfUserCircleImageView = findViewById(R.id.circle_image_view_profile);
+
+                        nameOfUserTextView.setText(
+                                getString(
+                                        R.string.val,
+                                        String.valueOf(mAuth.getCurrentUser().getDisplayName())
+                                )
+                        );
+
+                        weightTextView.setText(
+                                getString(
+                                        R.string.val_with_unit,
+                                        String.valueOf(userInfo.getWeight()),
+                                        "kg"
+                                )
+                        );
+
+                        heightTextView.setText(
+                                getString(
+                                        R.string.val_with_unit,
+                                        String.valueOf(userInfo.getHeight()),
+                                        "cm"
+                                )
+                        );
+
+                        Picasso.get().load(mAuth.getCurrentUser().getPhotoUrl())
+                                .placeholder(R.drawable.ic_person_white_24dp)
+                                .error(R.drawable.ic_person_white_24dp)
+                                .into(profileImageOfUserCircleImageView);
                     }
                     return true;
             }
