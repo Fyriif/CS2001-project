@@ -2,7 +2,6 @@
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,8 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/profile_image"
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/circle_image_view_profile"
                 android:layout_width="128dp"
                 android:layout_height="128dp"
                 android:layout_alignParentTop="true"
@@ -31,22 +30,24 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/logo"
+                android:src="@drawable/ic_person_white_24dp"
                 app:civ_border_color="#ffffff"
                 app:civ_border_width="2dp" />
+
             <TextView
                 android:id="@+id/text_view_user_full_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/title_user_full_name"
+                android:text="@string/val"
                 android:textSize="28sp"
                 android:fontFamily="@font/questrial_regular"
                 android:textColor="@color/textColorSecondary"
-                android:layout_below="@id/profile_image"
+                android:layout_below="@id/circle_image_view_profile"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentEnd="true"
                 android:gravity="center"
                 android:layout_marginBottom="8dp"/>
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 
@@ -150,12 +151,12 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/edit_text_weight"
+                        android:id="@+id/edit_text_user_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="number"
-                        android:text="@string/val"
+                        android:text="@string/val_with_unit"
                         android:textAlignment="center"
                         android:textSize="24sp" />
                 </LinearLayout>
@@ -187,12 +188,12 @@
                         android:textSize="18sp" />
 
                     <EditText
-                        android:id="@+id/editText"
+                        android:id="@+id/edit_text_user_height"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:ems="10"
                         android:inputType="number"
-                        android:text="@string/val"
+                        android:text="@string/val_with_unit"
                         android:textAlignment="center"
                         android:textSize="24sp" />
                 </LinearLayout>
